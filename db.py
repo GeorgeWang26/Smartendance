@@ -1,7 +1,6 @@
 import json
 from flask_login import UserMixin
-from mongoengine import (connect, Document, EmbeddedDocument,
-                         EmbeddedDocumentListField, StringField, BooleanField)
+from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentListField, StringField, BooleanField, SortedListField, EmbeddedDocumentField
 
 # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
 # to print the whole db in formated json style
@@ -9,30 +8,46 @@ from mongoengine import (connect, Document, EmbeddedDocument,
 connect('test')
 
 
+# as for db, dont use  unique  other than in main(top) document
+# it will cause collisions if want to save more than one instance
+# just do a manual check
+
+
 class Member(EmbeddedDocument):
     name = StringField(required=True)
     attendance = BooleanField(default=False)
+    # sort by name
 
 
 class Day(EmbeddedDocument):
     date = StringField(required=True)
-    members = EmbeddedDocumentListField(Member)
+    members = SortedListField(EmbeddedDocumentField(Member), ordering = 'name')
+    # sort by data
 
 
 class Group(EmbeddedDocument):
     groupName = StringField(required=True)
-    allMembers = EmbeddedDocumentListField(Member)
-    days = EmbeddedDocumentListField(Day)
+    allMembers = SortedListField(EmbeddedDocumentField(Member), ordering = 'name')
+    days = SortedListField(EmbeddedDocumentField(Day), ordering = 'date')
+    # sort by groupname 
 
 
 class User(Document):
     username = StringField(unique=True, required=True)
     password = StringField(required=True)
-    groups = EmbeddedDocumentListField(Group)
+    groups = SortedListField(EmbeddedDocumentField(Group), ordering = 'groupName')
+    meta = {
+        'ordering': ['+username']
+    }
+    # sort by username
 
 
 class LoginReturn(Document, UserMixin):
     username = StringField(unique=True, required=True)
+    meta = {
+        'ordering': ['+username']
+    }
+    # sort by username
 
 
 #
@@ -190,14 +205,23 @@ if __name__ == '__main__':
     print('User', User.objects())
     print('LoginReturn', LoginReturn.objects())
 
-    addUser('a', 'a')
-    addGroup('a', 'a')
-    addMember('a', 'a', 'a')
-    addDay('a', 'a', 'a')
-    markAttendance('a', 'a', 'a', 'a')
     addUser('d', 'd')
     addUser('b', 'b')
     addUser('c', 'c')
+
+    addUser('a', 'a')
+    addGroup('a', 'b')
+    addGroup('a', 'c')
+    addGroup('a','e')
+    addGroup('a', 'a')
+    addMember('a', 'a', 'a')
+    addDay('a', 'a', '20200101')
+    addDay('a', 'a', '20200201')
+    addDay('a', 'a', '20200301')
+    addDay('a', 'a', '20200401')
+    addDay('a', 'a', '20200106')
+
+    # markAttendance('a', 'a', 'a', 'a')
 
     print('a', addUser('a', 'a'))
 
@@ -206,5 +230,4 @@ if __name__ == '__main__':
     removeUser('b')
 
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
-    print(json.dumps(json.loads(LoginReturn.objects().to_json()),
-                     sort_keys=True, indent=4))
+    print(json.dumps(json.loads(LoginReturn.objects().to_json()), sort_keys=True, indent=4))
