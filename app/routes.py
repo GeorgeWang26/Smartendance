@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, redirect, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 import base64
 import recognition as rec
@@ -20,10 +20,22 @@ def load_user(user_id):
     return user
 
 
+@app.route("/checkStatus")
+def checkStatus():
+    if current_user.is_authenticated:
+        return jsonify(status = True)
+    else:
+        return jsonify(status = False)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+
+@app.route("/")
 @app.route("/login")
 def login():
     return render_template("login.html")
-
+# should stop user from log in to a second user account here
 
 @app.route("/signup")
 def signup():
