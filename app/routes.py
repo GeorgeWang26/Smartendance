@@ -42,6 +42,11 @@ def signup():
     return render_template("signup.html")
 
 
+@app.route("userhome")
+def userhome():
+    return render_template("userhome.html")
+
+
 @app.route('/capture')
 def capture():
     return render_template('capture.html')
