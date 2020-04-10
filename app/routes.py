@@ -1,7 +1,24 @@
 from app import app
 from flask import render_template, request, jsonify
+from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 import base64
-import recognition
+import recognition as rec
+import db
+
+app.config['SECRET_KEY'] = 'itssecretkey'
+
+loginManager = LoginManager()
+loginManager.init_app(app)
+
+
+@loginManager.user_loader
+def load_user(user_id):
+    print('\n\nLOAD USER', type(user_id), user_id)
+    user = db.getFromId(user_id)
+    if type(user) == str:
+        return None
+    return user
+
 
 @app.route('/capture')
 def capture():

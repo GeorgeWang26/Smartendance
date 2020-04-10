@@ -28,13 +28,15 @@ class Day(EmbeddedDocument):
 class Group(EmbeddedDocument):
     groupName = StringField(required=True)
     allMembers = SortedListField(EmbeddedDocumentField(Member), ordering = 'name')
-    days = SortedListField(EmbeddedDocumentField(Day), ordering = 'date')
+    calendar = SortedListField(EmbeddedDocumentField(Day), ordering = 'date')
     # sort by groupname 
 
 
 class User(Document):
     username = StringField(unique=True, required=True)
     password = StringField(required=True)
+    # currently email is not enabled or used
+    email = StringField() 
     groups = SortedListField(EmbeddedDocumentField(Group), ordering = 'groupName')
     meta = {
         'ordering': ['+username']
@@ -152,7 +154,7 @@ def addDay(username, group, date):
         return 'no such user'
     for g in user.groups:
         if group == g.groupName:
-            for day in g.days:
+            for day in g.calendar:
                 if date == day.date:
                     return 'date already exist'
             members = []
@@ -160,7 +162,7 @@ def addDay(username, group, date):
                 newMember = Member(name=member.name)
                 members.append(newMember)
             day = Day(date=date, members=members)
-            g.days.append(day)
+            g.calendar.append(day)
             user.save()
             return 'success'
     return 'no such group'
@@ -172,7 +174,7 @@ def markAttendance(username, group, date, name):
         return 'no such user'
     for g in user.groups:
         if g.groupName == group:
-            for day in g.days:
+            for day in g.calendar:
                 if date == day.date:
                     for member in day.members:
                         if name == member.name:
@@ -190,7 +192,7 @@ def getAttendance(username, group, date):
         return 'no such user'
     for g in user.groups:
         if g.groupName == group:
-            for day in g.days:
+            for day in g.calendar:
                 if date == day.date:
                     return day
             return 'no such date'
@@ -214,14 +216,17 @@ if __name__ == '__main__':
     addGroup('a', 'c')
     addGroup('a','e')
     addGroup('a', 'a')
-    addMember('a', 'a', 'a')
+    addMember('a', 'a', 'B George')
+    addMember('a', 'a', 'A George')
+    addMember('a', 'a', 'AZ George')
+    addMember('a', 'a', 'membera')
     addDay('a', 'a', '20200101')
     addDay('a', 'a', '20200201')
     addDay('a', 'a', '20200301')
     addDay('a', 'a', '20200401')
     addDay('a', 'a', '20200106')
 
-    # markAttendance('a', 'a', 'a', 'a')
+    markAttendance('a', 'a', '20200101', 'membera')
 
     print('a', addUser('a', 'a'))
 
