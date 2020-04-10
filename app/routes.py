@@ -20,6 +20,16 @@ def load_user(user_id):
     return user
 
 
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
+
 @app.route('/capture')
 def capture():
     return render_template('capture.html')
@@ -32,7 +42,7 @@ def search():
     with open("app/static/img/image.png", "wb") as fh:
         fh.write(base64.b64decode(data))
         fh.close()
-    result = recognition.searchName('Family', 'app/static/img/image.png')
+    result = rec.searchName('Family', 'app/static/img/image.png')
     return jsonify(result=result)
 
 
@@ -49,7 +59,7 @@ def add():
     with open("app/static/img/image.png", "wb") as fh:
         fh.write(base64.b64decode(data))
         fh.close()
-    result = recognition.addFace('Family', 'app/static/img/image.png', name)
+    result = rec.addFace('Family', 'app/static/img/image.png', name)
     return jsonify(result=result)
 
 
@@ -65,5 +75,5 @@ def deleteFace():
     with open("app/static/img/image.png", "wb") as fh:
         fh.write(base64.b64decode(data))
         fh.close()
-    result = recognition.deleteByImg('Family', 'app/static/img/image.png')
+    result = rec.deleteByImg('Family', 'app/static/img/image.png')
     return jsonify(result=result)
