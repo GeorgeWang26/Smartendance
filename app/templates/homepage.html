@@ -1,0 +1,73 @@
+<head>
+    <title>Smartendance</title>
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/general.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/homepage.css">
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-expand-md bg-light">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <img class="logo" src="../static/images/logo.png">
+                <a class="navbar-brand" href="/">Smartendance</a>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link disabled">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Log In</a>
+                </li>
+            </ul>
+        <div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div id="productCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-pause="false">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="card" style="width: 100%; height: 100%;">
+                                <img src="../static/images/AttendanceSheet2.jpg" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="card-title-subtitle">
+                                        <h5 class="card-title">Tired of taking attendance?</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">We are too.</h6>
+                                    </div>
+                                    <p class="card-text">Introducing Smartendance, the best attendance automation tool.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+
+            </div>
+            <div class="col-5">
+                <form action="/signedup" method="POST">
+                    <div class="form-group">
+                        <label for="usernameInput">Username</label>
+                        <input name="username" class="form-control" id="usernameInput">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailInput">Email</label>
+                        <input name="email" class="form-control" id="emailInput">
+                        <small id="emailHelp" class="form-text text-muted">For sign in and emailing purposes only.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordInput">Password</label>
+                        <input name="password" class="form-control" id="passwordInput">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up for Smartendance</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+</body>

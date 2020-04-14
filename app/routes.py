@@ -31,15 +31,15 @@ def checkStatus():
 def logout():
     logout_user()
 
-@app.route("/")
 @app.route("/login")
 def login():
     return render_template("login.html")
 # should stop user from log in to a second user account here
 
+@app.route("/")
 @app.route("/signup")
 def signup():
-    return render_template("signup.html")
+    return render_template("homepage.html")
 
 
 @app.route("userhome")
