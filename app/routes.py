@@ -36,13 +36,15 @@ def logout():
 def login():
     return render_template("login.html")
 # should stop user from log in to a second user account here
+# login with email or username  and   password
 
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
+# sign up with either email, username and password
 
 
-@app.route("userhome")
+@app.route("/userhome")
 def userhome():
     return render_template("userhome.html")
 
