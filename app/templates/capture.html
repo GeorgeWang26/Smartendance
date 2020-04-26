@@ -1,25 +1,50 @@
-<!doctype html>
-<html>
 <head>
-	<title>WebRTC: Still photo capture demo</title>
-  <meta charset='utf-8'>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/capture.css') }}">
-  <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-  <script type=text/javascript src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/capture.js') }}"></script>
+  <title>Smartendance</title>
+  <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="../static/css/general.css">
+  <link type="text/css" rel="stylesheet" href="../static/css/capture.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-	
-  <div class="camera">
-    <video id="video">Video stream not available.</video>
-    <button id="startbutton">Take photo</button> 
+  <div class="container">
+      <div class="row">
+          <div class="col-3">
+
+          </div>
+          <div class="col-6" style="text-align: center;">
+              <h1 style="margin: 1rem 0;">Smartendance</h1>
+              <h5>Group Name</h5>
+              <label>Take a picture of yourself to mark your presence</label>
+              <video id="video" class="bg-light"></video>
+              <button class="btn btn-warning" id="startbutton" onclick="takepicture()" data-toggle="modal" data-target="#confirmation" disabled>Take Photo</button>
+          </div>
+          <div class="col-3">
+
+          </div>
+      </div>
   </div>
-  <canvas id="canvas">
-  </canvas>
-  <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box."> 
+  <!-- Modal -->
+  <div class="modal fade" id="confirmation">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Confirmation</h5>
+                  <button class="close" data-dismiss="modal">
+                      <span>&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body" style="text-align: center;">
+                  <img id="photo" style="width: 100%;">
+                  <label style="margin-top: 1rem;" id="result"></label>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-secondary" data-dismiss="modal">Retake</button>
+                  <button class="btn btn-primary" data-dismiss="modal">Okay!</button>
+              </div>
+          </div>
+      </div>
   </div>
-  <span id='result'>result will be here</span>
-	
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js'></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/capture.js"></script>
 </body>
-</html>

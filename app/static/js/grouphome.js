@@ -1,29 +1,90 @@
-function redirect(urlRedirect) {
-    window.location.href = urlRedirect
+function useWebcam() {
+    let video = document.querySelector('#webcam-view')
+    if(navigator.mediaDevices.getUserMedia){
+        navigator.mediaDevices.getUserMedia({video:true})
+            .then(function (stream) {
+                video.srcObject = stream
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+}
+
+function takePhoto() {
+    let canvas = document.createElement('canvas');
+    let video = document.querySelector('#webcam-view');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').transform(-1, 0, 0, 1, video.videoWidth, 0);
+    canvas.getContext('2d').drawImage(video, 0, 0);  
+    
+    let resultURI = canvas.toDataURL('image/jpeg');
+    document.querySelector('#webcam-result').src = resultURI
+    
+    useWebcamButton = document.querySelector('.closing-options')
+    useWebcamButton.removeAttribute('disabled')
+
+    let webcam = document.querySelector('.webcam')
+    let webcamResult = document.querySelector('.webcam-result')
+    webcam.style.visibility = "hidden"
+    webcamResult.style.visibility = "visible"
+}
+
+function retakePhoto() {
+    useWebcamButton = document.querySelector('.closing-options')
+    useWebcamButton.setAttribute('disabled', true)
+
+    let webcam = document.querySelector(".webcam")
+    let webcamResult = document.querySelector('.webcam-result')
+    webcam.style.visibility = "visible"
+    webcamResult.style.visibility = "hidden"
+}
+
+function showImageName() {
+    document.querySelector('.filename').textContent = document.querySelector('.input-file').files[0].name
+
+    useFilesButton = document.querySelectorAll('.closing-options')[1]
+    useFilesButton.removeAttribute('disabled')
+}
+
+function chooseFiles() {
+    let file = document.querySelector('.input-file').files[0]
+    let reader = new FileReader()
+    reader.readAsDataURL(file)
+
+    let memberName = document.querySelector('.name-input').value
+
+    reader.addEventListener("load", function () {
+        addMember(reader.result, memberName)
+    }, false);
+}
+
+function chooseWebcam() {
+    let memberName = document.querySelector('.name-input').value
+    let imageURI = document.querySelector('#webcam-result').src
+    addMember(imageURI, memberName)
 }
 
 function displayConfirmation(order) {
     let overlapContainer = document.querySelectorAll('.overlap-container')[order-1]
-    let group = overlapContainer.children[0]
+    let member = overlapContainer.children[0]
     let confirmation = overlapContainer.children[1]
-    group.style.visibility = "hidden"
+    member.style.visibility = "hidden"
     confirmation.style.visibility = "visible"
 }
 
 function closeConfirmation(order) {
     let overlapContainer = document.querySelectorAll('.overlap-container')[order-1]
-    let group = overlapContainer.children[0]
+    let member = overlapContainer.children[0]
     let confirmation = overlapContainer.children[1]
-    group.style.visibility = "visible"
+    member.style.visibility = "visible"
     confirmation.style.visibility = "hidden"
 }
 
-function deleteGroup(order) {
+function deleteMember(order) {
     let fullList = document.querySelectorAll('.list-group-item')
     let listItem = fullList[order-1]
-    if (listItem.children[0].children[0].children[0].children[0].tagName == 'FORM') {
-        document.querySelector('.add-content-button').removeAttribute('disabled')
-    }
     listItem.parentNode.removeChild(listItem)
 
     let deleteList = document.querySelectorAll('.delete-group')
@@ -35,7 +96,7 @@ function deleteGroup(order) {
     }
 }
 
-function createGroup() {
+function addMember(imageURI, newMemberName) {
     let dataOrder = document.querySelectorAll('.list-group-item').length + 1
 
     let listGroupItem = document.createElement('a')
@@ -49,27 +110,18 @@ function createGroup() {
     groupWrapper.className = "group-wrapper"
     overlapContainer.appendChild(groupWrapper)
 
-    let groupText = document.createElement('div')
-    groupText.className = "group-text"
-    groupWrapper.appendChild(groupText)
+    let memberInfo = document.createElement('div')
+    memberInfo.className = "member-info"
+    groupWrapper.appendChild(memberInfo)
 
-    let groupNameForm = document.createElement('form')
-    groupNameForm.className = "group-name-input"
-    groupNameForm.onsubmit = function() {nameGroup()}
-    groupText.appendChild(groupNameForm)
+    let memberPhoto = document.createElement('img')
+    memberPhoto.className = "member-picture"
+    memberPhoto.src = imageURI
+    memberInfo.appendChild(memberPhoto)
 
-    let groupNameWrapper = document.createElement('div')
-    groupNameWrapper.className = "form-group"
-    groupNameForm.appendChild(groupNameWrapper)
-
-    let groupNameInput = document.createElement('input')
-    groupNameInput.className = "form-control group-name"
-    groupNameInput.placeholder = "Group Name:"
-    groupNameWrapper.appendChild(groupNameInput)
-
-    let numMembers = document.createElement('small')
-    numMembers.textContent = "0 students"
-    groupText.appendChild(numMembers)
+    let memberName = document.createElement('h5')
+    memberName.textContent = newMemberName
+    memberInfo.appendChild(memberName)
 
     let valignWrapper = document.createElement('div')
     valignWrapper.className = "valign-wrapper"
@@ -96,7 +148,7 @@ function createGroup() {
     let choice1 = document.createElement('button')
     choice1.className = "choice-button bg-success"
     choice1.setAttribute('data-order', dataOrder)
-    choice1.onclick = function() {deleteGroup(this.getAttribute('data-order'))}
+    choice1.onclick = function() {deleteMember(this.getAttribute('data-order'))}
     choiceWrapper.appendChild(choice1)
 
     let check = document.createElement('i')
@@ -118,22 +170,4 @@ function createGroup() {
 
     let listGroup = document.querySelector('.list-group')
     listGroup.appendChild(listGroupItem)
-
-    document.querySelector('.add-content-button').setAttribute('disabled', true)
-}
-
-function nameGroup() {
-    let groupName = document.querySelector('.group-name').value
-    let groupNameForm = document.querySelector('.group-name-input')
-    let groupTextWrapper = groupNameForm.parentNode
-
-    let groupUrl = '/' + groupName.replace(/ /g, '-')
-    groupTextWrapper.onclick = function() {redirect(groupUrl)}
-    groupTextWrapper.removeChild(groupNameForm)
-
-    let groupNameHeader = document.createElement('h5')
-    groupNameHeader.textContent = groupName
-    groupTextWrapper.insertBefore(groupNameHeader, groupTextWrapper.childNodes[0])
-
-    document.querySelector('.add-content-button').removeAttribute('disabled')
 }

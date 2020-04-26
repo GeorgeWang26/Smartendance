@@ -2,7 +2,9 @@
 // width to the value defined here, but the height will be
 // calculated based on the aspect ratio of the input stream.
 
-var width = 320;    // We will scale the photo width to this
+
+var computedWidth = getComputedStyle(document.querySelector('#video')).width    // We will scale the photo width to this
+var width = computedWidth.slice(0, computedWidth.length-2)
 var height = 0;     // This will be computed based on the input stream
 
 // |streaming| indicates whether or not we're currently streaming
@@ -18,11 +20,19 @@ var canvas = null;
 var photo = null;
 var startbutton = null;
 
+addEventListener('resize', function(event) {
+    var computedStyle = getComputedStyle(document.querySelector('#video'))
+    var newComputedWidth = computedStyle.width
+    var newWidth = newComputedWidth.slice(0, newComputedWidth.length-2)
+    var newHeight = newWidth / (video.videoWidth/video.videoHeight);
+    video.setAttribute('height', newHeight);
+})
+
 function startup() {
-    video = document.getElementById('video');
-    canvas = document.getElementById('canvas');
-    photo = document.getElementById('photo');
-    startbutton = document.getElementById('startbutton');
+    video = document.querySelector('#video');
+    canvas = document.createElement('canvas');
+    photo = document.querySelector('#photo');
+    startbutton = document.querySelector('#startbutton');
 
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
@@ -36,6 +46,7 @@ function startup() {
     video.addEventListener('canplay', function(ev){
         console.log("in")
         if (!streaming) {
+            startbutton.removeAttribute('disabled')
             height = video.videoHeight / (video.videoWidth/width);
             
             // Firefox currently has a bug where the height can't be read from
@@ -47,15 +58,11 @@ function startup() {
             
             video.setAttribute('width', width);
             video.setAttribute('height', height);
+            photo.setAttribute('height', 466/(video.videoWidth/video.videoHeight));
             canvas.setAttribute('width', width);
             canvas.setAttribute('height', height);
             streaming = true;
         }
-    });
-
-    startbutton.addEventListener('click', function(ev){
-        takepicture();
-        ev.preventDefault();
     });
 
     clearphoto();
@@ -81,12 +88,13 @@ function clearphoto() {
 // other changes before drawing it.
 
 function takepicture() {
-    $("#result").html('proccessing');
+    $("#result").html('Processing...');
     console.log('snap');
     var context = canvas.getContext('2d');
     if (width && height) {
         canvas.width = width;
         canvas.height = height;
+        context.transform(-1, 0, 0, 1, video.width, 0);    //mirror image
         context.drawImage(video, 0, 0, width, height);
         var dataURL = canvas.toDataURL();
         photo.setAttribute('src', dataURL);
