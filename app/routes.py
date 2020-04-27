@@ -54,16 +54,22 @@ def capture():
     return render_template('capture.html')
 
 
+# @app.route('/search')
+# def search():
+#     dataURL = request.args.get('dataURL')
+#     data = dataURL.split(',')[1]
+#     with open("app/static/img/image.png", "wb") as fh:
+#         fh.write(base64.b64decode(data))
+#         fh.close()
+#     result = rec.searchName('Family', 'app/static/img/image.png')
+#     return jsonify(result=result)
+
 @app.route('/search')
 def search():
     dataURL = request.args.get('dataURL')
     data = dataURL.split(',')[1]
-    with open("app/static/img/image.png", "wb") as fh:
-        fh.write(base64.b64decode(data))
-        fh.close()
-    result = rec.searchName('Family', 'app/static/img/image.png')
+    result = rec.searchName('Family', base64.b64decode(data))
     return jsonify(result=result)
-
 
 @app.route('/upload')
 def upload():

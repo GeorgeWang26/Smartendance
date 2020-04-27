@@ -103,21 +103,50 @@ def DeleteFaces(collectionId, facesIds):
 # see ownFunctions.py in top levle for more info
 
 
-def searchName(collectionId, photoFile):
-    face = detectFaces(photoFile)
-    if face is False:
-        return 'no face in picture'
+# def searchName(collectionId, photoFile):
+#     face = detectFaces(photoFile)
+#     if face is False:
+#         return 'no face in picture'
+
+#     threshold = 90
+#     maxFaces = 1
+
+#     img = open(photoFile, 'rb')
+#     response = client.search_faces_by_image(CollectionId=collectionId,
+#                                             Image={'Bytes': img.read()},
+#                                             FaceMatchThreshold=threshold,
+#                                             MaxFaces=maxFaces)
+
+#     img.close()
+
+#     faceMatches = response['FaceMatches']
+#     name = ''
+
+#     for match in faceMatches:
+#         name = match['Face']['ExternalImageId']
+
+#     if name:
+#         return name
+#     else:
+#         return 'face not recognized'
+
+
+
+
+def searchName(collectionId, b64Decode):
+
+#     face = detectFaces(b64Decode)
+#     if face is False:
+#         return 'no face in picture'
 
     threshold = 90
     maxFaces = 1
 
-    img = open(photoFile, 'rb')
     response = client.search_faces_by_image(CollectionId=collectionId,
-                                            Image={'Bytes': img.read()},
+                                            Image={'Bytes': b64Decode},
                                             FaceMatchThreshold=threshold,
                                             MaxFaces=maxFaces)
 
-    img.close()
 
     faceMatches = response['FaceMatches']
     name = ''
@@ -129,6 +158,10 @@ def searchName(collectionId, photoFile):
         return name
     else:
         return 'face not recognized'
+
+
+
+
 
 
 def addFace(collectionId, photoFile, name):
