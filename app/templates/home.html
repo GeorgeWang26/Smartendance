@@ -2,13 +2,13 @@
     <title>Smartendance</title>
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../static/css/general.css">
-    <link type="text/css" rel="stylesheet" href="../static/css/homepage.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/home.css">
 </head>
 <body>
     <nav class="navbar navbar-light navbar-expand-md bg-light">
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
-                <img class="logo" src="../static/images/logo.png">
+                <img class="logo" src="../static/img/logo.png">
                 <a class="navbar-brand" href="/">Smartendance</a>
             </ul>
         </div>
@@ -31,7 +31,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="card" style="width: 100%; height: 100%;">
-                                <img src="../static/images/AttendanceSheet2.jpg" class="card-img-top">
+                                <img src="../static/img/AttendanceSheet2.jpg" class="card-img-top">
                                 <div class="card-body">
                                     <div class="card-title-subtitle">
                                         <h5 class="card-title">Tired of taking attendance?</h5>
@@ -51,16 +51,16 @@
                 <form action="/signedup" method="POST">
                     <div class="form-group">
                         <label for="usernameInput">Username</label>
-                        <input name="username" class="form-control" id="usernameInput">
+                        <input name="username" class="form-control" id="usernameInput" required>
                     </div>
                     <div class="form-group">
                         <label for="emailInput">Email</label>
-                        <input name="email" class="form-control" id="emailInput">
+                        <input name="email" class="form-control" id="emailInput" required>
                         <small id="emailHelp" class="form-text text-muted">For sign in and emailing purposes only.</small>
                     </div>
                     <div class="form-group">
                         <label for="passwordInput">Password</label>
-                        <input name="password" class="form-control" id="passwordInput">
+                        <input name="password" class="form-control" id="passwordInput" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Sign Up for Smartendance</button>
                 </form>
