@@ -1,6 +1,6 @@
 import json
 from flask_login import UserMixin
-from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentListField, StringField, BooleanField, SortedListField, EmbeddedDocumentField
+from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentListField, StringField, BooleanField, SortedListField, EmbeddedDocumentField, IntField
 
 # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
 # to print the whole db in formated json style
@@ -16,12 +16,13 @@ connect('test')
 class Member(EmbeddedDocument):
     name = StringField(required = True)
     dataURL = StringField(required = True)
-    attendance = BooleanField(default = False)
+    attendance = StringField(default = 'A')
     # sort by name
 
 
 class Day(EmbeddedDocument):
-    date = StringField(required=True)
+    date = IntField(required=True)
+    status = StringField(default = 'P')
     members = SortedListField(EmbeddedDocumentField(Member), ordering = 'name')
     # sort by data
 
@@ -167,7 +168,7 @@ def addDay(username, group, date):
                     return 'date already exist'
             members = []
             for member in g.allMembers:
-                newMember = Member(name=member.name)
+                newMember = Member(name=member.name, dataURL = member.dataURL)
                 members.append(newMember)
             day = Day(date=date, members=members)
             g.calendar.append(day)
@@ -175,6 +176,8 @@ def addDay(username, group, date):
             return 'success'
     return 'no such group'
 
+
+# remove a day should be added here, incase user want to discard the attendance 
 
 def markAttendance(username, group, date, name):
     user = User.objects(username=username).first()
@@ -186,13 +189,18 @@ def markAttendance(username, group, date, name):
                 if date == day.date:
                     for member in day.members:
                         if name == member.name:
-                            member.attendance = True
+                            member.attendance = day.status
                             user.save()
                             return 'success'
                     return 'no such member'
             return 'no such date'
     return 'no such group'
 
+
+
+
+# ability to change attendance status should be added here      P, L, A
+# ability to change individual attendance should be added here  A -> P
 
 def getAttendance(username, group, date):
     user = User.objects(username=username).first()
@@ -237,20 +245,25 @@ if __name__ == '__main__':
     print('LoginReturn', LoginReturn.objects())
 
     addUser('a', 'a@email', 'pass')
-    addGroup('a','group1')
-    addGroup('a','group2')
-    addGroup('a','group3')
-    addGroup('a','group4')
+    addGroup('a', 'group1')
+    addGroup('a', 'group2')
+    addGroup('a', 'group3')
+    addGroup('a', 'group4')
     addMember('a', 'group1', 'George', 'George_dataURL')
     addMember('a', 'group1', 'Fred', 'Fred_dataURL')
     addMember('a', 'group2', 'Yang', 'Yang_dataURL')
 
-    print('username ', authenticate('a', 'pass').to_json())
-    print('email ', authenticate('a@email', 'pass').to_json())
 
-    print(getGroups('a'))
-    print(getMembers('a', 'group1'))
-    print(getMembers('a', 'group2'))
+    addDay('a', 'group1', 20200428)
+    print(markAttendance('a', 'group1', 20200428, 'George'))
+
+    # print('username ', authenticate('a', 'pass').to_json())
+    # print('email ', authenticate('a@email', 'pass').to_json())
+    print(getAttendance('a', 'group1', 20200428).to_json())
+
+    # print(getGroups('a'))
+    # print(getMembers('a', 'group1'))
+    # print(getMembers('a', 'group2'))
 
 
     # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))

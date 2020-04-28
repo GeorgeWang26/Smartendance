@@ -31,48 +31,58 @@ def checkStatus():
 def logout():
     logout_user()
 
-@app.route("/")
-@app.route("/login")
-def login():
-    return render_template("login.html")
-# should stop user from log in to a second user account here
-# login with email or username  and   password
 
-@app.route("/signup")
+@app.route('/')
+@app.route('/signup')
 def signup():
-    return render_template("signup.html")
-# sign up with either email, username and password
+    return render_template()
 
 
-@app.route("/userhome")
-def userhome():
-    return render_template("userhome.html")
 
 
-@app.route('/capture')
-def capture():
-    return render_template('capture.html')
+
+# @app.route("/")
+# @app.route("/login")
+# def login():
+#     return render_template("login.html")
+# # should stop user from log in to a second user account here
+# # login with email or username  and   password
+
+# @app.route("/signup")
+# def signup():
+#     return render_template("signup.html")
+# # sign up with either email, username and password
 
 
-@app.route('/search')
-def search():
-    dataURL = request.args.get('dataURL')
-    data = dataURL.split(',')[1]
-    result = rec.searchName('Family', base64.b64decode(data))
-    return jsonify(result=result)
+# @app.route("/userhome")
+# def userhome():
+#     return render_template("userhome.html")
 
 
-@app.route('/upload')
-def upload():
-    return render_template('upload.html')
+# @app.route('/capture')
+# def capture():
+#     return render_template('capture.html')
 
 
-@app.route('/add')
-def add():
-    dataURL = request.args.get('dataURL')
-    name = request.args.get('name')
-    data = dataURL.split(',')[1]
-    result = rec.addFace('Family', base64.b64decode(data), name)
-    return jsonify(result=result)
+# @app.route('/search')
+# def search():
+#     dataURL = request.args.get('dataURL')
+#     data = dataURL.split(',')[1]
+#     result = rec.searchName('Family', base64.b64decode(data))
+#     return jsonify(result=result)
 
-# delete face will done by member name instead of taking pictures
+
+# @app.route('/upload')
+# def upload():
+#     return render_template('upload.html')
+
+
+# @app.route('/add')
+# def add():
+#     dataURL = request.args.get('dataURL')
+#     name = request.args.get('name')
+#     data = dataURL.split(',')[1]
+#     result = rec.addFace('Family', base64.b64decode(data), name)
+#     return jsonify(result=result)
+
+# # delete face will done by member name instead of taking pictures
