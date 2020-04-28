@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Users/george/Desktop/Smartendance/venv/bin/python3",
-    "python.linting.enabled": true,
+    "python.pythonPath": "C:\\Program Files\\Python37\\python.exe",
+    "python.linting.enabled": false,
     "python.linting.pylintEnabled": true
 }

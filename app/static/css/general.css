@@ -1,0 +1,21 @@
+@font-face {
+    font-family: product-sans;
+    src: url(../fonts/ProductSans-Regular.ttf);
+}
+
+.logo {
+    height: 2.5rem;
+    width: auto;
+    padding-right: 1rem;
+}
+
+.navbar {
+    padding: 15px 30px;
+    height: 5rem;
+}
+
+.valign-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

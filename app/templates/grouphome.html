@@ -1,0 +1,129 @@
+<head>
+    <title>Smartendance</title>
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/general.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/grouphome.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-primary" onload="showMembers()">
+    <nav class="navbar navbar-light navbar-expand-md bg-light">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <img class="logo" src="../static/images/logo.png">
+                <a class="navbar-brand" href="/">Smartendance</a>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item sign-in-status">
+                    <label>You are signed</label>
+                    <label>in as:</label>
+                    <label>FredLiu876</label>
+                </li>
+                <li class="nav-item logout-button">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+            </ul>
+        <div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row" style="text-align: center;">
+            <h3 class="group-header">Group Name</h3>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class=section-wrapper>
+                    <div class="section-title"><h5>Member List</h5></div>
+                    <div class="bg-light" style="height: calc(60vh - 6.5rem);">
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="overlap-container">
+                                <div class="group-wrapper">
+                                    <div class="member-info">
+                                        <img class="member-picture" src="../static/images/FredSchoolPhoto.jpg">
+                                        <h5>Fred Liu</h5>
+                                    </div>
+                                    <div class="valign-wrapper">
+                                        <button class="delete-group bg-light" onclick="displayConfirmation(this.getAttribute('data-order'))" data-order="1"></button>
+                                    </div>
+                                </div>
+                                <div class="delete-confirmation">
+                                    <h5>Are you sure?</h5>
+                                    <div class="choice-wrapper">
+                                        <button class="choice-button bg-success" onclick="deleteMember(this.getAttribute('data-order'))" data-order="1"><i class="material-icons">check</i></button>
+                                        <button class="choice-button bg-danger" onclick="closeConfirmation(this.getAttribute('data-order'))" data-order="1"><i class="material-icons">close</i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    </div>
+                    <div class="add-content">
+                        <button class="add-content-button btn btn-success" data-toggle="modal" data-target="#addMember" onclick="useWebcam()">Add Member</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=section-wrapper>
+                    <div class="section-title"><h5>Calendar</h5></div>
+                    <button class="calendar btn btn-light"></button>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=section-wrapper>
+                    <div class="section-title"><h5>Track Attendance</h5></div>
+                    <button class="attendance btn btn-light"></button>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="addMember">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Member</h5>
+                    <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label >Member Name</label>
+                        <input class="form-control name-input">
+                    </div>
+                    <h5 style="text-align: center; margin-top: 2rem;">Choose how to add member's face</h5>
+                    <div class="upload-options">
+                        <div style="width: 40%; margin-top: 2rem;">
+                            <label>From files</label>
+                            <label for="file" class="input-file-label bg-light"></label>
+                            <input type="file" class="input-file" id="file" onchange="showImageName()">
+                            <label class="filename">No file selected</label>
+                        </div>
+                        <div style="width: 40%; margin-top: 2rem;">
+                            <label>From webcam</label>
+                            <div class="overlap-container" style="width: 100%;">
+                                <div class="webcam">
+                                    <video autoplay="true" id="webcam-view" class="bg-light"></video>
+                                    <label onclick="takePhoto()" class="take-picture">Take Picture</label>
+                                </div>
+                                <div class="webcam-result">
+                                    <img class="frame" id="webcam-result">
+                                    <label onclick="retakePhoto()" class="take-picture">Retake</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary closing-options" disabled onclick="chooseWebcam()" data-dismiss="modal">Use Webcam</button>
+                    <button type="button" class="btn btn-primary closing-options" disabled onclick="chooseFiles()" data-dismiss="modal">Use Files</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js'></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/grouphome.js"></script>
+</body>

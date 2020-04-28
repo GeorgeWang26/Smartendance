@@ -1,0 +1,147 @@
+<head>
+    <title>Smartendance</title>
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/general.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/userhome.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body onload="showGroups()">
+    <nav class="navbar navbar-light navbar-expand-md bg-light">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <img class="logo" src="../static/images/logo.png">
+                <a class="navbar-brand" href="/">Smartendance</a>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item sign-in-status">
+                    <label>You are signed</label>
+                    <label>in as:</label>
+                    <label>FredLiu876</label>
+                </li>
+                <li class="nav-item logout-button">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+            </ul>
+        <div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="user-home-header">
+                    <h1>Hi FredLiu876</h1>
+                    <label>Here are your groups:</label>
+                </div>
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="overlap-container">
+                            <div class="group-wrapper">
+                                <div onclick="redirect('/Computer-Science-Afternoon')" class="group-text">
+                                    <h5>Computer Science Afternoon</h5>
+                                    <small>1 students</small>
+                                </div>
+                                <div class="valign-wrapper">
+                                    <button class="delete-group bg-light" onclick="displayConfirmation(this.getAttribute('data-order'))" data-order="1"></button>
+                                </div>
+                            </div>
+                            <div class="delete-confirmation">
+                                <h5>Are you sure?</h5>
+                                <div class="choice-wrapper">
+                                    <button class="choice-button bg-success" onclick="deleteGroup(this.getAttribute('data-order'))" data-order="1"><i class="material-icons">check</i></button>
+                                    <button class="choice-button bg-danger" onclick="closeConfirmation(this.getAttribute('data-order'))" data-order="1"><i class="material-icons">close</i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="overlap-container">
+                            <div class="group-wrapper">
+                                <div onclick="redirect('/Computer-Science-Afternoon')" class="group-text">
+                                    <h5>Computer Science Afternoon</h5>
+                                    <small>2 students</small>
+                                </div>
+                                <div class="valign-wrapper">
+                                    <button class="delete-group bg-light" onclick="displayConfirmation(this.getAttribute('data-order'))" data-order="2"></button>
+                                </div>
+                            </div>
+                            <div class="delete-confirmation">
+                                <h5>Are you sure?</h5>
+                                <div class="choice-wrapper">
+                                    <button class="choice-button bg-success" onclick="deleteGroup(this.getAttribute('data-order'))" data-order="2"><i class="material-icons">check</i></button>
+                                    <button class="choice-button bg-danger" onclick="closeConfirmation(this.getAttribute('data-order'))" data-order="2"><i class="material-icons">close</i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="overlap-container">
+                            <div class="group-wrapper">
+                                <div onclick="redirect('/Computer-Science-Afternoon')" class="group-text">
+                                    <h5>Computer Science Afternoon</h5>
+                                    <small>3 students</small>
+                                </div>
+                                <div class="valign-wrapper">
+                                    <button class="delete-group bg-light" onclick="displayConfirmation(this.getAttribute('data-order'))" data-order="3"></button>
+                                </div>
+                            </div>
+                            <div class="delete-confirmation">
+                                <h5>Are you sure?</h5>
+                                <div class="choice-wrapper">
+                                    <button class="choice-button bg-success" onclick="deleteGroup(this.getAttribute('data-order'))" data-order="3"><i class="material-icons">check</i></button>
+                                    <button class="choice-button bg-danger" onclick="closeConfirmation(this.getAttribute('data-order'))" data-order="3"><i class="material-icons">close</i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="overlap-container">
+                            <div class="group-wrapper">
+                                <div onclick="redirect('/Computer-Science-Afternoon')" class="group-text">
+                                    <h5>Computer Science Afternoon</h5>
+                                    <small>4 students</small>
+                                </div>
+                                <div class="valign-wrapper">
+                                    <button class="delete-group bg-light" onclick="displayConfirmation(this.getAttribute('data-order'))" data-order="4"></button>
+                                </div>
+                            </div>
+                            <div class="delete-confirmation">
+                                <h5>Are you sure?</h5>
+                                <div class="choice-wrapper">
+                                    <button class="choice-button bg-success" onclick="deleteGroup(this.getAttribute('data-order'))" data-order="4"><i class="material-icons">check</i></button>
+                                    <button class="choice-button bg-danger" onclick="closeConfirmation(this.getAttribute('data-order'))" data-order="4"><i class="material-icons">close</i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="overlap-container">
+                            <div class="group-wrapper">
+                                <div onclick="redirect('/Computer-Science-Afternoon')" class="group-text">
+                                    <h5>Computer Science Afternoon</h5>
+                                    <small>5 students</small>
+                                </div>
+                                <div class="valign-wrapper">
+                                    <button class="delete-group bg-light" onclick="displayConfirmation(this.getAttribute('data-order'))" data-order="5"></button>
+                                </div>
+                            </div>
+                            <div class="delete-confirmation">
+                                <h5>Are you sure?</h5>
+                                <div class="choice-wrapper">
+                                    <button class="choice-button bg-success" onclick="deleteGroup(this.getAttribute('data-order'))" data-order="5"><i class="material-icons">check</i></button>
+                                    <button class="choice-button bg-danger" onclick="closeConfirmation(this.getAttribute('data-order'))" data-order="5"><i class="material-icons">close</i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="add-content">
+                    <button class="add-content-button bg-success" onclick="createGroup()">Add Group</button>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+    <script src="../static/js/userhome.js"></script>
+</body>
