@@ -75,15 +75,4 @@ def add():
     result = rec.addFace('Family', base64.b64decode(data), name)
     return jsonify(result=result)
 
-
-@app.route('/delete')
-def delete():
-    return render_template('delete.html')
-
-
-@app.route('/deleteFace')
-def deleteFace():
-    dataURL = request.args.get('dataURL')
-    data = dataURL.split(',')[1]
-    result = rec.deleteByImg('Family', base64.b64decode(data))
-    return jsonify(result=result)
+# delete face will done by member name instead of taking pictures

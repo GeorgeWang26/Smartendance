@@ -14,8 +14,9 @@ connect('test')
 
 
 class Member(EmbeddedDocument):
-    name = StringField(required=True)
-    attendance = BooleanField(default=False)
+    name = StringField(required = True)
+    dataURL = StringField(required = True)
+    attendance = BooleanField(default = False)
     # sort by name
 
 
@@ -124,7 +125,7 @@ def removeGroup(username, group):
     return 'no such group'
 
 
-def addMember(username, group, name):
+def addMember(username, group, name, dataURL):
     user = User.objects(username=username).first()
     if not user:
         return 'no such user'
@@ -133,7 +134,7 @@ def addMember(username, group, name):
             for member in g.allMembers:
                 if member.name == name:
                     return 'member already exist'
-            member = Member(name=name)
+            member = Member(name = name, dataURL = dataURL)
             g.allMembers.append(member)
             user.save()
             return 'success'
@@ -212,10 +213,7 @@ def getGroups(username):
         return 'no such user'
     groups = []
     for group in user.groups:
-        eachGroup = []
-        eachGroup.append(group.groupName)
-        eachGroup.append(len(group.allMembers))
-        groups.append(eachGroup)
+        groups.append([group.groupName, len(group.allMembers)])
     return groups
 
 def getMembers(username, groupName):
@@ -226,10 +224,7 @@ def getMembers(username, groupName):
     for group in user.groups:
         if group.groupName == groupName:
             for member in group.allMembers:
-                eachMember = []
-                eachMember.append(member.name)
-                # append data url here
-                members.append(eachMember)
+                members.append([member.name, member.dataURL])
             return(members)
     return 'no such group'
 
@@ -246,9 +241,9 @@ if __name__ == '__main__':
     addGroup('a','group2')
     addGroup('a','group3')
     addGroup('a','group4')
-    addMember('a', 'group1', 'George')
-    addMember('a', 'group1', 'Fred')
-    addMember('a', 'group2', 'Yang')
+    addMember('a', 'group1', 'George', 'George_dataURL')
+    addMember('a', 'group1', 'Fred', 'Fred_dataURL')
+    addMember('a', 'group2', 'Yang', 'Yang_dataURL')
 
     print('username ', authenticate('a', 'pass').to_json())
     print('email ', authenticate('a@email', 'pass').to_json())
