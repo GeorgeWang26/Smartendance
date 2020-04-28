@@ -21,6 +21,10 @@ def load_user(user_id):
     return user
 
 
+@LoginManager.unauthorized_handler
+def unauthorized():
+    return redirect('/')
+
 
 @app.route("/checkStatus")
 def checkStatus():
@@ -30,9 +34,14 @@ def checkStatus():
         return jsonify(status = False)
 
 
+# only the render template urls need  login_required
+# the ajax request urls don't need it since they all will have checkStatus included in them
+
+
 # this function should be done through a ajax request
+# no need to send suceess and let page redirect to '/' 
+# because that will be done by '/checkStatus'
 @app.route("/logout")
-@login_required
 def logout():
     logout_user()
 
@@ -41,12 +50,16 @@ def logout():
 @app.route('/')
 @app.route('/signup')
 def signup():
+    if current_user.is_authenticated:
+        redirect('/userhome')
     return render_template('Home.html')
 
 
 
 @app.route('/login')
 def login():
+    if current_user.is_authenticated:
+        redirect('/userhome')
     return render_template('Login.html')
 
 
@@ -92,15 +105,5 @@ def week(groupname, weeknumber):
     return render_template('Week.html')
 
 
-
-@LoginManager.unauthorized_handler
-def unauthorized():
-    return redirect('/')
-
-
-
-
-# should stop user from log in to a second user account here
-# login with email or username  and   password
 
 # # delete face will done by member name instead of taking pictures
