@@ -30,7 +30,8 @@
             </div>
             <div class="col-6">
                 <h3 class="authentication-header">Log in to Smartendance</h3>
-                <form class="login-form" action="/loggedin" method="POST">
+                <label class="text-danger form-status" style="display: none;"></label>
+                <form class="login-form">
                     <div class="form-group">
                         <label for="usernameInput">Username or Email</label>
                         <input type="username" class="form-control" id="usernameInput" required>
@@ -39,7 +40,7 @@
                         <label for="passwordInput">Password</label>
                         <input type="password" class="form-control" id="passwordInput" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Log In to Smartendance</button>
+                    <button class="btn btn-primary" onclick="displayAuthenticationStatus()">Log In to Smartendance</button>
                 </form>
             </div>
             <div class="col-3">
@@ -47,4 +48,5 @@
             </div>
         </div>
     </div>
+    <script src="../static/js/login.js"></script>
 </body>

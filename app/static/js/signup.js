@@ -1,0 +1,22 @@
+function displayAuthenticationStatus() {
+    let formStatus = document.querySelector('.form-status')
+    let usernameInput = document.querySelector('#usernameInput')
+    let username = usernameInput.value
+    if(username.includes('@')) {
+        formStatus.style.display = "block"
+        formStatus.textContent = "Username cannot contain @"
+    } else if (username.includes('_')) {
+        formStatus.style.display = "block"
+        formStatus.textContent = "Username cannot contain _"
+    } else {
+
+        //Ajax request here 
+
+        if(data.result == "success") {
+            location.href = "/login"
+        } else {
+            formStatus.style.display = "block"
+            formStatus.textContent = data.result
+        }
+    }
+}

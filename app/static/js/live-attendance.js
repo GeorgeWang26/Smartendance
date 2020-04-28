@@ -1,3 +1,29 @@
+function showMembers() {
+    for(let i = 0; i < data.result.length; i++) {
+        let memberName = data.result[i]
+
+        let listGroupItem = document.createElement('a')
+        listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
+
+        let groupWrapper = document.createElement('div')
+        groupWrapper.className = "group-wrapper"
+        listGroupItem.appendChild(groupWrapper)
+
+        let memberInfo = document.createElement('label')
+        memberInfo.className = "member-name"
+        memberInfo.textContent = memberName
+        groupWrapper.appendChild(memberInfo)
+
+        let attendanceStatus = document.createElement('label')
+        attendanceStatus.className = "attendance-status"
+        attendanceStatus.textContent = "-"
+        groupWrapper.appendChild(attendanceStatus)
+
+        let listGroup = document.querySelector('.list-group')
+        listGroup.appendChild(listGroupItem)
+    }
+}
+
 function getTimestamp() {
     let d = new Date()
     let timestamp = document.querySelector('.date')
