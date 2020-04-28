@@ -34,8 +34,8 @@ class Group(EmbeddedDocument):
 
 class User(Document):
     username = StringField(unique=True, required=True)
-    password = StringField(required=True)
     email = StringField(unique = True, required = True)
+    password = StringField(required=True)
     # currently email is enabled
     groups = SortedListField(EmbeddedDocumentField(Group), ordering = 'groupName')
     meta = {
@@ -64,7 +64,7 @@ def addUser(username, email, password):
         return 'username already exist'
     elif User.objects(email=email).first():
         return 'email already used'
-    User(username=username, password=password).save()
+    User(username=username, email = email, password=password).save()
     LoginReturn(username=username).save()
     return 'success'
 
@@ -84,12 +84,12 @@ def authenticate(input, password):
         user = User.objects(email=input).first()
     else:
         # using username
-        user = User.objects(username=username).first()
+        user = User.objects(username=input).first()
     if not user:
         return 'no such user'
     if user.password != password:
         return 'password incorrect'
-    return LoginReturn.objects(username=username).first()
+    return LoginReturn.objects(username=user.username).first()
 
 
 def getFromId(user_id):
@@ -206,6 +206,33 @@ def getAttendance(username, group, date):
     return 'no such group'
 
 
+def getGroups(username):
+    user = User.objects(username=username).first()
+    if not user:
+        return 'no such user'
+    groups = []
+    for group in user.groups:
+        eachGroup = []
+        eachGroup.append(group.groupName)
+        eachGroup.append(len(group.allMembers))
+        groups.append(eachGroup)
+    return groups
+
+def getMembers(username, groupName):
+    user = User.objects(username=username).first()
+    if not user:
+        return 'no such user'
+    members = []
+    for group in user.groups:
+        if group.groupName == groupName:
+            for member in group.allMembers:
+                eachMember = []
+                eachMember.append(member.name)
+                # append data url here
+                members.append(eachMember)
+            return(members)
+    return 'no such group'
+
 if __name__ == '__main__':
 
     User.drop_collection()
@@ -214,32 +241,22 @@ if __name__ == '__main__':
     print('User', User.objects())
     print('LoginReturn', LoginReturn.objects())
 
-    addUser('d', 'd@email', 'd')
-    addUser('b', 'b@email', 'b')
-    addUser('c', 'c@email', 'c')
+    addUser('a', 'a@email', 'pass')
+    addGroup('a','group1')
+    addGroup('a','group2')
+    addGroup('a','group3')
+    addGroup('a','group4')
+    addMember('a', 'group1', 'George')
+    addMember('a', 'group1', 'Fred')
+    addMember('a', 'group2', 'Yang')
 
-    addUser('a', 'a')
-    addGroup('a', 'b')
-    addGroup('a', 'c')
-    addGroup('a','e')
-    addGroup('a', 'a')
-    addMember('a', 'a', 'B George')
-    addMember('a', 'a', 'A George')
-    addMember('a', 'a', 'AZ George')
-    addMember('a', 'a', 'membera')
-    addDay('a', 'a', '20200101')
-    addDay('a', 'a', '20200201')
-    addDay('a', 'a', '20200301')
-    addDay('a', 'a', '20200401')
-    addDay('a', 'a', '20200106')
+    print('username ', authenticate('a', 'pass').to_json())
+    print('email ', authenticate('a@email', 'pass').to_json())
 
-    markAttendance('a', 'a', '20200101', 'membera')
+    print(getGroups('a'))
+    print(getMembers('a', 'group1'))
+    print(getMembers('a', 'group2'))
 
-    print('a', addUser('a', 'a'))
 
-    print('authenticate user a ', authenticate('a', 'a').username)
-
-    removeUser('b')
-
-    print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
-    print(json.dumps(json.loads(LoginReturn.objects().to_json()), sort_keys=True, indent=4))
+    # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
+    # print(json.dumps(json.loads(LoginReturn.objects().to_json()), sort_keys=True, indent=4))
