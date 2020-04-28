@@ -11,6 +11,7 @@ loginManager = LoginManager()
 loginManager.init_app(app)
 
 
+
 @loginManager.user_loader
 def load_user(user_id):
     print('\n\nLOAD USER', type(user_id), user_id)
@@ -20,6 +21,7 @@ def load_user(user_id):
     return user
 
 
+
 @app.route("/checkStatus")
 def checkStatus():
     if current_user.is_authenticated:
@@ -27,62 +29,78 @@ def checkStatus():
     else:
         return jsonify(status = False)
 
+
+# this function should be done through a ajax request
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
+
 
 
 @app.route('/')
 @app.route('/signup')
 def signup():
-    return render_template()
+    return render_template('Home.html')
+
+
+
+@app.route('/login')
+def login():
+    return render_template('Login.html')
+
+
+
+@app.route('/userhome')
+@login_required
+def userhome():
+    return render_template('Userhome.html')
+
+
+
+@app.route('/userhome/group/<string:groupname>')
+@login_required
+def grouphome(groupname):
+    return render_template('Grouphome.html')
+
+
+
+@app.route('userhome/group/<string:groupname>/calendar')
+@login_required
+def calendar(groupname):
+    return render_template('Calendar.html')
+
+
+
+@app.route('userhome/group<string:groupname>/live')
+@login_required
+def liveAttendance(groupname):
+    return render_template('Live-attendance.html')
+
+
+
+@app.route('userhome/group/<string:groupname>/capture')
+@login_required
+def capture(groupname):
+    return render_template('Capture.html')
+
+
+
+@app.route('/userhome/group/<string:groupname>/calendar/<string:weeknumber>')
+@login_required
+def week(groupname, weeknumber):
+    return render_template('Week.html')
+
+
+
+@LoginManager.unauthorized_handler
+def unauthorized():
+    return redirect('/')
 
 
 
 
-
-# @app.route("/")
-# @app.route("/login")
-# def login():
-#     return render_template("login.html")
-# # should stop user from log in to a second user account here
-# # login with email or username  and   password
-
-# @app.route("/signup")
-# def signup():
-#     return render_template("signup.html")
-# # sign up with either email, username and password
-
-
-# @app.route("/userhome")
-# def userhome():
-#     return render_template("userhome.html")
-
-
-# @app.route('/capture')
-# def capture():
-#     return render_template('capture.html')
-
-
-# @app.route('/search')
-# def search():
-#     dataURL = request.args.get('dataURL')
-#     data = dataURL.split(',')[1]
-#     result = rec.searchName('Family', base64.b64decode(data))
-#     return jsonify(result=result)
-
-
-# @app.route('/upload')
-# def upload():
-#     return render_template('upload.html')
-
-
-# @app.route('/add')
-# def add():
-#     dataURL = request.args.get('dataURL')
-#     name = request.args.get('name')
-#     data = dataURL.split(',')[1]
-#     result = rec.addFace('Family', base64.b64decode(data), name)
-#     return jsonify(result=result)
+# should stop user from log in to a second user account here
+# login with email or username  and   password
 
 # # delete face will done by member name instead of taking pictures
