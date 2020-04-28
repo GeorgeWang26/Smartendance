@@ -35,8 +35,8 @@ class Group(EmbeddedDocument):
 class User(Document):
     username = StringField(unique=True, required=True)
     password = StringField(required=True)
-    # currently email is not enabled or used
-    email = StringField() 
+    email = StringField(unique = True, required = True)
+    # currently email is enabled
     groups = SortedListField(EmbeddedDocumentField(Group), ordering = 'groupName')
     meta = {
         'ordering': ['+username']
@@ -58,10 +58,12 @@ class LoginReturn(Document, UserMixin):
 #
 
 
-def addUser(username, password):
-    duplicate = User.objects(username=username).first()
-    if duplicate:
-        return 'user already exist'
+def addUser(username, email, password):
+    # duplicate = User.objects(username=username).first()
+    if User.objects(username=username).first():
+        return 'username already exist'
+    elif User.objects(email=email).first():
+        return 'email already used'
     User(username=username, password=password).save()
     LoginReturn(username=username).save()
     return 'success'
@@ -76,8 +78,13 @@ def removeUser(username):
     return 'success'
 
 
-def authenticate(username, password):
-    user = User.objects(username=username).first()
+def authenticate(input, password):
+    if '@' in input:
+        # this is email address
+        user = User.objects(email=input).first()
+    else:
+        # using username
+        user = User.objects(username=username).first()
     if not user:
         return 'no such user'
     if user.password != password:
@@ -207,9 +214,9 @@ if __name__ == '__main__':
     print('User', User.objects())
     print('LoginReturn', LoginReturn.objects())
 
-    addUser('d', 'd')
-    addUser('b', 'b')
-    addUser('c', 'c')
+    addUser('d', 'd@email', 'd')
+    addUser('b', 'b@email', 'b')
+    addUser('c', 'c@email', 'c')
 
     addUser('a', 'a')
     addGroup('a', 'b')
