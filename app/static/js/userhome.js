@@ -1,15 +1,3 @@
-function checkIllegalChar() {
-    let usernameInput = document.querySelector('#usernameInput')
-    let username = usernameInput.textContent
-    if(username.includes('@')) {
-        formStatus.style.display = "block"
-        formStatus.textContent = "Username cannot contain @"
-    } else if (username.includes('_')) {
-        formStatus.style.display = "block"
-        formStatus.textContent = "Username cannot contain _"
-    }
-}
-
 function showGroups() {
     for (let i = 0; i < data.result.length; i++) {
         let dataOrder = i + 1

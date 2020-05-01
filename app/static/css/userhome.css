@@ -83,7 +83,7 @@ body {
 
 .delete-group {
     opacity: 0;
-    background-image: url(../images/trash.png);
+    background-image: url(../img/trash.png);
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: contain;

@@ -1,7 +1,6 @@
 function displayAuthenticationStatus() {
     let formStatus = document.querySelector('.form-status')
-    let usernameInput = document.querySelector('#usernameInput')
-    let username = usernameInput.value
+    let username = document.querySelector('#usernameInput').value
     if(username.includes('@')) {
         formStatus.style.display = "block"
         formStatus.textContent = "Username cannot contain @"
