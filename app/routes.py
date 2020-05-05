@@ -52,7 +52,7 @@ def logout():
 def signup():
     if current_user.is_authenticated:
         redirect('/userhome')
-    return render_template('Home.html')
+    return render_template('home.html')
 
 
 
@@ -60,7 +60,7 @@ def signup():
 def login():
     if current_user.is_authenticated:
         redirect('/userhome')
-    return render_template('Login.html')
+    return render_template('login.html')
 
 # embed ajax auto login ajax request in these two htmls as well
 # customize the ajax call back function on /signup and /login 
@@ -71,43 +71,43 @@ def login():
 @app.route('/userhome')
 @login_required
 def userhome():
-    return render_template('Userhome.html')
+    return render_template('userhome.html')
 
 
 
 @app.route('/userhome/group/<string:groupname>')
 @login_required
 def grouphome(groupname):
-    return render_template('Grouphome.html')
+    return render_template('grouphome.html')
 
 
 
 @app.route('userhome/group/<string:groupname>/calendar')
 @login_required
 def calendar(groupname):
-    return render_template('Calendar.html')
+    return render_template('calendar.html')
 
 
 
 @app.route('userhome/group<string:groupname>/live')
 @login_required
 def liveAttendance(groupname):
-    return render_template('Live-attendance.html')
+    return render_template('live-attendance.html')
 
 
 
 @app.route('userhome/group/<string:groupname>/capture')
 @login_required
 def capture(groupname):
-    return render_template('Capture.html')
+    return render_template('capture.html')
 
 
 
 @app.route('/userhome/group/<string:groupname>/calendar/<string:weeknumber>')
 @login_required
 def week(groupname, weeknumber):
-    return render_template('Week.html')
+    return render_template('week.html')
 
 
 
-# # delete face will done by member name instead of taking pictures
+# delete face will done by member name instead of taking pictures
