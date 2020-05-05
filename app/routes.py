@@ -11,6 +11,7 @@ loginManager = LoginManager()
 loginManager.init_app(app)
 
 
+
 @loginManager.user_loader
 def load_user(user_id):
     print('\n\nLOAD USER', type(user_id), user_id)
@@ -20,6 +21,11 @@ def load_user(user_id):
     return user
 
 
+@loginManager.unauthorized_handler
+def unauthorized():
+    return redirect('/')
+
+
 @app.route("/checkStatus")
 def checkStatus():
     if current_user.is_authenticated:
@@ -27,52 +33,81 @@ def checkStatus():
     else:
         return jsonify(status = False)
 
+
+# only the render template urls need  login_required
+# the ajax request urls don't need it since they all will have checkStatus included in them
+
+
+# this function should be done through a ajax request
+# no need to send suceess and let page redirect to '/' 
+# because that will be done by '/checkStatus'
 @app.route("/logout")
 def logout():
     logout_user()
 
-@app.route("/")
-@app.route("/login")
-def login():
-    return render_template("login.html")
-# should stop user from log in to a second user account here
-# login with email or username  and   password
 
-@app.route("/signup")
+
+@app.route('/')
+@app.route('/signup')
 def signup():
-    return render_template("signup.html")
-# sign up with either email, username and password
+    if current_user.is_authenticated:
+        redirect('/userhome')
+    return render_template('home.html')
 
 
-@app.route("/userhome")
+
+@app.route('/login')
+def login():
+    if current_user.is_authenticated:
+        redirect('/userhome')
+    return render_template('login.html')
+
+# embed ajax auto login ajax request in these two htmls as well
+# customize the ajax call back function on /signup and /login 
+# if /checkstatus returns true, they will be redirected to /userhome
+
+
+
+@app.route('/userhome')
+@login_required
 def userhome():
-    return render_template("userhome.html")
+    return render_template('userhome.html')
 
 
-@app.route('/capture')
-def capture():
+
+@app.route('/userhome/group/<string:groupname>')
+@login_required
+def grouphome(groupname):
+    return render_template('grouphome.html')
+
+
+
+@app.route('/userhome/group/<string:groupname>/calendar')
+@login_required
+def calendar(groupname):
+    return render_template('calendar.html')
+
+
+
+@app.route('/userhome/group<string:groupname>/live')
+@login_required
+def liveAttendance(groupname):
+    return render_template('live-attendance.html')
+
+
+
+@app.route('/userhome/group/<string:groupname>/capture')
+@login_required
+def capture(groupname):
     return render_template('capture.html')
 
 
-@app.route('/search')
-def search():
-    dataURL = request.args.get('dataURL')
-    data = dataURL.split(',')[1]
-    result = rec.searchName('Family', base64.b64decode(data))
-    return jsonify(result=result)
+
+@app.route('/userhome/group/<string:groupname>/calendar/<string:weeknumber>')
+@login_required
+def week(groupname, weeknumber):
+    return render_template('week.html')
 
 
-@app.route('/upload')
-def upload():
-    return render_template('upload.html')
-
-
-@app.route('/add')
-def add():
-    dataURL = request.args.get('dataURL')
-    name = request.args.get('name')
-    data = dataURL.split(',')[1]
-    result = rec.addFace('Family', base64.b64decode(data), name)
-    return jsonify(result=result)
 
 # delete face will done by member name instead of taking pictures
