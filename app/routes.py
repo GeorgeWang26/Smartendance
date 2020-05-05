@@ -62,6 +62,10 @@ def login():
         redirect('/userhome')
     return render_template('Login.html')
 
+# embed ajax auto login ajax request in these two htmls as well
+# customize the ajax call back function on /signup and /login 
+# if /checkstatus returns true, they will be redirected to /userhome
+
 
 
 @app.route('/userhome')
