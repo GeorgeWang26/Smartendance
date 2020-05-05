@@ -21,7 +21,7 @@ def load_user(user_id):
     return user
 
 
-@LoginManager.unauthorized_handler
+@loginManager.unauthorized_handler
 def unauthorized():
     return redirect('/')
 
@@ -82,21 +82,21 @@ def grouphome(groupname):
 
 
 
-@app.route('userhome/group/<string:groupname>/calendar')
+@app.route('/userhome/group/<string:groupname>/calendar')
 @login_required
 def calendar(groupname):
     return render_template('calendar.html')
 
 
 
-@app.route('userhome/group<string:groupname>/live')
+@app.route('/userhome/group<string:groupname>/live')
 @login_required
 def liveAttendance(groupname):
     return render_template('live-attendance.html')
 
 
 
-@app.route('userhome/group/<string:groupname>/capture')
+@app.route('/userhome/group/<string:groupname>/capture')
 @login_required
 def capture(groupname):
     return render_template('capture.html')
