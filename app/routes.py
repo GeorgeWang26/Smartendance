@@ -57,11 +57,12 @@ def signup():
 # add new user here
 @app.route('/newUser', methods = ['POST'])
 def newUser():
-    username = request.args['username']
-    email = request.args['email']
-    password = request.args['password']
+    username = request.form["username"]
+    email = request.form["email"]
+    password = request.form["password"]
     print(username, email, password)
-    return jsonify('still testing...')
+    result = db.addUser(username, email, password)
+    return jsonify(result = result)
 
 
 
