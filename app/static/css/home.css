@@ -24,7 +24,7 @@ body {
     justify-content: center; 
 }
 
-.col-5 form {
+.form-sub {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -35,7 +35,7 @@ body {
     font-family: product-sans;
 }
 
-.col-5 form button {
+.form-sub button {
     height: 5rem;
     white-space: normal;
 }

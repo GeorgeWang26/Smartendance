@@ -1,4 +1,5 @@
 function displayAuthenticationStatus() {
+    console.log('hello')
     let formStatus = document.querySelector('.form-status')
     let username = document.querySelector('#usernameInput').value
     if(username.includes('@')) {
