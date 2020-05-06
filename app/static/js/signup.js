@@ -4,6 +4,8 @@ function displayAuthenticationStatus() {
     let email = document.querySelector('#emailInput').value
     let password = document.querySelector('#passwordInput').value
 
+    // string restriction
+
     if(username.includes('@')) {
         formStatus.style.display = "block"
         formStatus.textContent = "Username cannot contain @"

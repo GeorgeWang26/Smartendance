@@ -72,6 +72,20 @@ def login():
         redirect('/userhome')
     return render_template('login.html')
 
+
+@app.route('/authenticate', methods = ['POST'])
+def authenticate():
+    print('hello')
+    username = request.form['username']
+    password = request.form['password']
+    result = db.authenticate(username, password)
+    if type(result) == str:
+        return jsonify(result = result)
+    else:
+        login_user(result)
+        return jsonify(result = 'success')
+
+
 # embed ajax auto login ajax request in these two htmls as well
 # customize the ajax call back function on /signup and /login 
 # if /checkstatus returns true, they will be redirected to /userhome
