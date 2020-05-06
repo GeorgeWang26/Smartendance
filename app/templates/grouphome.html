@@ -91,6 +91,9 @@
                     <div class="form-group">
                         <label >Member Name</label>
                         <input class="form-control name-input" required>
+                        <div class="invalid-feedback" style="display: none;">
+                            Required.
+                        </div>
                     </div>
                     <h5 style="text-align: center; margin-top: 2rem;">Choose how to add member's face</h5>
                     <div class="upload-options">
@@ -117,8 +120,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary closing-options" disabled onclick="chooseWebcam()" data-dismiss="modal">Use Webcam</button>
-                    <button type="button" class="btn btn-primary closing-options" disabled onclick="chooseFiles()" data-dismiss="modal">Use Files</button>
+                    <button type="button" class="btn btn-primary closing-options" disabled onclick="chooseWebcam()">Use Webcam</button>
+                    <button type="button" class="btn btn-primary closing-options" disabled onclick="chooseFiles()">Use Files</button>
                 </div>
             </div>
         </div>

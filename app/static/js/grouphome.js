@@ -129,21 +129,33 @@ function showImageName() {
 }
 
 function chooseFiles() {
-    let file = document.querySelector('.input-file').files[0]
-    let reader = new FileReader()
-    reader.readAsDataURL(file)
-
     let memberName = document.querySelector('.name-input').value
 
-    reader.addEventListener("load", function () {
-        addMember(reader.result, memberName)
-    }, false);
+    if(memberName == "") {
+        document.querySelector('.invalid-feedback').style.display = "block"
+        document.querySelector('.form-control').className += " is-invalid"
+    } else {
+        $('#addMember').modal('hide')
+        let file = document.querySelector('.input-file').files[0]
+        let reader = new FileReader()
+        reader.readAsDataURL(file)
+    
+        reader.addEventListener("load", function () {
+            addMember(reader.result, memberName)
+        }, false);
+    }
 }
 
 function chooseWebcam() {
     let memberName = document.querySelector('.name-input').value
-    let imageURI = document.querySelector('#webcam-result').src
-    addMember(imageURI, memberName)
+    if(memberName == "") {
+        document.querySelector('.invalid-feedback').style.display = "block"
+        document.querySelector('.form-control').className += " is-invalid"
+    } else {
+        $('#addMember').modal('hide')
+        let imageURI = document.querySelector('#webcam-result').src
+        addMember(imageURI, memberName)
+    }
 }
 
 function displayConfirmation(order) {
