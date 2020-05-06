@@ -54,6 +54,15 @@ def signup():
         redirect('/userhome')
     return render_template('home.html')
 
+# add new user here
+@app.route('/newUser', methods = ['POST'])
+def newUser():
+    username = request.args['username']
+    email = request.args['email']
+    password = request.args['password']
+    print(username, email, password)
+    return jsonify('still testing...')
+
 
 
 @app.route('/login')
