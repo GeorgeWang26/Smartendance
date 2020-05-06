@@ -29,7 +29,7 @@ body {
     white-space: normal;
 }
 
-form {
+.form-sub {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
