@@ -1,26 +1,26 @@
 function displayAuthenticationStatus() {
-    console.log("hello");
     let formStatus = document.querySelector('.form-status')
     let username = document.querySelector('#usernameInput').value
+    let email = document.querySelector('#emailInput').value
+    let password = document.querySelector('#passwordInput').value
+
     if(username.includes('@')) {
         formStatus.style.display = "block"
         formStatus.textContent = "Username cannot contain @"
     } else if (username.includes('_')) {
         formStatus.style.display = "block"
         formStatus.textContent = "Username cannot contain _"
-    } else if ($("#emailInput").contains("@") == false) {
+    } else if (email.includes("@") == false) {
         formStatus.style.display = "block"
         formStatus.textContent = "Email not valid"
     } else {
 
-        console.log($("#emailInput") + "  includes " + $("#emailInput").includes("@") + "    contains " + $("#emailInput").contains("@"));
-
         $.ajax({
             url: "/newUser",
             data: {
-                username: $("#usernameInput"),
-                email: $("#emailInput"),
-                password: $("#passwordInput")
+                username: username,
+                email: email,
+                password: password
             },
             dataType: "JSON",
             type: "POST",
