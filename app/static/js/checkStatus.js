@@ -7,11 +7,11 @@ setInterval(() => {
                 console.log("logged in");
                 // user is logged in
                 var path = window.location.pathname
-                if (path == undefined || path == "/signup" || path == "/login") {
+                if (path == "/" || path == "/signup" || path == "/login") {
                     window.location.pathname = "/userhome";
                 }
             } else {
-                if (path != undefined  && path != "/signup" && path != "/login") {
+                if (path != "/"  && path != "/signup" && path != "/login") {
                     window.location.pathname = "/userhome";
                 }
                 // user is logged out

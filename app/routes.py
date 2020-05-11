@@ -51,7 +51,8 @@ def logout():
 @app.route('/signup')
 def signup():
     if current_user.is_authenticated:
-        redirect('/userhome')
+        print("authenticated already  -signup")
+        return redirect('/userhome')
     return render_template('home.html')
 
 # add new user here
@@ -69,7 +70,8 @@ def newUser():
 @app.route('/login')
 def login():
     if current_user.is_authenticated:
-        redirect('/userhome')
+        print("authenticated already  -login")
+        return redirect('/userhome')
     return render_template('login.html')
 
 
@@ -86,16 +88,20 @@ def authenticate():
         return jsonify(result = 'success')
 
 
-# embed ajax auto login ajax request in these two htmls as well
-# customize the ajax call back function on /signup and /login 
-# if /checkstatus returns true, they will be redirected to /userhome
+# embed ajax auto login ajax request in /signup and /login
+# customize the ajax call back function
+# if /checkstatus returns true, it should be redirected to /userhome
 
 
 
 @app.route('/userhome')
 @login_required
 def userhome():
+    print("entered userhome")
     return render_template('userhome.html')
+
+
+
 
 
 

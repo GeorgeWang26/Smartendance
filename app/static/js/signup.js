@@ -1,4 +1,4 @@
-function displayAuthenticationStatus() {
+function addNewUser() {
     let formStatus = document.querySelector('.form-status')
     let username = document.querySelector('#usernameInput').value
     let email = document.querySelector('#emailInput').value
