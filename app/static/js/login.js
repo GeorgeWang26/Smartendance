@@ -7,10 +7,12 @@ function displayAuthenticationStatus() {
     // string restriction here
     if(username == "") {
         formStatus.style.display = "block"
-        formStatus.textContent = "Username cannot be left empty!"
+        formStatus.textContent = "Username is empty"
+
     } else if (password == "") {
         formStatus.style.display = "block"
-        formStatus.textContent = "Password cannot be left empty!"
+        formStatus.textContent = "Password is empty"
+
     } else {
         $.ajax({
             url: "/authenticate",
