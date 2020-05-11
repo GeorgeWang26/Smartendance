@@ -12,7 +12,7 @@ setInterval(() => {
                 }
             } else {
                 if (path != "/"  && path != "/signup" && path != "/login") {
-                    window.location.pathname = "/userhome";
+                    window.location.pathname = "/login";
                 }
                 // user is logged out
                 // redirect to /login
