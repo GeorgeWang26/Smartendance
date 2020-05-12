@@ -1,16 +1,16 @@
-function displayAuthenticationStatus() {
-    console.log('hello its me here')
+function authenticate() {
     let formStatus = document.querySelector('.form-status')
     let username = document.querySelector("#usernameInput").value
     let password = document.querySelector("#passwordInput").value
-    console.log(username + " " + password)
     // string restriction here
     if(username == "") {
         formStatus.style.display = "block"
-        formStatus.textContent = "Username cannot be left empty!"
+        formStatus.textContent = "Username is empty"
+
     } else if (password == "") {
         formStatus.style.display = "block"
-        formStatus.textContent = "Password cannot be left empty!"
+        formStatus.textContent = "Password is empty"
+
     } else {
         $.ajax({
             url: "/authenticate",
