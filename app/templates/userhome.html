@@ -4,8 +4,11 @@
     <link type="text/css" rel="stylesheet" href="../static/css/general.css">
     <link type="text/css" rel="stylesheet" href="../static/css/userhome.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src = "../static/js/jquery.js"></script>
+    <script src = "../static/js/checkStatus.js"></script>
+    <script src = "../static/js/userhome.js"></script>
 </head>
-<body onload="showGroups()">
+<body onload=showGroups()>
     <nav class="navbar navbar-light navbar-expand-md bg-light">
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
@@ -137,11 +140,10 @@
                     </a>
                 </div>
                 <div class="add-content">
-                    <button class="add-content-button bg-success" onclick="createGroup()">Add Group</button>
+                    <button class="add-content-button bg-success" onclick=createGroup()>Add Group</button>
                 </div>
             </div>
             <div class="col-2"></div>
         </div>
     </div>
-    <script src="../static/js/userhome.js"></script>
 </body>

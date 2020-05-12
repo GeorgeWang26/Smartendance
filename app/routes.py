@@ -26,7 +26,7 @@ def unauthorized():
     return redirect('/')
 
 
-@app.route("/checkStatus")
+@app.route('/checkStatus')
 def checkStatus():
     if current_user.is_authenticated:
         return jsonify(status = True)
@@ -35,15 +35,14 @@ def checkStatus():
 
 
 # only the render template urls need  login_required
-# the ajax request urls don't need it since they all will have checkStatus included in them
+# the ajax request urls don't need it since they all will have checkStatus included in the htmls
 
 
-# this function should be done through a ajax request
-# no need to send suceess and let page redirect to '/' 
-# because that will be done by '/checkStatus'
-@app.route("/logout")
+
+@app.route('/logout')
 def logout():
     logout_user()
+    return redirect('/login')
 
 
 
@@ -51,16 +50,16 @@ def logout():
 @app.route('/signup')
 def signup():
     if current_user.is_authenticated:
-        print("authenticated already  -signup")
+        print('authenticated already  -signup')
         return redirect('/userhome')
     return render_template('home.html')
 
 # add new user here
 @app.route('/newUser', methods = ['POST'])
 def newUser():
-    username = request.form["username"]
-    email = request.form["email"]
-    password = request.form["password"]
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
     print(username, email, password)
     result = db.addUser(username, email, password)
     return jsonify(result = result)
@@ -70,7 +69,7 @@ def newUser():
 @app.route('/login')
 def login():
     if current_user.is_authenticated:
-        print("authenticated already  -login")
+        print('authenticated already  -login')
         return redirect('/userhome')
     return render_template('login.html')
 
@@ -97,8 +96,16 @@ def authenticate():
 @app.route('/userhome')
 @login_required
 def userhome():
-    print("entered userhome")
+    print('entered userhome')
     return render_template('userhome.html')
+
+@app.route('/getGroups')
+def getGroups():
+    username = current_user.username
+    print('current user raw:', current_user, '   try to get username:', username)
+    groups = db.getGroups(username)
+    print(groups)
+    return jsonify(result = groups)
 
 
 
