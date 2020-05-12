@@ -63,7 +63,7 @@ class LoginReturn(Document, UserMixin):
 def addUser(username, email, password):
     # duplicate = User.objects(username=username).first()
     if User.objects(username=username).first():
-        return 'username already exist'
+        return 'username already exists'
     elif User.objects(email=email).first():
         return 'email already used'
     User(username=username, email = email, password=password).save()
