@@ -121,16 +121,23 @@ def userhome(username):
     return render_template('userhome.html')
 
 
-@app.route('/getGroups')
+@app.route('/getGroups', methods = ['POST'])
 def getGroups():
-    username = request.args['username']
+    username = request.form['username']
     print('getting group information for user:', username)
     groups = db.getGroups(username)
     print(groups)
     return jsonify(result = groups)
 
 
-
+@app.route('/createGroup', methods = ['POST'])
+def createGroup():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    print('adding new group:', groupname, '  for:', username)
+    result = db.addGroup(username, groupname)
+    print(result)
+    return jsonify(result = result)
 
 
 

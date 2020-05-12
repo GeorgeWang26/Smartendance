@@ -19,7 +19,7 @@ function showGroups() {
 
     $.ajax({
         url: "/getGroups",
-        type: "GET",
+        type: "POST",
         data: {
             username: username
         },
@@ -116,8 +116,9 @@ function showGroups() {
     });
 }
 
-function redirect(urlRedirect) {
+function redirect(groupname) {
     location.href = urlRedirect
+    window.location.pathname = window.location.pathname + "/group/" + groupname
 }
 
 function displayConfirmation(order) {
@@ -250,31 +251,41 @@ function createGroup() {
 }
 
 function nameGroup() {
+    let username = window.location.pathname.split("/")[2]
     let groupName = document.querySelector('.group-name').value
     let formStatus = document.querySelector('.form-status')
     if(groupName.includes('_')) {
         formStatus.style.display = "block"
-        formStatus.textContent = "Group name cannot contain _"
+        formStatus.textContent = "Group name cannot includes _"
     } else {
 
-        //Ajax to send name of group
+        $.ajax({
+            url: '/createGroup',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                username: username,
+                password: password
+            },
+            success: function(data){
+                if(data.result == "success") {
+                    let groupNameForm = document.querySelector('.group-name-input')
+                    let groupTextWrapper = groupNameForm.parentNode
+        
+                    groupTextWrapper.onclick = function() {redirect(groupName)}
+                    groupTextWrapper.removeChild(groupNameForm)
+        
+                    let groupNameHeader = document.createElement('h5')
+                    groupNameHeader.textContent = groupName
+                    groupTextWrapper.insertBefore(groupNameHeader, groupTextWrapper.childNodes[0])
+        
+                    document.querySelector('.add-content-button').removeAttribute('disabled')
+                } else {
+                    formStatus.style.display = "block"
+                    formStatus.textContent = data.result
+                }
+            }
+        });
 
-        if(data.result == "success") {
-            let groupNameForm = document.querySelector('.group-name-input')
-            let groupTextWrapper = groupNameForm.parentNode
-
-            let groupUrl = '/' + groupName.replace(/ /g, '-')
-            groupTextWrapper.onclick = function() {redirect(groupUrl)}
-            groupTextWrapper.removeChild(groupNameForm)
-
-            let groupNameHeader = document.createElement('h5')
-            groupNameHeader.textContent = groupName
-            groupTextWrapper.insertBefore(groupNameHeader, groupTextWrapper.childNodes[0])
-
-            document.querySelector('.add-content-button').removeAttribute('disabled')
-        } else {
-            formStatus.style.display = "block"
-            formStatus.textContent = data.result
-        }
     }
 }
