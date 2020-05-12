@@ -1,10 +1,30 @@
+function setUp() {
+    showUsername();
+    showGroups();
+}
+
+function showUsername() {
+    let username = window.location.pathname.split("/")[2];
+    $(".username")[0].innerHTML = username;
+    $(".username")[1].innerHTML = "Hi " + username;
+}
+
+
 function showGroups() {
 
     console.log("loaded page, sending ajax request to /getGroups")
+    let split = window.location.pathname.split("/")
+    let username = split[2]
+    console.log("split: " + split + "   username: " + username)
 
     $.ajax({
         url: "/getGroups",
         type: "GET",
+        data: {
+            username: username
+        },
+        dataType: 'JSON',
+
         success: function(data){
             console.log("success" + data.result)
             let numGroups = data.result.length
