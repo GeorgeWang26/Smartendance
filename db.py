@@ -107,7 +107,7 @@ def addGroup(username, group):
         return 'no such user'
     for g in user.groups:
         if g.groupName == group:
-            return 'group already exist'
+            return 'group already exists'
     newGroup = Group(groupName=group)
     user.groups.append(newGroup)
     user.save()

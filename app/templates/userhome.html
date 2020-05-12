@@ -5,10 +5,10 @@
     <link type="text/css" rel="stylesheet" href="../static/css/userhome.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src = "../static/js/jquery.js"></script>
-    <script src = "../static/js/checkStatus.js"></script>
+    <!-- <script src = "../static/js/checkStatus.js"></script> -->
     <script src = "../static/js/userhome.js"></script>
 </head>
-<body onload=showGroups()>
+<body onload=setUp()>
     <nav class="navbar navbar-light navbar-expand-md bg-light">
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
@@ -21,7 +21,7 @@
                 <li class="nav-item sign-in-status">
                     <label>You are signed</label>
                     <label>in as:</label>
-                    <label class="username">FredLiu876</label>
+                    <label class="username"></label>
                 </li>
                 <li class="nav-item logout-button">
                     <a class="nav-link" href="/logout">Log Out</a>
@@ -34,7 +34,7 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="user-home-header">
-                    <h1 class="username">Hi FredLiu876</h1>
+                    <h1 class="username">Hi</h1>
                     <label>Here are your groups:</label>
                 </div>
                 <div class="list-group">
