@@ -117,10 +117,13 @@ function closeConfirmation(order) {
 }
 
 function deleteGroup(order) {
-    let fullList = document.querySelectorAll('.list-group-item')
+    let listItem = document.querySelectorAll('.list-group-item')[order-1]
     let listItem = fullList[order-1]
     if (listItem.children[0].children[0].children[0].children[0].tagName == 'FORM') {
         document.querySelector('.add-content-button').removeAttribute('disabled')
+    } else {
+        let groupName = document.querySelectorAll(".group-text h5")[order-1].textContent
+        //Ajax request here
     }
     listItem.parentNode.removeChild(listItem)
 
@@ -158,6 +161,11 @@ function createGroup() {
     let groupNameForm = document.createElement('form')
     groupNameForm.className = "group-name-input"
     groupNameForm.onsubmit = function() {nameGroup()}
+    groupNameForm.onkeyup = function(e) {
+        if(e.key === "Enter") {
+            nameGroup()
+        }
+    }
     groupText.appendChild(groupNameForm)
 
     let groupNameWrapper = document.createElement('div')
