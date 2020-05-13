@@ -140,6 +140,9 @@ def createGroup():
     return jsonify(result = result)
 
 
+# delete group here
+
+
 
 @app.route('/userhome/<string:username>/group/<string:groupname>')
 @login_required
