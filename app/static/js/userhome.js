@@ -117,7 +117,6 @@ function showGroups() {
 }
 
 function redirect(groupname) {
-    location.href = urlRedirect
     window.location.pathname = window.location.pathname + "/group/" + groupname
 }
 
@@ -139,7 +138,6 @@ function closeConfirmation(order) {
 
 function deleteGroup(order) {
     let listItem = document.querySelectorAll('.list-group-item')[order-1]
-    let listItem = fullList[order-1]
     if (document.querySelector('.group-name-input')) {
         document.querySelector('.add-content-button').removeAttribute('disabled')
     } else {
@@ -279,7 +277,7 @@ function nameGroup() {
             dataType: 'JSON',
             data: {
                 username: username,
-                password: password
+                groupname: groupName
             },
             success: function(data){
                 if(data.result == "success") {
