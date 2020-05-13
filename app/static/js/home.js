@@ -1,3 +1,9 @@
+function submitForm(e) {
+    if(e.key === "Enter"){
+        addNewUser()
+    }
+}
+
 function addNewUser() {
     let formStatus = document.querySelector('.form-status')
     let username = document.querySelector('#usernameInput').value
