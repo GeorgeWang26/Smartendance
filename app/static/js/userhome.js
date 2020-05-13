@@ -140,7 +140,7 @@ function closeConfirmation(order) {
 function deleteGroup(order) {
     let listItem = document.querySelectorAll('.list-group-item')[order-1]
     let listItem = fullList[order-1]
-    if (listItem.children[0].children[0].children[0].children[0].tagName == 'FORM') {
+    if (document.querySelector('.group-name-input')) {
         document.querySelector('.add-content-button').removeAttribute('disabled')
     } else {
         let groupName = document.querySelectorAll(".group-text h5")[order-1].textContent
@@ -154,6 +154,13 @@ function deleteGroup(order) {
         deleteList[i].setAttribute("data-order", String(i+1))
         choicesList[i].children[0].setAttribute("data-order", String(i+1))
         choicesList[i].children[1].setAttribute("data-order", String(i+1))
+    }
+
+    if(document.querySelector('.list-group').children.length == 0) {
+        let listGroupItem = document.createElement('a')
+        listGroupItem.className = "list-group-item default-list-item"
+        listGroupItem.textContent = "You have no groups."
+        document.querySelector('.list-group').appendChild(listGroupItem)
     }
 }
 
@@ -179,14 +186,8 @@ function createGroup() {
     groupText.className = "group-text"
     groupWrapper.appendChild(groupText)
 
-    let groupNameForm = document.createElement('form')
+    let groupNameForm = document.createElement('div')
     groupNameForm.className = "group-name-input"
-    groupNameForm.onsubmit = function() {nameGroup()}
-    groupNameForm.onkeyup = function(e) {
-        if(e.key === "Enter") {
-            nameGroup()
-        }
-    }
     groupText.appendChild(groupNameForm)
 
     let groupNameWrapper = document.createElement('div')
@@ -201,6 +202,11 @@ function createGroup() {
     let groupNameInput = document.createElement('input')
     groupNameInput.className = "form-control group-name"
     groupNameInput.placeholder = "Group Name:"
+    groupNameInput.onkeyup = function(e) {
+        if(e.key === "Enter") {
+            nameGroup()
+        }
+    }
     groupNameWrapper.appendChild(groupNameInput)
 
     let numMembers = document.createElement('small')
