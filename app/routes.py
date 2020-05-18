@@ -60,6 +60,8 @@ def logout():
 # the ajax request urls don't need it since they all will have checkStatus included in the htmls
 
 
+# make /login and /signup complex routing
+# having both GET and POST
 
 @app.route('/')
 @app.route('/signup')
@@ -140,7 +142,14 @@ def createGroup():
     return jsonify(result = result)
 
 
-# delete group here
+@app.route('/deleteGroup', methods = ['POST'])
+def deleteGroup():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    print('deleting group:', groupname, '  for:', username)
+    result = db.removeGroup(username, groupname)
+    print(result)
+    return jsonify(result = result)
 
 
 
