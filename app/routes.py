@@ -60,6 +60,8 @@ def logout():
 # the ajax request urls don't need it since they all will have checkStatus included in the htmls
 
 
+# make /login and /signup complex routing
+# having both GET and POST
 
 @app.route('/')
 @app.route('/signup')
@@ -104,7 +106,7 @@ def authenticate():
 
 # embed ajax auto login ajax request in /signup and /login
 # customize the ajax call back function
-# if /checkstatus returns true, it should be redirected to /userhome
+# if /checkStatus returns true, it should be redirected to /userhome
 
 
 @app.route('/userhome')
@@ -140,7 +142,15 @@ def createGroup():
     return jsonify(result = result)
 
 
-# delete group here
+@app.route('/deleteGroup', methods = ['POST'])
+def deleteGroup():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    print('deleting group:', groupname, '  for:', username)
+    result = db.removeGroup(username, groupname)
+    print(result)
+    return jsonify(result = result)
+
 
 
 
@@ -189,5 +199,6 @@ def week(username, groupname, weeknumber):
     return render_template('week.html')
 
 
-
-# delete face will done by member name instead of taking pictures
+# add face will be done in group homepage
+# delete face will done by member name instead of taking pictures in group homepage
+# detect face will be done in capture page

@@ -26,7 +26,7 @@ function showGroups() {
         dataType: 'JSON',
 
         success: function(data){
-            console.log("success" + data.result)
+            console.log("success " + data.result)
             let numGroups = data.result.length
             if(numGroups == 0) {
                 let listGroupItem = document.createElement('a')
@@ -117,7 +117,7 @@ function showGroups() {
 }
 
 function redirect(groupname) {
-    window.location.pathname = window.location.pathname + "/group/" + groupname
+    window.location.pathname += "/group/" + groupname
 }
 
 function displayConfirmation(order) {
@@ -143,6 +143,22 @@ function deleteGroup(order) {
     } else {
         let groupName = document.querySelectorAll(".group-text h5")[order-1].textContent
         //Ajax request here
+        $.ajax({
+            url: '/deleteGroup',
+            type: 'POST',
+            data: {
+                username: window.location.pathname.split("/")[2],
+                groupname: groupName
+            },
+            dataType: 'JSON',
+
+            success: function(data) {
+                // data.result
+                // if success then remove the element
+                // if not success still delete the element
+                console.log(data.result)
+            }
+        });
     }
     listItem.parentNode.removeChild(listItem)
 
