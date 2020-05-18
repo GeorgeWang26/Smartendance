@@ -4,7 +4,7 @@
     <link type="text/css" rel="stylesheet" href="/static/css/general.css">
     <link type="text/css" rel="stylesheet" href="/static/css/login.css">
     <script src = "/static/js/jquery.js"></script>
-    <script src="/static/js/login.js"></script>
+    <script src = "/static/js/login.js"></script>
     <script src = "/static/js/checkStatus.js"></script>
 </head>
 
@@ -38,11 +38,11 @@
                 <div class="form-sub">
                     <div class="form-group">
                         <label for="usernameInput">Username or Email</label>
-                        <input type="username" class="form-control" id="usernameInput" onkeyup="submitForm()" required>
+                        <input type="username" class="form-control" id="usernameInput" onkeyup="submitForm(event)" required>
                     </div>
                     <div class="form-group">
                         <label for="passwordInput">Password</label>
-                        <input type="password" class="form-control" id="passwordInput" onkeyup="submitForm()" required>
+                        <input type="password" class="form-control" id="passwordInput" onkeyup="submitForm(event)" required>
                     </div>
                     <button class="btn btn-primary" onclick=authenticate()>Log In to Smartendance</button>
                 </div>
