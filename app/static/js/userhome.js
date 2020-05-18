@@ -117,7 +117,7 @@ function showGroups() {
 }
 
 function redirect(groupname) {
-    window.location.pathname = window.location.pathname + "/group/" + groupname
+    window.location.pathname += "/group/" + groupname
 }
 
 function displayConfirmation(order) {
