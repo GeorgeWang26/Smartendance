@@ -1,15 +1,15 @@
 <head>
     <title>Smartendance</title>
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/general.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/live-attendance.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/general.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/week-attendance.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body class="bg-white" onload="getTimestamp(); showMembers()">
+<body class="bg-white">
     <nav class="navbar navbar-light navbar-expand-md bg-light">
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
-                <img class="logo" src="/static/img/logo.png">
+                <img class="logo" src="../static/img/logo.png">
                 <a class="navbar-brand" href="/">Smartendance</a>
             </ul>
         </div>
@@ -31,16 +31,8 @@
             <div style="display: flex; flex-direction: column; justify-content: center;">
                 <h6>Group Name</h6>
             </div>
-            <div class="set-presence-wrapper">
-                <input type="radio" id="radio1" name="set-presence" value="Present" checked>
-                <label for="radio1">Start</label>
-                <input type="radio" id="radio2" name="set-presence" value="Late">
-                <label for="radio2">Begin Lates</label>
-                <input type="radio" id="radio3" name="set-presence" value="Absent">
-                <label for="radio3" onclick="endAttendance()">End</label>
-            </div>
             <div style="display: flex; flex-direction: column; justify-content: center;">
-                <h6 class="date"></h6>
+                <h6 class="date">May 11 - May 17</h6>
             </div>
         </div>
         <div class="row">
@@ -48,47 +40,55 @@
 
             </div>
             <div class="col-10">
+                <div class="days-wrapper" style="margin-top: 2rem;">
+                    <label></label>
+                    <div class="dates">
+                        <label>11</label>
+                        <label>12</label>
+                        <label>13</label>
+                        <label>14</label>
+                        <label>15</label>
+                    </div>
+                </div>
+                <div class="days-wrapper">
+                    <label></label>
+                    <div class="days-of-week">
+                        <label>Mo</label>
+                        <label>Tu</label>
+                        <label>We</label>
+                        <label>Th</label>
+                        <label>Fr</label>
+                    </div>
+                </div>
                 <div class="list-group">
                     <a class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="item-wrapper">
                             <label class="member-name">Fred Liu</label>
-                            <label class="attendance-status">Present</label>
+                            <div class="attendance-wrapper">
+                                <label class="attendance-status">P</label>
+                                <label class="attendance-status">P</label>
+                                <label class="attendance-status">P</label>
+                                <label class="attendance-status">P</label>
+                                <label class="attendance-status">P</label>
+                            </div>
                         </div>
                     </a>
                     <a class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="item-wrapper">
                             <label class="member-name">George Wang</label>
-                            <label class="attendance-status">Late</label>
+                            <div class="attendance-wrapper">
+                                <label class="attendance-status">L</label>
+                                <label class="attendance-status">P</label>
+                                <label class="attendance-status">A</label>
+                                <label class="attendance-status">A</label>
+                                <label class="attendance-status">L</label>
+                            </div>
                         </div>
                     </a>
                 </div>
             </div>
             <div class="col-1">
 
-            </div>
-        </div>
-        <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 2rem;">
-            <button class="btn btn-secondary discard-button" data-toggle="modal" data-target="#confirmation">Discard</button>
-            <button class="btn btn-primary save-button" disabled>Save</button>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="confirmation">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirmation</h5>
-                        <button class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h5 style="text-align: center;">Are you sure?</h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a class="btn btn-primary" style="color: white;" href="/">Yes</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
