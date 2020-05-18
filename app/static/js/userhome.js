@@ -138,7 +138,7 @@ function closeConfirmation(order) {
 
 function deleteGroup(order) {
     let listItem = document.querySelectorAll('.list-group-item')[order-1]
-    if (document.querySelector('.group-name-input')) {
+    if (document.querySelector('.group-name-input') && order == document.querySelectorAll('.list-group-item').length) {
         document.querySelector('.add-content-button').removeAttribute('disabled')
     } else {
         let groupName = document.querySelectorAll(".group-text h5")[order-1].textContent
