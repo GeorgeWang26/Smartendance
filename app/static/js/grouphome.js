@@ -1,80 +1,88 @@
 function showMembers() {
-    for(let i = 0; i < data.result.length; i++) {
-        let dataOrder = i + 1
-        let newMemberName = data.result[i][0]
-        let imageURI = data.result[i][1]
-
+    let numMembers = data.result.length
+    if(numMembers == 0) {
         let listGroupItem = document.createElement('a')
-        listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
-
-        let overlapContainer = document.createElement('div')
-        overlapContainer.className = "overlap-container"
-        listGroupItem.appendChild(overlapContainer)
-
-        let groupWrapper = document.createElement('div')
-        groupWrapper.className = "group-wrapper"
-        overlapContainer.appendChild(groupWrapper)
-
-        let memberInfo = document.createElement('div')
-        memberInfo.className = "member-info"
-        groupWrapper.appendChild(memberInfo)
-
-        let memberPhoto = document.createElement('img')
-        memberPhoto.className = "member-picture"
-        memberPhoto.src = imageURI
-        memberInfo.appendChild(memberPhoto)
-
-        let memberName = document.createElement('h5')
-        memberName.textContent = newMemberName
-        memberInfo.appendChild(memberName)
-
-        let valignWrapper = document.createElement('div')
-        valignWrapper.className = "valign-wrapper"
-        groupWrapper.appendChild(valignWrapper)
-
-        let deleteButton = document.createElement('button')
-        deleteButton.className = "delete-group bg-light"
-        deleteButton.setAttribute('data-order', dataOrder)
-        deleteButton.onclick = function() {displayConfirmation(this.getAttribute('data-order'))}
-        valignWrapper.appendChild(deleteButton)
-
-        let deleteConfirmation = document.createElement('div')
-        deleteConfirmation.className = "delete-confirmation"
-        overlapContainer.appendChild(deleteConfirmation)
-
-        let areYouSure = document.createElement('h5')
-        areYouSure.textContent = "Are you sure?"
-        deleteConfirmation.appendChild(areYouSure)
-
-        let choiceWrapper = document.createElement('div')
-        choiceWrapper.className = "choice-wrapper"
-        deleteConfirmation.appendChild(choiceWrapper)
-
-        let choice1 = document.createElement('button')
-        choice1.className = "choice-button bg-success"
-        choice1.setAttribute('data-order', dataOrder)
-        choice1.onclick = function() {deleteMember(this.getAttribute('data-order'))}
-        choiceWrapper.appendChild(choice1)
-
-        let check = document.createElement('i')
-        check.className = "material-icons"
-        check.textContent = "check"
-        choice1.appendChild(check)
-
-        let choice2 = document.createElement('button')
-        choice2.className = "choice-button bg-danger"
-        choice2.setAttribute('data-order', dataOrder)
-        choice2.style.marginLeft = "4px"
-        choice2.onclick = function() {closeConfirmation(this.getAttribute('data-order'))}
-        choiceWrapper.appendChild(choice2)
-
-        let close = document.createElement('i')
-        close.className = "material-icons"
-        close.textContent = "close"
-        choice2.appendChild(close)
-
-        let listGroup = document.querySelector('.list-group')
-        listGroup.appendChild(listGroupItem)
+        listGroupItem.className = "list-group-item default-list-item"
+        listGroupItem.textContent = "You have no members."
+        document.querySelector('.list-group').appendChild(listGroupItem)
+    } else {
+        for(let i = 0; i < numMembers; i++) {
+            let dataOrder = i + 1
+            let newMemberName = data.result[i][0]
+            let imageURI = data.result[i][1]
+    
+            let listGroupItem = document.createElement('a')
+            listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
+    
+            let overlapContainer = document.createElement('div')
+            overlapContainer.className = "overlap-container"
+            listGroupItem.appendChild(overlapContainer)
+    
+            let groupWrapper = document.createElement('div')
+            groupWrapper.className = "group-wrapper"
+            overlapContainer.appendChild(groupWrapper)
+    
+            let memberInfo = document.createElement('div')
+            memberInfo.className = "member-info"
+            groupWrapper.appendChild(memberInfo)
+    
+            let memberPhoto = document.createElement('img')
+            memberPhoto.className = "member-picture"
+            memberPhoto.src = imageURI
+            memberInfo.appendChild(memberPhoto)
+    
+            let memberName = document.createElement('h5')
+            memberName.textContent = newMemberName
+            memberInfo.appendChild(memberName)
+    
+            let valignWrapper = document.createElement('div')
+            valignWrapper.className = "valign-wrapper"
+            groupWrapper.appendChild(valignWrapper)
+    
+            let deleteButton = document.createElement('button')
+            deleteButton.className = "delete-group bg-light"
+            deleteButton.setAttribute('data-order', dataOrder)
+            deleteButton.onclick = function() {displayConfirmation(this.getAttribute('data-order'))}
+            valignWrapper.appendChild(deleteButton)
+    
+            let deleteConfirmation = document.createElement('div')
+            deleteConfirmation.className = "delete-confirmation"
+            overlapContainer.appendChild(deleteConfirmation)
+    
+            let areYouSure = document.createElement('h5')
+            areYouSure.textContent = "Are you sure?"
+            deleteConfirmation.appendChild(areYouSure)
+    
+            let choiceWrapper = document.createElement('div')
+            choiceWrapper.className = "choice-wrapper"
+            deleteConfirmation.appendChild(choiceWrapper)
+    
+            let choice1 = document.createElement('button')
+            choice1.className = "choice-button bg-success"
+            choice1.setAttribute('data-order', dataOrder)
+            choice1.onclick = function() {deleteMember(this.getAttribute('data-order'))}
+            choiceWrapper.appendChild(choice1)
+    
+            let check = document.createElement('i')
+            check.className = "material-icons"
+            check.textContent = "check"
+            choice1.appendChild(check)
+    
+            let choice2 = document.createElement('button')
+            choice2.className = "choice-button bg-danger"
+            choice2.setAttribute('data-order', dataOrder)
+            choice2.style.marginLeft = "4px"
+            choice2.onclick = function() {closeConfirmation(this.getAttribute('data-order'))}
+            choiceWrapper.appendChild(choice2)
+    
+            let close = document.createElement('i')
+            close.className = "material-icons"
+            close.textContent = "close"
+            choice2.appendChild(close)
+    
+            let listGroup = document.querySelector('.list-group')
+            listGroup.appendChild(listGroupItem)
+        }
     }
 }
 
@@ -187,6 +195,13 @@ function deleteMember(order) {
         choicesList[i].children[0].setAttribute("data-order", String(i+1))
         choicesList[i].children[1].setAttribute("data-order", String(i+1))
     }
+
+    if(document.querySelector('.list-group').children.length == 0) {
+        let listGroupItem = document.createElement('a')
+        listGroupItem.className = "list-group-item default-list-item"
+        listGroupItem.textContent = "You have no members."
+        document.querySelector('.list-group').appendChild(listGroupItem)
+    }
 }
 
 function addMember(imageURI, newMemberName) {
@@ -260,6 +275,11 @@ function addMember(imageURI, newMemberName) {
     close.className = "material-icons"
     close.textContent = "close"
     choice2.appendChild(close)
+
+    let defaultItem = document.querySelector('.default-list-item')
+    if(defaultItem) {
+        defaultItem.parentNode.removeChild(defaultItem)
+    }
 
     let listGroup = document.querySelector('.list-group')
     listGroup.appendChild(listGroupItem)
