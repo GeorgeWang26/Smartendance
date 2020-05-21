@@ -118,6 +118,10 @@ function useWebcam() {
         navigator.mediaDevices.getUserMedia({video:true})
             .then(function (stream) {
                 video.srcObject = stream
+                closingButtons = document.querySelectorAll('.modal-footer .btn')
+                for(button in closingButtons) {
+                    closingButtons[button].onclick = function () {stream.getTracks().forEach(track => track.stop())}
+                }
             })
             .catch(function (error) {
                 console.log(error)
