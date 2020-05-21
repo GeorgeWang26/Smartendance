@@ -172,7 +172,6 @@ function chooseFiles() {
         document.querySelector('.invalid-feedback').style.display = "block"
         document.querySelector('.form-control').className += " is-invalid"
     } else {
-        $('#addMember').modal('hide')
         let file = document.querySelector('.input-file').files[0]
         let reader = new FileReader()
         reader.readAsDataURL(file)
@@ -189,7 +188,6 @@ function chooseWebcam() {
         document.querySelector('.invalid-feedback').style.display = "block"
         document.querySelector('.form-control').className += " is-invalid"
     } else {
-        $('#addMember').modal('hide')
         let imageURI = document.querySelector('#webcam-result').src
         addMember(imageURI, memberName)
     }
@@ -247,6 +245,8 @@ function addMember(imageURI, newMemberName) {
         },
         success: function(data) {
             if(data.result == "success") {
+                $('#addMember').modal('hide')
+
                 let dataOrder = document.querySelectorAll('.list-group-item').length + 1
 
                 let listGroupItem = document.createElement('a')
@@ -328,7 +328,8 @@ function addMember(imageURI, newMemberName) {
 
             } else {
                 // show the error message here
-                
+                formStatus.style.display = "block"
+                formStatus.textContent = data.result
             }
         }
     });
