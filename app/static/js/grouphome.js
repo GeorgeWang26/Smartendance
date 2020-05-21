@@ -328,6 +328,7 @@ function addMember(imageURI, newMemberName) {
 
             } else {
                 // show the error message here
+                
             }
         }
     });

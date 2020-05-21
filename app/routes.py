@@ -146,6 +146,11 @@ def createGroup():
     print('adding new group:', groupname, '  for:', username)
     result = db.addGroup(username, groupname)
     print(result)
+    if result == 'success':
+        collectionID = username + '_' + groupname
+        print('creating new collection', collectionID)
+        createCollectionresult = rec.CreateCollection(collectionID)
+        print(createCollectionresult)
     return jsonify(result = result)
 
 
@@ -156,6 +161,11 @@ def deleteGroup():
     print('deleting group:', groupname, '  for:', username)
     result = db.removeGroup(username, groupname)
     print(result)
+    if result == 'success':
+        collectionID = username + '_' + groupname
+        print('deleting collection', collectionID)
+        deleteCollectionResult = rec.DeleteCollection(collectionID)
+        print(deleteCollectionResult)
     return jsonify(result = result)
 
 
@@ -181,8 +191,15 @@ def newMember():
     groupname = request.form['groupname']
     imageURL = request.form['imageURL']
     memberName = request.form['membername']
+    image = imageURL.split(',')[1]
+    result = db.addMember(username, groupname, memberName, imageURL)
+    if result == 'success':
+        collectionID = username + "_" + groupname
+        addFaceResult = rec.addFace(collectionID, base64.b64decode(image), memberName)
+        print(addFaceResult)
+    return jsonify(result = result)
 
-    
+
 
 @app.route('/userhome/<string:username>/group/<string:groupname>/calendar')
 @login_required
