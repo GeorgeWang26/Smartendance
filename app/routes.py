@@ -175,7 +175,14 @@ def getMembers():
     memberList = db.getMembers(username, groupname)
     return jsonify(result = memberList)
 
+@app.route('/newMember', methods = ['POST'])
+def newMember():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    imageURL = request.form['imageURL']
+    memberName = request.form['membername']
 
+    
 
 @app.route('/userhome/<string:username>/group/<string:groupname>/calendar')
 @login_required
