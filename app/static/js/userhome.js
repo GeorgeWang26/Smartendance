@@ -284,7 +284,10 @@ function nameGroup() {
     let formStatus = document.querySelector('.form-status')
     if(groupName.includes('_')) {
         formStatus.style.display = "block"
-        formStatus.textContent = "Group name cannot includes _"
+        formStatus.textContent = "Group name cannot include _"
+    } else if(groupName.includes('/')) {
+        formStatus.style.display = "block"
+        formStatus.textContent = "Group name cannot include /"
     } else {
 
         $.ajax({
