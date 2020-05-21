@@ -328,6 +328,7 @@ function addMember(imageURI, newMemberName) {
 
             } else {
                 // show the error message here
+                let formStatus = document.querySelector('.form-status')
                 formStatus.style.display = "block"
                 formStatus.textContent = data.result
             }
