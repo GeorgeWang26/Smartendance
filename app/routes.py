@@ -23,9 +23,16 @@ loginManager.init_app(app)
 
 def checkUser(username):
     if current_user.username != username:
-        print('abort 404')
+        print('no such user', username, '\nabort 404')
         abort(404)
 
+
+def checkGroup(username, groupname):
+    for i in db.getGroups(username):
+        if groupname == i[0]:
+            return
+    print('no such group', groupname, 'for user', username, '\nabort 404')
+    abort(404)
 
 @loginManager.user_loader
 def load_user(user_id):
@@ -158,8 +165,15 @@ def deleteGroup():
 @login_required
 def grouphome(username, groupname):
     checkUser(username)
-    # check group here
+    checkGroup(username, groupname)
     return render_template('grouphome.html')
+
+@app.route('/getMembers', methods = ['POST'])
+def getMembers():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    memberList = db.getMembers(username, groupname)
+    return jsonify(result = memberList)
 
 
 
@@ -167,7 +181,7 @@ def grouphome(username, groupname):
 @login_required
 def calendar(username, groupname):
     checkUser(username)
-    # check group here
+    checkGroup(username, groupname)
     return render_template('calendar.html')
 
 
@@ -176,7 +190,7 @@ def calendar(username, groupname):
 @login_required
 def liveAttendance(username, groupname):
     checkUser(username)
-    # check group here
+    checkGroup(username, groupname)
     return render_template('live-attendance.html')
 
 
@@ -185,7 +199,7 @@ def liveAttendance(username, groupname):
 @login_required
 def capture(username, groupname):
     checkUser(username)
-    # check group here
+    checkGroup(username, groupname)
     return render_template('capture.html')
 
 
@@ -194,7 +208,7 @@ def capture(username, groupname):
 @login_required
 def week(username, groupname, weeknumber):
     checkUser(username)
-    # check group here
+    checkGroup(username, groupname)
     # check week number here
     return render_template('week.html')
 
