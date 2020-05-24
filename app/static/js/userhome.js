@@ -5,8 +5,7 @@ function setUp() {
 
 function showUsername() {
     let username = window.location.pathname.split("/")[2];
-    $(".username")[0].innerHTML = username;
-    $(".username")[1].innerHTML = "Hi " + username;
+    $(".username")[0].innerHTML = "Hi " + username;
 }
 
 
