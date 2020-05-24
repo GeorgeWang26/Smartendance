@@ -6,7 +6,6 @@
 .logo {
     height: 2.5rem;
     width: auto;
-    padding-right: 1rem;
 }
 
 .navbar {
@@ -20,11 +19,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.brand-area {
-    margin: 0;
-    padding: 0;
 }
 
 .breadcrumb-item {
