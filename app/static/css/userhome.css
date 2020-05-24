@@ -78,7 +78,6 @@ body {
     width: 50%;
     height: 3rem;
     cursor: pointer;
-    border: 1px #212529 solid;
 }
 
 .delete-group {

@@ -10,9 +10,17 @@
 
 .navbar {
     padding: 15px 30px;
-    height: 5rem;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.logout-button {
+    color: #007bff !important;
+    padding: 0.5rem !important;
+}
+
+.logout-button:hover {
+    color: #fff !important;
 }
 
 .valign-wrapper {
