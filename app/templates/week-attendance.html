@@ -6,35 +6,23 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="bg-white">
-    <nav class="navbar navbar-light navbar-expand-md bg-light">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <ul class="navbar-nav mr-auto">
-                <img class="logo" src="../static/img/logo.png">
-                <a class="navbar-brand" href="/">Smartendance</a>
-            </ul>
-        </div>
-        <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item sign-in-status">
-                    <label>You are signed</label>
-                    <label>in as:</label>
-                    <label>FredLiu876</label>
-                </li>
-                <li class="nav-item logout-button">
-                    <a class="nav-link" href="/logout">Log Out</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-light navbar-expand-lg bg-light">
+        <a class="navbar-brand" href="/"><img class="logo" src="/static/img/logo.png"> Smartendance</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="valign-wrapper collapse navbar-collapse" id="navbar">
+            <nav aria-label="breadcrumb" class="breadcrumb-container">
+                <ol class="breadcrumb" style="margin: auto;">
+                    <li class="breadcrumb-item"><a href="#" class="text-primary">Home <img src="../static/img/home.png" style="height: 1.25rem; padding-left: 2px; margin-top: -0.5rem;"></a></li>
+                    <li class="breadcrumb-item"><a class="group-name text-primary"></a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a class="text-primary">Calendar</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a class="date"></a></li>
+                </ol>
+            </nav>
         <div>
     </nav>
     <div class="container-fluid" style="padding: 0;">
-        <div class="row toolbar bg-light">
-            <div style="display: flex; flex-direction: column; justify-content: center;">
-                <h6>Group Name</h6>
-            </div>
-            <div style="display: flex; flex-direction: column; justify-content: center;">
-                <h6 class="date">May 11 - May 17</h6>
-            </div>
-        </div>
         <div class="row">
             <div class="col-1">
 

@@ -5,8 +5,8 @@ function setUp() {
 
 
 function showNames() {
-    $(".username")[0].innerHTML = window.location.pathname.split("/")[2];
-    $(".group-header")[0].innerHTML = window.location.pathname.split("/")[4];
+    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4];
+    $(".group-name")[1].innerHTML = window.location.pathname.split("/")[4];
 }
 
 
@@ -109,7 +109,6 @@ function showMembers() {
             }
         }
     });
-    
 }
 
 function useWebcam() {

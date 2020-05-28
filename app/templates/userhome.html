@@ -9,22 +9,12 @@
     <script src = "/static/js/userhome.js"></script>
 </head>
 <body onload=setUp()>
-    <nav class="navbar navbar-light navbar-expand-md bg-light">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <ul class="navbar-nav mr-auto">
-                <img class="logo" src="/static/img/logo.png">
-                <a class="navbar-brand" href="/">Smartendance</a>
-            </ul>
-        </div>
-        <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/"><img class="logo" src="/static/img/logo.png"> Smartendance</a>
+        <div>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item sign-in-status">
-                    <label>You are signed</label>
-                    <label>in as:</label>
-                    <label class="username"></label>
-                </li>
-                <li class="nav-item logout-button">
-                    <a class="nav-link" href="/logout">Log Out</a>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-primary logout-button" href="/logout">Log Out</a>
                 </li>
             </ul>
         <div>
@@ -34,14 +24,14 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="user-home-header">
-                    <h1 class="username">Hi</h1>
+                    <h1 class="username"></h1>
                     <label>Here are your groups:</label>
                 </div>
                 <div class="list-group">
                     
                 </div>
                 <div class="add-content">
-                    <button class="add-content-button bg-success" onclick=createGroup()>Add Group</button>
+                    <button class="add-content-button btn btn-success" onclick=createGroup()>Add Group</button>
                 </div>
             </div>
             <div class="col-2"></div>
