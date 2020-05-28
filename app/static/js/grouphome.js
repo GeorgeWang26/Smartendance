@@ -210,9 +210,25 @@ function closeConfirmation(order) {
 }
 
 function deleteMember(order) {
+
     let fullList = document.querySelectorAll('.list-group-item')
     let listItem = fullList[order-1]
     let memberName = document.querySelectorAll('.member-info h5')[order-1].textContent
+
+    $.ajax({
+        url: "/removeMember",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            username: window.location.pathname.split("/")[2],
+            groupname: window.location.pathname.split("/")[4],
+            membername: memberName
+        },
+        success: function(data) {
+            console.log("db result: " + data.dbResult + "   aws result: " + data.awsResult)
+        }
+    });
+
     listItem.parentNode.removeChild(listItem)
 
     let deleteList = document.querySelectorAll('.delete-group')

@@ -197,7 +197,23 @@ def newMember():
         collectionID = username + "_" + groupname
         addFaceResult = rec.addFace(collectionID, base64.b64decode(image), memberName)
         print(addFaceResult)
+        if addFaceResult != 'success':
+            db.removeMember(username, groupname, memberName)
+            return jsonify(result = addFaceResult)
     return jsonify(result = result)
+
+
+# need to be implemented in js
+@app.route('/removeMember', methods = ['POST'])
+def removeMember():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    memberName = request.form['membername']
+    collectionID = username + '_' + groupname
+    dbResult = db.removeMember(username, groupname, memberName)
+    awsResult = rec.deleteByName(collectionID, memberName)
+    return jsonify(dbResult = dbResult, awsResult = awsResult)
+
 
 
 
