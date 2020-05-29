@@ -4,10 +4,30 @@
     <link type="text/css" rel="stylesheet" href="/static/css/general.css">
     <link type="text/css" rel="stylesheet" href="/static/css/live-attendance.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/live-attendance.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
 </head>
-<body class="bg-white" onload="getTimestamp(); showMembers()">
-    <nav class="navbar navbar-light bg-light">
+<body class="bg-white" onload="setUp()">
+    <nav class="navbar navbar-light navbar-expand-md bg-light">
         <a class="navbar-brand" href="/"><img class="logo" src="/static/img/logo.png"> Smartendance</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a target="_blank" href="" class="nav-link text-primary capture-button">Start Capture</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link discard-button text-secondary" data-toggle="modal" data-target="#confirmation">Discard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link save-button disabled">Save</a>
+                </li>
+            </ul>
+        <div>
     </nav>
     <div class="container-fluid" style="padding: 0;">
         <div class="row toolbar bg-light">
@@ -15,12 +35,12 @@
                 <h6>Group Name</h6>
             </div>
             <div class="set-presence-wrapper">
-                <input type="radio" id="radio1" name="set-presence" value="Present" checked>
+                <input type="radio" id="radio1" name="set-presence" value="Present" checked disabled>
                 <label for="radio1">Start</label>
                 <input type="radio" id="radio2" name="set-presence" value="Late">
-                <label for="radio2">Begin Lates</label>
+                <label for="radio2" onclick="changeAttendance('L', 1)">Begin Lates</label>
                 <input type="radio" id="radio3" name="set-presence" value="Absent">
-                <label for="radio3" onclick="endAttendance()">End</label>
+                <label for="radio3" onclick="changeAttendance('A', 2)">End</label>
             </div>
             <div style="display: flex; flex-direction: column; justify-content: center;">
                 <h6 class="date"></h6>
@@ -32,27 +52,11 @@
             </div>
             <div class="col-10">
                 <div class="list-group">
-                    <a class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="item-wrapper">
-                            <label class="member-name">Fred Liu</label>
-                            <label class="attendance-status">Present</label>
-                        </div>
-                    </a>
-                    <a class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="item-wrapper">
-                            <label class="member-name">George Wang</label>
-                            <label class="attendance-status">Late</label>
-                        </div>
-                    </a>
                 </div>
             </div>
             <div class="col-1">
 
             </div>
-        </div>
-        <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 2rem;">
-            <button class="btn btn-secondary discard-button" data-toggle="modal" data-target="#confirmation">Discard</button>
-            <button class="btn btn-primary save-button" disabled>Save</button>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="confirmation">
@@ -69,13 +73,10 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a class="btn btn-primary" style="color: white;" href="/">Yes</a>
+                        <a class="btn btn-primary" style="color: white;" onclick="discardData()">Yes</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js'></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/live-attendance.js"></script>
 </body>
