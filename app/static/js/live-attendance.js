@@ -37,7 +37,6 @@ function showMembers() {
             username: window.location.pathname.split("/")[2],
             groupname: window.location.pathname.split("/")[4]
         },
-
         success: function(data){
             console.log(data.result)
             let numMembers = data.result.length
