@@ -64,3 +64,12 @@
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
 }
+
+.week-disabled {
+    height: 2rem;
+    width: 100%;
+}
+
+.week-disabled label {
+    display: none;
+}

@@ -1,13 +1,14 @@
 <head>
     <title>Smartendance</title>
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/general.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/calendar.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/general.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/calendar.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src='/static/js/jquery.js'></script>
-    <script src="/static/js/bootstrap.min.js"></script>
+    <script src='../static/js/jquery.js'></script>
+    <script src="../static/js/calendar.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
 </head>
-<body class="bg-primary">
+<body class="bg-primary" onload="setUp()">
     <nav class="navbar navbar-light navbar-expand-md bg-light">
         <a class="navbar-brand" href="/"><img class="logo" src="/static/img/logo.png"> Smartendance</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,189 +30,7 @@
             <label style="width: 100%;" class="text-light">Find a week in the calendar below and view the attendance</label>
         </div>
         <div class="row bg-white calendar-overflow" style="padding: 2rem 0;">
-            <div class="month-wrapper bg-light">
-                <div class="month-header bg-warning">
-                    <label>May 2020</label>
-                </div>  
-                <div class="days-header">
-                    <label>M</label>
-                    <label>T</label>
-                    <label>W</label>
-                    <label>T</label>
-                    <label>F</label>
-                    <label>S</label>
-                    <label>S</label>
-                </div>
-                <div class="days-wrapper">
-                    <div class="week">
-                        <label></label>
-                        <label></label>
-                        <label></label>
-                        <label></label>
-                        <label>1</label>
-                        <label class="text-muted">2</label>
-                        <label class="text-muted">3</label>
-                    </div>
-                    <div class="week">
-                        <label>4</label>
-                        <label>5</label>
-                        <label>6</label>
-                        <label>7</label>
-                        <label>8</label>
-                        <label class="text-muted">9</label>
-                        <label class="text-muted">10</label>
-                    </div>
-                    <div class="week">
-                        <label>11</label>
-                        <label>12</label>
-                        <label>13</label>
-                        <label>14</label>
-                        <label>15</label>
-                        <label class="text-muted">16</label>
-                        <label class="text-muted">17</label>
-                    </div>
-                    <div class="week">
-                        <label>18</label>
-                        <label>19</label>
-                        <label>20</label>
-                        <label>21</label>
-                        <label>22</label>
-                        <label class="text-muted">23</label>
-                        <label class="text-muted">24</label>
-                    </div>
-                    <div class="week">
-                        <label>25</label>
-                        <label>26</label>
-                        <label>27</label>
-                        <label>28</label>
-                        <label>29</label>
-                        <label class="text-muted">30</label>
-                        <label class="text-muted">31</label>
-                    </div>
-                </div>
-            </div>
-            <div class="month-wrapper bg-light">
-                <div class="month-header bg-warning">
-                    <label>June 2020</label>
-                </div>  
-                <div class="days-header">
-                    <label>M</label>
-                    <label>T</label>
-                    <label>W</label>
-                    <label>T</label>
-                    <label>F</label>
-                    <label>S</label>
-                    <label>S</label>
-                </div>
-                <div class="days-wrapper">
-                    <div class="week">
-                        <label>1</label>
-                        <label>2</label>
-                        <label>3</label>
-                        <label>4</label>
-                        <label>5</label>
-                        <label class="text-muted">6</label>
-                        <label class="text-muted">7</label>
-                    </div>
-                    <div class="week">
-                        <label>7</label>
-                        <label>8</label>
-                        <label>9</label>
-                        <label>10</label>
-                        <label>11</label>
-                        <label class="text-muted">12</label>
-                        <label class="text-muted">13</label>
-                    </div>
-                    <div class="week">
-                        <label>14</label>
-                        <label>15</label>
-                        <label>16</label>
-                        <label>17</label>
-                        <label>18</label>
-                        <label class="text-muted">19</label>
-                        <label class="text-muted">20</label>
-                    </div>
-                    <div class="week">
-                        <label>21</label>
-                        <label>22</label>
-                        <label>23</label>
-                        <label>24</label>
-                        <label>25</label>
-                        <label class="text-muted">26</label>
-                        <label class="text-muted">27</label>
-                    </div>
-                    <div class="week">
-                        <label>28</label>
-                        <label>29</label>
-                        <label>30</label>
-                        <label></label>
-                        <label></label>
-                        <label class="text-muted"></label>
-                        <label class="text-muted"></label>
-                    </div>
-                </div>
-            </div>
-            <div class="month-wrapper bg-light">
-                <div class="month-header bg-warning">
-                    <label>June 2020</label>
-                </div>  
-                <div class="days-header">
-                    <label>M</label>
-                    <label>T</label>
-                    <label>W</label>
-                    <label>T</label>
-                    <label>F</label>
-                    <label>S</label>
-                    <label>S</label>
-                </div>
-                <div class="days-wrapper">
-                    <div class="week">
-                        <label>1</label>
-                        <label>2</label>
-                        <label>3</label>
-                        <label>4</label>
-                        <label>5</label>
-                        <label class="text-muted">6</label>
-                        <label class="text-muted">7</label>
-                    </div>
-                    <div class="week">
-                        <label>7</label>
-                        <label>8</label>
-                        <label>9</label>
-                        <label>10</label>
-                        <label>11</label>
-                        <label class="text-muted">12</label>
-                        <label class="text-muted">13</label>
-                    </div>
-                    <div class="week">
-                        <label>14</label>
-                        <label>15</label>
-                        <label>16</label>
-                        <label>17</label>
-                        <label>18</label>
-                        <label class="text-muted">19</label>
-                        <label class="text-muted">20</label>
-                    </div>
-                    <div class="week">
-                        <label>21</label>
-                        <label>22</label>
-                        <label>23</label>
-                        <label>24</label>
-                        <label>25</label>
-                        <label class="text-muted">26</label>
-                        <label class="text-muted">27</label>
-                    </div>
-                    <div class="week">
-                        <label>28</label>
-                        <label>29</label>
-                        <label>30</label>
-                        <label></label>
-                        <label></label>
-                        <label class="text-muted"></label>
-                        <label class="text-muted"></label>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </body>
