@@ -37,20 +37,6 @@ function showCalendar() {
     });
 }
 
-function test(dataresult) {
-    for (let i = 0; i < dataresult.length; i++) {
-        let year = parseInt(dataresult[i].substring(0, 4))
-        let month = parseInt(dataresult[i].substring(4, 6))
-        let day = parseInt(dataresult[i].substring(6))
-        let monthName = monthNames[month-1]
-        if (document.querySelector('#' + monthName + year)) {
-            markDay(year, month, day)
-        } else {
-            showMonth(year, month, day)
-        }
-    }
-}
-
 function showMonth(year, month, day) {
     let monthName = monthNames[month-1]
 
