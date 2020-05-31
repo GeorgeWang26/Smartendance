@@ -1,5 +1,6 @@
 const numDaysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 const monthNames = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
+let weekNumber = 1
 
 function setUp() {
     showNames();
@@ -34,6 +35,20 @@ function showCalendar() {
             }
         }
     });
+}
+
+function test(dataresult) {
+    for (let i = 0; i < dataresult.length; i++) {
+        let year = parseInt(dataresult[i].substring(0, 4))
+        let month = parseInt(dataresult[i].substring(4, 6))
+        let day = parseInt(dataresult[i].substring(6))
+        let monthName = monthNames[month-1]
+        if (document.querySelector('#' + monthName + year)) {
+            markDay(year, month, day)
+        } else {
+            showMonth(year, month, day)
+        }
+    }
 }
 
 function showMonth(year, month, day) {
@@ -103,5 +118,12 @@ function showMonth(year, month, day) {
 
 function markDay(year, month, day) {
     let monthName = monthNames[month-1]
-    document.querySelector('#' + monthName + year + ' .day' + day).className = "day" + day
+    let dayLabel = document.querySelector('#' + monthName + year + ' .day' + day)
+    dayLabel.className = "day" + day
+    if (typeof dayLabel.parentNode.onclick != "function") {
+        let tempWeek = weekNumber
+        dayLabel.parentNode.onclick = function() {location.href = location.pathname + "/" + tempWeek}
+        weekNumber += 1
+        dayLabel.parentNode.style.cursor = "pointer"
+    }
 }
