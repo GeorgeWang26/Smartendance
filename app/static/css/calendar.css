@@ -58,6 +58,7 @@
     text-align: center;
     font-size: initial;
     margin: 0.25rem 0;
+    cursor: inherit !important;
 }
 
 .week:last-child {
