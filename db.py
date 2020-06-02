@@ -226,6 +226,7 @@ def updateStatus(username, group, date, newStatus):
                 if date == day.date:
                     day.date.status = newStatus
                     user.save()
+                    return 'success'
             return 'no such date'
     return 'no such group'
 

@@ -141,15 +141,16 @@ function getTimestamp() {
     timestamp.textContent = month + " " + day + " " + year
 }
 
-function changeAttendance(status, number) {
+function changeStatus(status, number) {
     if (!document.querySelectorAll('.set-presence-wrapper input')[number].checked && !document.querySelectorAll('.set-presence-wrapper input')[number].disabled) {
         $.ajax({
-            url: "/changedAttendance",
+            url: "/changeStatus",
             type: "POST",
             dataType: "JSON",
             data: {
                 username: window.location.pathname.split("/")[2],
                 groupname: window.location.pathname.split("/")[4],
+                date: year+newMonthInt+day,
                 status: status
             },
             success: function(data){
@@ -176,11 +177,24 @@ function endAttendance() {
 }
 
 function saveData() {
-    //AJAX request for save here
-    
+    window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
 }
 
 function discardData() {
     //AJAX request for discard here
-
+    $.ajax({
+        url: "/discardAttendance",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            username: window.location.pathname.split("/")[2],
+            groupname: window.location.pathname.split("/")[4],
+            date: year+newMonthInt+day
+        },
+        success: function(data){
+            if (data.result == "success") {
+                window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
+            }
+        }
+    });
 }

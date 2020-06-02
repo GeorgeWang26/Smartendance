@@ -244,6 +244,16 @@ def capture(username, groupname):
 
 
 
+@app.route('/discardAttendance')
+def discardAttendance():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    result = db.discardAttendance(username, groupname, int(date))
+    return jsonify(result = result)
+
+
+
 @app.route('/userhome/<string:username>/group/<string:groupname>/calendar/<string:weeknumber>')
 @login_required
 def week(username, groupname, weeknumber):
@@ -251,6 +261,19 @@ def week(username, groupname, weeknumber):
     checkGroup(username, groupname)
     # check week number here
     return render_template('week-attendance.html')
+
+
+
+@app.route('/changeStatus'):
+def changeStatus():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    status = request.form['status']
+    result = db.updateStatus(username, groupname, date, status)
+    jsonify(result = result)
+
+
 
 @app.route('/getWeekAttendance')
 def getWeekAttendance():
