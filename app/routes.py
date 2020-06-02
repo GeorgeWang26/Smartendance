@@ -250,8 +250,23 @@ def week(username, groupname, weeknumber):
     checkUser(username)
     checkGroup(username, groupname)
     # check week number here
-    return render_template('week.html')
+    return render_template('week-attendance.html')
 
+@app.route('/getWeekAttendance')
+def getWeekAttendance():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    dates = request.form['dates']
+    result = {}
+    allDays = []
+    allMembers = set()
+    for date in dates:
+        dateResult = db.getAttendance(username, groupname, int(date))
+        allMembers = allMembers|set(result.members)
+        allDays.append(dateResult)
+    result['allMembers'] = list(allMembers)
+    result['allDays'] = allDays
+    return jsonify(result = result)
 
 # add face will be done in group homepage
 # delete face will done by member name instead of taking pictures in group homepage
