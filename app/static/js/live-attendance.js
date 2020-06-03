@@ -7,13 +7,13 @@ let newMonthInt, newDay
 if (monthInt < 10) {
     newMonthInt = "0" + monthInt
 } else {
-    newMonthInt = String(monthInt)
+    newMonthInt = "" + monthInt
 }
 
 if (day < 10) {
     newDay = "0" + newDay
 } else {
-    newDay = String(newDay)
+    newDay = "" + newDay
 }
 
 function setUp() {

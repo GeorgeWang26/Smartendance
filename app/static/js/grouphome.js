@@ -46,7 +46,7 @@ function showMembers() {
             } else {
                 for(let i = 0; i < numMembers; i++) {
                     let dataOrder = i + 1
-                    let newMemberName = data.result[i][0]
+                    let newMemberName = data.result[i][0].replace(/-/g, " ")
                     let imageURI = data.result[i][1]
             
                     let listGroupItem = document.createElement('a')
@@ -197,6 +197,8 @@ function chooseFiles() {
         formStatus.textContent = "member name cannot include -"
 
     } else {
+        memberName = memberName.replace(/ /g, "-")
+
         let file = document.querySelector('.input-file').files[0]
         let reader = new FileReader()
         reader.readAsDataURL(file)
@@ -225,6 +227,7 @@ function chooseWebcam() {
         formStatus.textContent = "member name cannot include -"
 
     } else {
+        memberName = memberName.replace(/ /g, "-")
         let imageURI = document.querySelector('#webcam-result').src
         addMember(imageURI, memberName)
     }
@@ -250,7 +253,7 @@ function deleteMember(order) {
 
     let fullList = document.querySelectorAll('.list-group-item')
     let listItem = fullList[order-1]
-    let memberName = document.querySelectorAll('.member-info h5')[order-1].textContent
+    let memberName = document.querySelectorAll('.member-info h5')[order-1].textContent.replace(/ /g, "-")
 
     $.ajax({
         url: "/removeMember",
@@ -325,7 +328,7 @@ function addMember(imageURI, newMemberName) {
                 memberInfo.appendChild(memberPhoto)
 
                 let memberName = document.createElement('h5')
-                memberName.textContent = newMemberName
+                memberName.textContent = newMemberName.replace(/-/g, " ")
                 memberInfo.appendChild(memberName)
 
                 let valignWrapper = document.createElement('div')
