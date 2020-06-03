@@ -1,6 +1,21 @@
 function setUp() {
     showNames();
     showMembers();
+    $('#addMember').on('hidden.bs.modal', function (e) {
+        document.querySelector('.name-input').value = ""
+        document.querySelector('.form-control').className = "form-control name-input"
+        document.querySelector('.invalid-feedback').style.display = "none"
+        let formStatus = document.querySelector('.form-status')
+        formStatus.style.display = "none"
+        formStatus.textContent = ""
+        let webcam = document.querySelector(".webcam")
+        let webcamResult = document.querySelector('.webcam-result')
+        webcam.style.visibility = "visible"
+        webcamResult.style.visibility = "hidden"
+        document.querySelector('.filename').textContent = ""
+        document.querySelectorAll('.closing-options')[1].setAttribute('disabled', true)
+        document.querySelector('.closing-options').setAttribute('disabled', true)
+    })
 }
 
 
@@ -138,7 +153,7 @@ function takePhoto() {
     let resultURI = canvas.toDataURL('image/jpeg');
     document.querySelector('#webcam-result').src = resultURI
     
-    useWebcamButton = document.querySelector('.closing-options')
+    let useWebcamButton = document.querySelector('.closing-options')
     useWebcamButton.removeAttribute('disabled')
 
     let webcam = document.querySelector('.webcam')
@@ -148,7 +163,7 @@ function takePhoto() {
 }
 
 function retakePhoto() {
-    useWebcamButton = document.querySelector('.closing-options')
+    let useWebcamButton = document.querySelector('.closing-options')
     useWebcamButton.setAttribute('disabled', true)
 
     let webcam = document.querySelector(".webcam")
@@ -160,14 +175,14 @@ function retakePhoto() {
 function showImageName() {
     document.querySelector('.filename').textContent = document.querySelector('.input-file').files[0].name
 
-    useFilesButton = document.querySelectorAll('.closing-options')[1]
+    let useFilesButton = document.querySelectorAll('.closing-options')[1]
     useFilesButton.removeAttribute('disabled')
 }
 
 function chooseFiles() {
     let memberName = document.querySelector('.name-input').value
 
-    if(document.querySelector('.name-input').value == "") {
+    if(memberName == "") {
         document.querySelector('.invalid-feedback').style.display = "block"
         document.querySelector('.form-control').className += " is-invalid"
     } else {
@@ -183,7 +198,7 @@ function chooseFiles() {
 
 function chooseWebcam() {
     let memberName = document.querySelector('.name-input').value
-    if(document.querySelector('.name-input').value == "") {
+    if(memberName == "") {
         document.querySelector('.invalid-feedback').style.display = "block"
         document.querySelector('.form-control').className += " is-invalid"
     } else {
@@ -260,7 +275,6 @@ function addMember(imageURI, newMemberName) {
         },
         success: function(data) {
             if(data.result == "success") {
-                document.querySelector('name-input').value = ""
                 $('#addMember').modal('hide')
 
                 let dataOrder = document.querySelectorAll('.list-group-item').length + 1
