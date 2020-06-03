@@ -31,7 +31,7 @@ function showMembers() {
             } else {
                 for(let i = 0; i < numMembers; i++) {
                     let dataOrder = i + 1
-                    let newMemberName = data.result[i][0]
+                    let newMemberName = data.result[i][0].replace(/-/g, " ")
                     let imageURI = data.result[i][1]
             
                     let listGroupItem = document.createElement('a')
@@ -170,7 +170,17 @@ function chooseFiles() {
     if(memberName == "") {
         document.querySelector('.invalid-feedback').style.display = "block"
         document.querySelector('.form-control').className += " is-invalid"
+
+    } else if(memberName.includes("_")) {
+        document.querySelector('.invalid-feedback').style.display = "block"
+        document.querySelector('.form-control').className += "member name cannot include _"
+
+    } else if(memberName.includes("-")){
+        document.querySelector('.invalid-feedback').style.display = "block"
+        document.querySelector('.form-control').className += "member name cannot include -"
+
     } else {
+        memberName = memberName.replace(/ /g, "-")
         let file = document.querySelector('.input-file').files[0]
         let reader = new FileReader()
         reader.readAsDataURL(file)
@@ -183,10 +193,21 @@ function chooseFiles() {
 
 function chooseWebcam() {
     let memberName = document.querySelector('.name-input').value
+    
     if(memberName == "") {
         document.querySelector('.invalid-feedback').style.display = "block"
         document.querySelector('.form-control').className += " is-invalid"
+
+    } else if(memberName.includes("_")) {
+        document.querySelector('.invalid-feedback').style.display = "block"
+        document.querySelector('.form-control').className += "member name cannot include _"
+
+    } else if(memberName.includes("-")){
+        document.querySelector('.invalid-feedback').style.display = "block"
+        document.querySelector('.form-control').className += "member name cannot include -"
+
     } else {
+        memberName = memberName.replace(/ /g, "-")
         let imageURI = document.querySelector('#webcam-result').src
         addMember(imageURI, memberName)
     }
@@ -212,7 +233,7 @@ function deleteMember(order) {
 
     let fullList = document.querySelectorAll('.list-group-item')
     let listItem = fullList[order-1]
-    let memberName = document.querySelectorAll('.member-info h5')[order-1].textContent
+    let memberName = document.querySelectorAll('.member-info h5')[order-1].textContent.replace(/ /g, "-")
 
     $.ajax({
         url: "/removeMember",
@@ -248,6 +269,7 @@ function deleteMember(order) {
 
 function addMember(imageURI, newMemberName) {
 
+    console.log('add member ' + newMemberName)
     $.ajax({
         url: "/newMember",
         type: "POST",
@@ -285,7 +307,7 @@ function addMember(imageURI, newMemberName) {
                 memberInfo.appendChild(memberPhoto)
 
                 let memberName = document.createElement('h5')
-                memberName.textContent = newMemberName
+                memberName.textContent = newMemberName.replace(/-/g, " ")
                 memberInfo.appendChild(memberName)
 
                 let valignWrapper = document.createElement('div')
@@ -352,7 +374,7 @@ function addMember(imageURI, newMemberName) {
 }
 
 function markAttendance() {
-    window.location.pathname += "/capture"
+    window.location.pathname += "/live"
 }
 
 function viewAttendance() {

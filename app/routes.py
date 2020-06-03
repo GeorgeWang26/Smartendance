@@ -164,7 +164,7 @@ def deleteGroup():
     if result == 'success':
         collectionID = username + '_' + groupname
         print('deleting collection', collectionID)
-        deleteCollectionResult = rec.DeleteCollection(collectionID)
+        deleteCollectionResult = rec.DelletCollection(collectionID)
         print(deleteCollectionResult)
     return jsonify(result = result)
 
@@ -192,6 +192,7 @@ def newMember():
     imageURL = request.form['imageURL']
     memberName = request.form['membername']
     image = imageURL.split(',')[1]
+    print('add member    ', memberName)
     result = db.addMember(username, groupname, memberName, imageURL)
     if result == 'success':
         collectionID = username + "_" + groupname
@@ -226,7 +227,7 @@ def calendar(username, groupname):
 
 
 
-@app.route('/userhome/<string:username>/group<string:groupname>/live')
+@app.route('/userhome/<string:username>/group/<string:groupname>/live')
 @login_required
 def liveAttendance(username, groupname):
     checkUser(username)
@@ -263,15 +264,15 @@ def week(username, groupname, weeknumber):
     return render_template('week-attendance.html')
 
 
-
-@app.route('/changeStatus'):
-def changeStatus():
+# change naming here in js
+@app.route('/changeAttendanceStatus')
+def changeAttendanceStatus():
     username = request.form['username']
     groupname = request.form['groupname']
     date = request.form['date']
     status = request.form['status']
     result = db.updateStatus(username, groupname, date, status)
-    jsonify(result = result)
+    return jsonify(result = result)
 
 
 

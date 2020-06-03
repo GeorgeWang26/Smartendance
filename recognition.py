@@ -47,7 +47,7 @@ def searchName(collectionId, b64Decode):
                                             Image={'Bytes': b64Decode},
                                             FaceMatchThreshold=threshold,
                                             MaxFaces=maxFaces)
-    print(response)
+    # print(response)
     faceMatches = response['FaceMatches']
 
     for match in faceMatches:
