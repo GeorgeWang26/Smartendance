@@ -167,7 +167,7 @@ function showImageName() {
 function chooseFiles() {
     let memberName = document.querySelector('.name-input').value
 
-    if(memberName == "") {
+    if(document.querySelector('.name-input').value == "") {
         document.querySelector('.invalid-feedback').style.display = "block"
         document.querySelector('.form-control').className += " is-invalid"
     } else {
@@ -183,7 +183,7 @@ function chooseFiles() {
 
 function chooseWebcam() {
     let memberName = document.querySelector('.name-input').value
-    if(memberName == "") {
+    if(document.querySelector('.name-input').value == "") {
         document.querySelector('.invalid-feedback').style.display = "block"
         document.querySelector('.form-control').className += " is-invalid"
     } else {
@@ -260,6 +260,7 @@ function addMember(imageURI, newMemberName) {
         },
         success: function(data) {
             if(data.result == "success") {
+                document.querySelector('name-input').value = ""
                 $('#addMember').modal('hide')
 
                 let dataOrder = document.querySelectorAll('.list-group-item').length + 1
