@@ -3,7 +3,12 @@ const monthNames = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug"
 
 function setUp() {
     showNames();
+    setURL();
     showCalendar();
+}
+
+function setURL() {
+    document.querySelector(".group-name").href = "/userhome/" + window.location.pathname.split("/")[4]
 }
 
 function showNames() {
