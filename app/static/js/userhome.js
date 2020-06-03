@@ -220,6 +220,7 @@ function createGroup() {
             nameGroup()
         }
     }
+    groupNameInput.setAttribute("autocomplete", "off")
     groupNameWrapper.appendChild(groupNameInput)
 
     let numMembers = document.createElement('small')
