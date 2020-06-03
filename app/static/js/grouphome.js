@@ -166,18 +166,20 @@ function showImageName() {
 
 function chooseFiles() {
     let memberName = document.querySelector('.name-input').value
+    console.log("file  " + memberName)
+    let formStatus = document.querySelector('.form-status')
 
     if(memberName == "") {
-        document.querySelector('.invalid-feedback').style.display = "block"
-        document.querySelector('.form-control').className += " is-invalid"
+        formStatus.style.display = "block"
+        formStatus.textContent = "member name cannot be empty"
 
     } else if(memberName.includes("_")) {
-        document.querySelector('.invalid-feedback').style.display = "block"
-        document.querySelector('.form-control').className += "member name cannot include _"
+        formStatus.style.display = "block"
+        formStatus.textContent = "member name cannot include _"
 
     } else if(memberName.includes("-")){
-        document.querySelector('.invalid-feedback').style.display = "block"
-        document.querySelector('.form-control').className += "member name cannot include -"
+        formStatus.style.display = "block"
+        formStatus.textContent = "member name cannot include -"
 
     } else {
         memberName = memberName.replace(/ /g, "-")
@@ -193,18 +195,20 @@ function chooseFiles() {
 
 function chooseWebcam() {
     let memberName = document.querySelector('.name-input').value
-    
+    console.log("web cam  " + memberName)
+    let formStatus = document.querySelector('.form-status')
+
     if(memberName == "") {
-        document.querySelector('.invalid-feedback').style.display = "block"
-        document.querySelector('.form-control').className += " is-invalid"
+        formStatus.style.display = "block"
+        formStatus.textContent = "member name cannot be empty"
 
     } else if(memberName.includes("_")) {
-        document.querySelector('.invalid-feedback').style.display = "block"
-        document.querySelector('.form-control').className += "member name cannot include _"
+        formStatus.style.display = "block"
+        formStatus.textContent = "member name cannot include _"
 
     } else if(memberName.includes("-")){
-        document.querySelector('.invalid-feedback').style.display = "block"
-        document.querySelector('.form-control').className += "member name cannot include -"
+        formStatus.style.display = "block"
+        formStatus.textContent = "member name cannot include -"
 
     } else {
         memberName = memberName.replace(/ /g, "-")
@@ -282,6 +286,8 @@ function addMember(imageURI, newMemberName) {
         },
         success: function(data) {
             if(data.result == "success") {
+                document.querySelector('.form-status').style.display = "none"
+
                 $('#addMember').modal('hide')
 
                 let dataOrder = document.querySelectorAll('.list-group-item').length + 1
