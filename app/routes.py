@@ -244,13 +244,51 @@ def capture(username, groupname):
 
 
 
+@app.route('/discardAttendance')
+def discardAttendance():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    result = db.discardAttendance(username, groupname, int(date))
+    return jsonify(result = result)
+
+
+
 @app.route('/userhome/<string:username>/group/<string:groupname>/calendar/<string:weeknumber>')
 @login_required
 def week(username, groupname, weeknumber):
     checkUser(username)
     checkGroup(username, groupname)
     # check week number here
-    return render_template('week.html')
+    return render_template('week-attendance.html')
 
+
+
+@app.route('/changeStatus'):
+def changeStatus():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    status = request.form['status']
+    result = db.updateStatus(username, groupname, date, status)
+    jsonify(result = result)
+
+
+
+@app.route('/getWeekAttendance')
+def getWeekAttendance():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    dates = request.form['dates']
+    result = {}
+    allDays = []
+    allMembers = set()
+    for date in dates:
+        dateResult = db.getAttendance(username, groupname, int(date))
+        allMembers = allMembers|set(result.members)
+        allDays.append(dateResult)
+    result['allMembers'] = list(allMembers)
+    result['allDays'] = allDays
+    return jsonify(result = result)
 
 # detect face will be done in capture page

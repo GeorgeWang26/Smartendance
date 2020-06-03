@@ -1,38 +1,6 @@
-.nav-item label {
-    margin-bottom: 0;
-}
-
-.sign-in-status {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin-right: 1rem;
-}
-
-.logout-button {
-    margin: auto;
-}
-
 .row {
     width: 100%;
     margin: 0;
-}
-
-.toolbar {
-    height: 3rem;
-    overflow: hidden;
-    background-color: #f8f9fa;
-    border-top: 2px solid #6c757d;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-.date {
-    text-align: center;
-}
-
-.list-group {
-    min-height: 50vh;
 }
 
 .list-group-item {
@@ -52,6 +20,12 @@
     padding: 1px 10px;
 }
 
+.dates, .days-of-week, .attendance-wrapper {
+    font-size: 0rem !important;
+}
+
 .dates label, .days-of-week label, .attendance-wrapper label {
-    width: 2rem;
+    font-size: 1rem !important;
+    width: 2rem !important;
+    text-align: center !important;
 }

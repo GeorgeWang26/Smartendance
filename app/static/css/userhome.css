@@ -1,24 +1,3 @@
-/*
-body {
-    background-color: rgb(74, 134, 232);
-}
-*/
-
-.nav-item label {
-    margin-bottom: 0;
-}
-
-.sign-in-status {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin-right: 1rem;
-}
-
-.logout-button {
-    margin: auto;
-}
-
 .user-home-header {
     margin: 1.5rem 0;
     text-align: center;

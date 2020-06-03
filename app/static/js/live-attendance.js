@@ -1,34 +1,102 @@
+let d = new Date()
+let monthInt = d.getMonth()
+let day = d.getDate()
+let year = d.getFullYear()
+
+let newMonthInt, newDay
+if (monthInt < 10) {
+    newMonthInt = "0" + monthInt
+} else {
+    newMonthInt = String(monthInt)
+}
+
+if (day < 10) {
+    newDay = "0" + newDay
+} else {
+    newDay = String(newDay)
+}
+
+function setUp() {
+    getTimestamp()
+    setURL()
+    showMembers()
+}
+
+function setURL() {
+    let capture = document.querySelector('.capture-button')
+    let captureURL = window.location.pathname.substring(0, window.location.pathname.length-4) + "capture"
+    capture.href = captureURL
+}
+
 function showMembers() {
-    for(let i = 0; i < data.result.length; i++) {
-        let memberName = data.result[i]
+    $.ajax({
+        url: "/getMembers",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            username: window.location.pathname.split("/")[2],
+            groupname: window.location.pathname.split("/")[4]
+        },
+        success: function(data){
+            console.log(data.result)
+            let numMembers = data.result.length
+            if (numMembers == 0) {
+                let listGroupItem = document.createElement('a')
+                listGroupItem.className = "list-group-item default-list-item"
+                listGroupItem.textContent = "You have no members."
+                document.querySelector('.list-group').appendChild(listGroupItem)
+            } else {
+                for(let i = 0; i < numMembers; i++) {
+                    let memberName = data.result[i][0]
+            
+                    let listGroupItem = document.createElement('a')
+                    listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
+                    listGroupItem.id = memberName
+            
+                    let groupWrapper = document.createElement('div')
+                    groupWrapper.className = "group-wrapper"
+                    listGroupItem.appendChild(groupWrapper)
+            
+                    let memberInfo = document.createElement('label')
+                    memberInfo.className = "member-name"
+                    memberInfo.textContent = memberName
+                    groupWrapper.appendChild(memberInfo)
+            
+                    let attendanceStatus = document.createElement('label')
+                    attendanceStatus.className = "attendance-status"
+                    attendanceStatus.textContent = "-"
+                    groupWrapper.appendChild(attendanceStatus)
+            
+                    let listGroup = document.querySelector('.list-group')
+                    listGroup.appendChild(listGroupItem)
+                }
+            }
+        }
+    });
+}
 
-        let listGroupItem = document.createElement('a')
-        listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
-
-        let groupWrapper = document.createElement('div')
-        groupWrapper.className = "group-wrapper"
-        listGroupItem.appendChild(groupWrapper)
-
-        let memberInfo = document.createElement('label')
-        memberInfo.className = "member-name"
-        memberInfo.textContent = memberName
-        groupWrapper.appendChild(memberInfo)
-
-        let attendanceStatus = document.createElement('label')
-        attendanceStatus.className = "attendance-status"
-        attendanceStatus.textContent = "-"
-        groupWrapper.appendChild(attendanceStatus)
-
-        let listGroup = document.querySelector('.list-group')
-        listGroup.appendChild(listGroupItem)
-    }
+function update() {
+    $.ajax({
+        url: "/liveUpdate",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            username: window.location.pathname.split("/")[2],
+            groupname: window.location.pathname.split("/")[4],
+            date: year+newMonthInt+day
+        },
+        success: function(data){
+            let listMembers = data.result.members
+            for (let i = 0; i < listMembers.length; i++) {
+                let member = listMembers[i]
+                document.querySelector('#' + member.name).children[0].children[1].textContent = member.attendance
+            }
+        }
+    });
 }
 
 function getTimestamp() {
-    let d = new Date()
     let timestamp = document.querySelector('.date')
-
-    let monthInt = d.getMonth()
 
     let month
     switch(monthInt) {
@@ -70,15 +138,63 @@ function getTimestamp() {
             break;
     }
         
-    timestamp.textContent = month + " " + d.getDate() + " " + d.getFullYear()
+    timestamp.textContent = month + " " + day + " " + year
+}
+
+function changeStatus(status, number) {
+    if (!document.querySelectorAll('.set-presence-wrapper input')[number].checked && !document.querySelectorAll('.set-presence-wrapper input')[number].disabled) {
+        $.ajax({
+            url: "/changeStatus",
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                username: window.location.pathname.split("/")[2],
+                groupname: window.location.pathname.split("/")[4],
+                date: year+newMonthInt+day,
+                status: status
+            },
+            success: function(data){
+                if (number == 2) {
+                    endAttendance()
+                }
+            }
+        });
+    }
 }
 
 function endAttendance() {
-    document.querySelector('.save-button').removeAttribute('disabled')
+    let saveButton = document.querySelector('.save-button')
+    saveButton.removeAttribute('disabled')
+    saveButton.className += " text-success"
+    saveButton.onclick = function() {saveData()}
+    saveButton.style.cursor = "pointer"
     let container = document.querySelector('.set-presence-wrapper')
     for (let i = 0; i < container.children.length; i++) {
         container.children[i].setAttribute('disabled', true)
     }
     container.children[0].removeAttribute('checked')
     container.children[4].setAttribute('checked', true)
+}
+
+function saveData() {
+    window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
+}
+
+function discardData() {
+    //AJAX request for discard here
+    $.ajax({
+        url: "/discardAttendance",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            username: window.location.pathname.split("/")[2],
+            groupname: window.location.pathname.split("/")[4],
+            date: year+newMonthInt+day
+        },
+        success: function(data){
+            if (data.result == "success") {
+                window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
+            }
+        }
+    });
 }
