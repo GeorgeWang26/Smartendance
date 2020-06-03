@@ -53,19 +53,19 @@ function showMembers() {
                     listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
                     listGroupItem.id = memberName
             
-                    let groupWrapper = document.createElement('div')
-                    groupWrapper.className = "group-wrapper"
-                    listGroupItem.appendChild(groupWrapper)
+                    let itemWrapper = document.createElement('div')
+                    itemWrapper.className = "item-wrapper"
+                    listGroupItem.appendChild(itemWrapper)
             
                     let memberInfo = document.createElement('label')
                     memberInfo.className = "member-name"
                     memberInfo.textContent = memberName
-                    groupWrapper.appendChild(memberInfo)
+                    itemWrapper.appendChild(memberInfo)
             
                     let attendanceStatus = document.createElement('label')
                     attendanceStatus.className = "attendance-status"
                     attendanceStatus.textContent = "-"
-                    groupWrapper.appendChild(attendanceStatus)
+                    itemWrapper.appendChild(attendanceStatus)
             
                     let listGroup = document.querySelector('.list-group')
                     listGroup.appendChild(listGroupItem)
