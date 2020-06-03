@@ -3,6 +3,7 @@ let monthInt = d.getMonth()
 let day = d.getDate()
 let year = d.getFullYear()
 
+
 let newMonthInt, newDay
 if (monthInt < 10) {
     newMonthInt = "0" + monthInt
@@ -15,6 +16,8 @@ if (day < 10) {
 } else {
     newDay = "" + newDay
 }
+
+let date = year + newMonthInt + newDay
 
 function setUp() {
     getTimestamp()
@@ -83,9 +86,10 @@ function update() {
         data: {
             username: window.location.pathname.split("/")[2],
             groupname: window.location.pathname.split("/")[4],
-            date: year+newMonthInt+day
+            date: date
         },
         success: function(data){
+            console.log(date.result)
             let listMembers = data.result.members
             for (let i = 0; i < listMembers.length; i++) {
                 let member = listMembers[i]
@@ -150,7 +154,7 @@ function changeStatus(status, number) {
             data: {
                 username: window.location.pathname.split("/")[2],
                 groupname: window.location.pathname.split("/")[4],
-                date: year+newMonthInt+day,
+                date: date,
                 status: status
             },
             success: function(data){

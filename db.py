@@ -16,7 +16,8 @@ connect('test')
 class Member(EmbeddedDocument):
     name = StringField(required = True)
     dataURL = StringField(required = True)
-    attendance = StringField(default = 'A')
+    attendance = StringField(default = '-')
+    # this attendance should be set to 'A' in the end, for whoever remains '-'
     # sort by name
 
 
@@ -211,6 +212,12 @@ def markAttendance(username, group, date, name):
 
 # passed in parameter  newStatus should be P,L,A
 
+def endAttendance(day):
+    for member in day.members:
+        if member.attendance == '-':
+            member.attendance = 'A'
+
+
 def updateStatus(username, group, date, newStatus):
     # should only need to change status for the group once,
     # since the default day.status = P
@@ -224,7 +231,9 @@ def updateStatus(username, group, date, newStatus):
         if g.groupName == group:
             for day in g.calendar:
                 if date == day.date:
-                    day.date.status = newStatus
+                    day.status = newStatus
+                    if newStatus == 'A':
+                        endAttendance(day)
                     user.save()
                     return 'success'
             return 'no such date'
@@ -232,7 +241,11 @@ def updateStatus(username, group, date, newStatus):
 
 # passed in parameter  newStatus should be P,L,A
 
+
+
+
 def updateIndividualAttendance(username, group, date, name, newStatus):
+    # in case user wants to update specific member's status manually
     user = User.objects(username=username).first()
     if not user:
         return 'no such user'
@@ -291,36 +304,23 @@ def getAttendance(username, group, date):
 
 if __name__ == '__main__':
 
-    User.drop_collection()
-    LoginReturn.drop_collection()
+    addUser('test', 'test@gmail.com', 'password')
+    addGroup('test', 'group1')
+    addMember('test', 'group1', 'George', 'George_dataURL')
+    addMember('test', 'group1', 'Fred', 'Fred_dataURL')
+    addMember('test', 'group1', 'Yang', 'Yang_dataURL')
 
-    print('User', User.objects())
-    print('LoginReturn', LoginReturn.objects())
-
-    addUser('a', 'a@email', 'pass')
-    addGroup('a', 'group1')
-    addGroup('a', 'group2')
-    addGroup('a', 'group3')
-    addGroup('a', 'group4')
-    addMember('a', 'group1', 'George', 'George_dataURL')
-    addMember('a', 'group1', 'Fred', 'Fred_dataURL')
-    addMember('a', 'group2', 'Yang', 'Yang_dataURL')
+    addAttendance('test', 'group1', 20200603)
+    print(markAttendance('test', 'group1', 20200603, 'George'))
+    print(updateStatus('test', 'group1', 20200603, 'L'))
+    print(markAttendance('test', 'group1', 20200603, 'Fred'))
+    print(updateStatus('test', 'group1', 20200603, 'A'))
 
 
-    addAttendance('a', 'group1', 20200428)
-    addAttendance('a', 'group1', 20200505)
-    print(markAttendance('a', 'group1', 20200428, 'George'))
-    updateStatus('a', 'group1', '20200505', 'P')
-    print(markAttendance('a', 'group1', 20200505, 'George'))
-    updateStatus('a', 'group1', '20200505', 'L')
-    print(markAttendance('a', 'group1', 20200505, 'Fred'))
-
-
-    attendance = getAttendance('a', 'group1', 20200505)
-    print(type(attendance))
+    attendance = getAttendance('test', 'group1', 20200603)
 
     print(attendance.to_json())
-    
-    for i in attendance:
-        print(i, attendance[i])
+
+    User.drop_collection()
+    LoginReturn.drop_collection()
         
