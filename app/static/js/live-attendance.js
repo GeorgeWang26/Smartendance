@@ -47,7 +47,7 @@ function showMembers() {
                 document.querySelector('.list-group').appendChild(listGroupItem)
             } else {
                 for(let i = 0; i < numMembers; i++) {
-                    let memberName = data.result[i][0]
+                    let memberName = data.result[i][0].replace(/-/g, " ")
             
                     let listGroupItem = document.createElement('a')
                     listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
