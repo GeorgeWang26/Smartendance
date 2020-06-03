@@ -1,6 +1,6 @@
 import json
 from flask_login import UserMixin
-from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentListField, StringField, BooleanField, SortedListField, EmbeddedDocumentField, IntField
+from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentListField, StringField, BooleanField, SortedListField, EmbeddedDocumentField
 
 # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
 # to print the whole db in formated json style
@@ -22,10 +22,10 @@ class Member(EmbeddedDocument):
 
 
 class Day(EmbeddedDocument):
-    date = IntField(required=True)
+    date = StringField(required=True)
     status = StringField(default = 'P')
     members = SortedListField(EmbeddedDocumentField(Member), ordering = 'name')
-    # sort by data
+    # sort by date
 
 
 class Group(EmbeddedDocument):
@@ -310,14 +310,14 @@ if __name__ == '__main__':
     addMember('test', 'group1', 'Fred', 'Fred_dataURL')
     addMember('test', 'group1', 'Yang', 'Yang_dataURL')
 
-    addAttendance('test', 'group1', 20200603)
-    print(markAttendance('test', 'group1', 20200603, 'George'))
-    print(updateStatus('test', 'group1', 20200603, 'L'))
-    print(markAttendance('test', 'group1', 20200603, 'Fred'))
-    print(updateStatus('test', 'group1', 20200603, 'A'))
+    addAttendance('test', 'group1', '20200603')
+    print(markAttendance('test', 'group1', '20200603', 'George'))
+    print(updateStatus('test', 'group1', '20200603', 'L'))
+    print(markAttendance('test', 'group1', '20200603', 'Fred'))
+    print(updateStatus('test', 'group1', '20200603', 'A'))
 
 
-    attendance = getAttendance('test', 'group1', 20200603)
+    attendance = getAttendance('test', 'group1', '20200603')
 
     print(attendance.to_json())
 

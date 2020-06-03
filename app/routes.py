@@ -234,13 +234,13 @@ def liveUpdate():
     return jsonify(result = result)
 
 
-
-@app.route('/userhome/<string:username>/group/<string:groupname>/capture')
-@login_required
-def capture(username, groupname):
-    checkUser(username)
-    checkGroup(username, groupname)
-    return render_template('capture.html')
+@app.route('/newAttendance', methods = ['POST'])
+def newAttendance():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    result = db.addAttendance(username, groupname, date)
+    return jsonify(result = result)
 
 
 @app.route('/changeAttendanceStatus')
@@ -252,15 +252,25 @@ def changeAttendanceStatus():
     result = db.updateStatus(username, groupname, date, status)
     return jsonify(result = result)
 
+
 @app.route('/discardAttendance')
 def discardAttendance():
     username = request.form['username']
     groupname = request.form['groupname']
     date = request.form['date']
-    result = db.discardAttendance(username, groupname, int(date))
+    result = db.discardAttendance(username, groupname, date)
     return jsonify(result = result)
 
 
+
+
+
+@app.route('/userhome/<string:username>/group/<string:groupname>/capture')
+@login_required
+def capture(username, groupname):
+    checkUser(username)
+    checkGroup(username, groupname)
+    return render_template('capture.html')
 
 
 

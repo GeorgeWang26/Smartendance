@@ -27,6 +27,21 @@ function setUp() {
 
 function setURL() {
     let capture = document.querySelector('.capture-button')
+    capture.addEventListener('click', function() {
+        $.ajax({
+            url: "/newAttendance",
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                username: window.location.pathname.split("/")[2],
+                groupname: window.location.pathname.split("/")[4],
+                date: date
+            },
+            success: function(data){
+                console.log(data.result)
+            }
+        })
+    })
     let captureURL = window.location.pathname.substring(0, window.location.pathname.length-4) + "capture"
     capture.href = captureURL
 }
@@ -158,8 +173,10 @@ function changeStatus(status, number) {
                 status: status
             },
             success: function(data){
+                console.log(data.result)
                 if (number == 2) {
                     endAttendance()
+                    update()
                 }
             }
         });
@@ -167,6 +184,7 @@ function changeStatus(status, number) {
 }
 
 function endAttendance() {
+    console.log('end attendance')
     let saveButton = document.querySelector('.save-button')
     saveButton.removeAttribute('disabled')
     saveButton.className += " text-success"
@@ -193,9 +211,10 @@ function discardData() {
         data: {
             username: window.location.pathname.split("/")[2],
             groupname: window.location.pathname.split("/")[4],
-            date: year+newMonthInt+day
+            date: date
         },
         success: function(data){
+            console.log(data.result)
             if (data.result == "success") {
                 window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
             }
