@@ -203,8 +203,6 @@ def newMember():
             return jsonify(result = addFaceResult)
     return jsonify(result = result)
 
-
-# need to be implemented in js
 @app.route('/removeMember', methods = ['POST'])
 def removeMember():
     username = request.form['username']
@@ -214,26 +212,6 @@ def removeMember():
     dbResult = db.removeMember(username, groupname, memberName)
     awsResult = rec.deleteByName(collectionID, memberName)
     return jsonify(dbResult = dbResult, awsResult = awsResult)
-
-
-
-
-@app.route('/userhome/<string:username>/group/<string:groupname>/calendar')
-@login_required
-def calendar(username, groupname):
-    checkUser(username)
-    checkGroup(username, groupname)
-    return render_template('calendar.html')
-
-
-
-@app.route('/getDates')
-def getDates():
-    username = request.form['username']
-    groupname = request.form['groupname']
-    result = db.getDates(username, groupname)
-    return jsonify(result=result)
-    
 
 
 @app.route('/userhome/<string:username>/group/<string:groupname>/live')
@@ -253,6 +231,14 @@ def capture(username, groupname):
     return render_template('capture.html')
 
 
+@app.route('/changeAttendanceStatus')
+def changeAttendanceStatus():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    status = request.form['status']
+    result = db.updateStatus(username, groupname, date, status)
+    return jsonify(result = result)
 
 @app.route('/discardAttendance')
 def discardAttendance():
@@ -264,6 +250,15 @@ def discardAttendance():
 
 
 
+
+
+@app.route('/userhome/<string:username>/group/<string:groupname>/calendar')
+@login_required
+def calendar(username, groupname):
+    checkUser(username)
+    checkGroup(username, groupname)
+    return render_template('calendar.html')
+
 @app.route('/userhome/<string:username>/group/<string:groupname>/calendar/<string:weeknumber>')
 @login_required
 def week(username, groupname, weeknumber):
@@ -272,16 +267,6 @@ def week(username, groupname, weeknumber):
     # check week number here
     return render_template('week-attendance.html')
 
-
-# change naming here in js
-@app.route('/changeAttendanceStatus')
-def changeAttendanceStatus():
-    username = request.form['username']
-    groupname = request.form['groupname']
-    date = request.form['date']
-    status = request.form['status']
-    result = db.updateStatus(username, groupname, date, status)
-    return jsonify(result = result)
 
 
 
