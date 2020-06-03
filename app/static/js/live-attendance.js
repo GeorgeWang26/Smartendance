@@ -144,7 +144,7 @@ function getTimestamp() {
 function changeStatus(status, number) {
     if (!document.querySelectorAll('.set-presence-wrapper input')[number].checked && !document.querySelectorAll('.set-presence-wrapper input')[number].disabled) {
         $.ajax({
-            url: "/changeStatus",
+            url: "/changeAttendanceStatus",
             type: "POST",
             dataType: "JSON",
             data: {

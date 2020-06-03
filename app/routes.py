@@ -227,6 +227,15 @@ def calendar(username, groupname):
 
 
 
+@app.route('/getDates')
+def getDates():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    result = db.getDates(username, groupname)
+    return jsonify(result=result)
+    
+
+
 @app.route('/userhome/<string:username>/group/<string:groupname>/live')
 @login_required
 def liveAttendance(username, groupname):
@@ -286,7 +295,7 @@ def getWeekAttendance():
     allMembers = set()
     for date in dates:
         dateResult = db.getAttendance(username, groupname, int(date))
-        allMembers = allMembers|set(result.members)
+        allMembers = allMembers|set(dateResult.members)
         allDays.append(dateResult)
     result['allMembers'] = list(allMembers)
     result['allDays'] = allDays
