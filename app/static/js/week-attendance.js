@@ -16,8 +16,14 @@ function convertString(numberInt) {
 
 function setUp() {
     document.querySelector('.group-name').innerHTML = window.location.pathname.split("/")[4]
+    setURL()
     getDates()
     showMembers()
+}
+
+function setURL() {
+    document.querySelector(".group-name").href = "/userhome/" + window.location.pathname.split("/")[4]
+    document.querySelector(".calendar-url").href = "/userhome/" + window.location.pathname.split("/")[4] + "/calendar"
 }
 
 function getDates() {
