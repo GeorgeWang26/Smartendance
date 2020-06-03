@@ -18,7 +18,7 @@ function showNames() {
 
 function showCalendar() {
     $.ajax({
-        url: "/getAllDates",
+        url: "/getDates",
         type: "POST",
         dataType: "JSON",
         data: {

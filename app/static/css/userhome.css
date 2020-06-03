@@ -38,6 +38,7 @@
 
 .group-text {
     cursor: pointer;
+    width: 50%;
 }
 
 .group-text:hover h5, .group-text:hover small{
