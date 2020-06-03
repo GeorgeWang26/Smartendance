@@ -352,7 +352,7 @@ function addMember(imageURI, newMemberName) {
 }
 
 function markAttendance() {
-    window.location.pathname += "/capture"
+    window.location.pathname += "/live"
 }
 
 function viewAttendance() {
