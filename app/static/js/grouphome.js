@@ -350,3 +350,11 @@ function addMember(imageURI, newMemberName) {
         }
     });
 }
+
+function markAttendance() {
+    window.location.pathname += "/capture"
+}
+
+function viewAttendance() {
+    window.location.pathname += "/calendar"
+}

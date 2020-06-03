@@ -253,6 +253,4 @@ def week(username, groupname, weeknumber):
     return render_template('week.html')
 
 
-# add face will be done in group homepage
-# delete face will done by member name instead of taking pictures in group homepage
 # detect face will be done in capture page

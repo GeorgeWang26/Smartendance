@@ -313,16 +313,13 @@ if __name__ == '__main__':
     print(markAttendance('a', 'group1', 20200505, 'George'))
     updateStatus('a', 'group1', '20200505', 'L')
     print(markAttendance('a', 'group1', 20200505, 'Fred'))
-    print(getAttendance('a', 'group1', 20200505).date)
 
 
+    attendance = getAttendance('a', 'group1', 20200505)
+    print(type(attendance))
 
-    print(getAttendance('a', 'group1', 20200428).to_json())
-
-    print(getGroups('a'))
-    print(getMembers('a', 'group1'))
-    # print(getMembers('a', 'group2'))
-
-
-    # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
-    # print(json.dumps(json.loads(LoginReturn.objects().to_json()), sort_keys=True, indent=4))
+    print(attendance.to_json())
+    
+    for i in attendance:
+        print(i, attendance[i])
+        
