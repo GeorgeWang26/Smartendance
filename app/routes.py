@@ -214,12 +214,24 @@ def removeMember():
     return jsonify(dbResult = dbResult, awsResult = awsResult)
 
 
+
+
+
 @app.route('/userhome/<string:username>/group/<string:groupname>/live')
 @login_required
 def liveAttendance(username, groupname):
     checkUser(username)
     checkGroup(username, groupname)
     return render_template('live-attendance.html')
+
+
+@app.route('/liveUpdate', methods = ['POST'])
+def liveUpdate():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    result = db.getAttendance(username, groupname, date)
+    return jsonify(result = result)
 
 
 
