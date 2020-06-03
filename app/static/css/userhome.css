@@ -38,7 +38,7 @@
 
 .group-text {
     cursor: pointer;
-    width: 50%;
+    width: calc(100% - 3rem);
 }
 
 .group-text:hover h5, .group-text:hover small{
