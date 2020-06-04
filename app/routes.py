@@ -257,7 +257,7 @@ def discardAttendance():
     username = request.form['username']
     groupname = request.form['groupname']
     date = request.form['date']
-    result = db.discardAttendance(username, groupname, int(date))
+    result = db.discardAttendance(username, groupname, date))
     return jsonify(result = result)
 
 
@@ -291,7 +291,7 @@ def getWeekAttendance():
     allDays = []
     allMembers = set()
     for date in dates:
-        dateResult = db.getAttendance(username, groupname, int(date))
+        dateResult = db.getAttendance(username, groupname, date)
         allMembers = allMembers|set(dateResult.members)
         allDays.append(dateResult)
     result['allMembers'] = list(allMembers)

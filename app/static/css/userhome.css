@@ -49,6 +49,10 @@
     color: #212529;
 }
 
+.group-name-input {
+    width: 75%;
+}
+
 .add-content {
     margin-top: 2rem;
     text-align: center;
