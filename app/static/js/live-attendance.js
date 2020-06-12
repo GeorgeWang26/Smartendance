@@ -25,6 +25,7 @@ let date = year + newMonthInt + newDay
 console.log(date, year, newMonthInt, newDay)
 
 function setUp() {
+    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4];
     getTimestamp()
     setURL()
     showMembers()
@@ -119,7 +120,7 @@ function update() {
                 if(data.result.status == 'P') {
                     console.log('P')
                     buttons[0].setAttribute('checked', true)
-                    buttons[1].setAttribute('checked', false)
+                    buttons[1].removeAttribute('checked')
                     buttons[2].setAttribute('checked', false)
                 } else if (data.result.status == 'L') {
                     console.log('L')
