@@ -118,7 +118,7 @@ function update() {
                 let buttons = document.querySelectorAll('input[type="radio"]')
                 if(data.result.status == 'P') {
                     buttons[0].setAttribute('checked', true)
-                    buttons[1].setAttribute('checked', false)
+                    buttons[1].removeAttribute('checked')
                     buttons[2].setAttribute('checked', false)
                 } else if (data.result.status == 'L') {
                     buttons[0].setAttribute('checked', false)
