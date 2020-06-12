@@ -119,16 +119,16 @@ function update() {
                 if(data.result.status == 'P') {
                     buttons[0].setAttribute('checked', true)
                     buttons[1].removeAttribute('checked')
-                    buttons[2].setAttribute('checked', false)
+                    buttons[2].removeAttribute('checked')
                 } else if (data.result.status == 'L') {
-                    buttons[0].setAttribute('checked', false)
+                    buttons[0].removeAttribute('checked')
                     buttons[0].setAttribute('disabled', true)
                     buttons[1].setAttribute('checked', true)
-                    buttons[2].setAttribute('checked', false)
+                    buttons[2].removeAttribute('checked')
                 } else {
-                    buttons[0].setAttribute('checked', false)
+                    buttons[0].removeAttribute('checked')
                     buttons[0].setAttribute('disabled', true)
-                    buttons[1].setAttribute('checked', false)
+                    buttons[1].removeAttribute('checked')
                     buttons[1].setAttribute('disabled', true)
                     buttons[2].setAttribute('checked', true)
                 }
