@@ -269,12 +269,29 @@ def discardAttendance():
 
 
 
-@app.route('/userhome/<string:username>/group/<string:groupname>/capture')
+@app.route('/userhome/<string:username>/group/<string:groupname>/capture/<string:date>')
 @login_required
-def capture(username, groupname):
+def capture(username, groupname, date):
     checkUser(username)
     checkGroup(username, groupname)
+    # check date here
     return render_template('capture.html')
+
+
+@app.route('/search', methods = ['POST'])
+def search():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    imageURL = request.form['dataURL']
+    date = request.form['date']
+    image = imageURL.split(',')[1]
+    collectionID = username + '_' + groupname
+    name = rec.searchName(collectionID, base64.b64decode(image))
+    if (name != 'no face in picture') & (name != 'face not recognized'):
+        db.markAttendance(username, groupname, date, name)
+    print(name)
+    return jsonify(name = name)
+
 
 
 

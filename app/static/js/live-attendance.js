@@ -48,7 +48,7 @@ function setURL() {
             }
         })
     })
-    let captureURL = window.location.pathname.substring(0, window.location.pathname.length-4) + "capture"
+    let captureURL = window.location.pathname.substring(0, window.location.pathname.length-4) + "capture/" + date
     capture.href = captureURL
 }
 

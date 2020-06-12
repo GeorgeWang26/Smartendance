@@ -3,8 +3,8 @@
 // calculated based on the aspect ratio of the input stream.
 
 
-var computedWidth = getComputedStyle(document.querySelector('#video')).width    // We will scale the photo width to this
-var width = computedWidth.slice(0, computedWidth.length-2)
+var computedWidth    // We will scale the photo width to this
+var width
 var height = 0;     // This will be computed based on the input stream
 
 // |streaming| indicates whether or not we're currently streaming
@@ -107,12 +107,16 @@ function takepicture() {
         $.ajax({
             url: '/search',
             data:{
-                dataURL: dataURL
+                username: window.location.pathname.split("/")[2],
+                groupname: window.location.pathname.split("/")[4],
+                dataURL: dataURL,
+                date: window.location.pathname.split("/")[6]
             },
             dateType: 'JSON',
-            type: 'GET',
+            type: 'POST',
             success: function(data){
-                $("#result").html(data.result);
+                console.log(data.name)
+                $("#result").html(data.name);
             }
         });
 
@@ -125,3 +129,7 @@ function takepicture() {
 // once loading is complete.
 window.addEventListener('load', startup);
 // startup()
+window.addEventListener("load",function() {
+    computedWidth = getComputedStyle(document.querySelector('#video')).width
+    width = computedWidth.slice(0, computedWidth.length-2)
+})
