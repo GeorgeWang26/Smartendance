@@ -44,11 +44,11 @@ function setURL() {
             },
             success: function(data){
                 console.log(data.result)
+                window.location.pathname = window.location.pathname.substring(0, window.location.pathname.length-4) + "capture/" + date
             }
         })
     })
-    let captureURL = window.location.pathname.substring(0, window.location.pathname.length-4) + "capture/" + date
-    capture.href = captureURL
+    
 }
 
 function showMembers() {
@@ -110,21 +110,25 @@ function update() {
             date: date
         },
         success: function(data){
-            console.log(data.result)
+            // console.log(data.result)
 
             if(typeof(data.result) != "string") {
-                console.log(data.result.date)
+                // console.log(data.result.date)
+                console.log('result    ' + data.result.status)
                 let buttons = document.querySelectorAll('input[type="radio"]')
                 if(data.result.status == 'P') {
+                    console.log('P')
                     buttons[0].setAttribute('checked', true)
                     buttons[1].setAttribute('checked', false)
                     buttons[2].setAttribute('checked', false)
                 } else if (data.result.status == 'L') {
+                    console.log('L')
                     buttons[0].setAttribute('checked', false)
                     buttons[0].setAttribute('disabled', true)
                     buttons[1].setAttribute('checked', true)
                     buttons[2].setAttribute('checked', false)
                 } else {
+                    console.log('A')
                     buttons[0].setAttribute('checked', false)
                     buttons[0].setAttribute('disabled', true)
                     buttons[1].setAttribute('checked', false)
@@ -242,9 +246,10 @@ function discardData() {
         },
         success: function(data){
             console.log(data.result)
-            if (data.result == "success") {
-                window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
-            }
+
+            // if (data.result == "success") {
+            //     window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
+            // }
         }
     });
 }

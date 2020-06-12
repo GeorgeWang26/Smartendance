@@ -240,6 +240,7 @@ def liveUpdate():
 
 @app.route('/newAttendance', methods = ['POST'])
 def newAttendance():
+    print('\n\n\n\nnew date\n\n\n\n')
     username = request.form['username']
     groupname = request.form['groupname']
     date = request.form['date']
@@ -259,6 +260,7 @@ def changeAttendanceStatus():
 
 @app.route('/discardAttendance', methods = ['POST'])
 def discardAttendance():
+    print('\n\n\n\ndiscard\n\n\n\n')
     username = request.form['username']
     groupname = request.form['groupname']
     date = request.form['date']

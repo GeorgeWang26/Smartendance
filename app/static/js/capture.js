@@ -113,8 +113,9 @@ function takepicture() {
             dateType: 'JSON',
             type: 'POST',
             success: function(data){
-                console.log(data.name)
-                $("#result").html(data.name);
+                name = data.name.replace(/-/g, " ")
+                console.log(name)
+                $("#result").html(name);
             }
         });
 
