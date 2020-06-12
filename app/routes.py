@@ -21,10 +21,15 @@ loginManager.init_app(app)
 # 
 #  
 
+@app.errorhandler(404)
+def page_not_found(e):
+    print(str(e))
+    return render_template('404.html'), 404
+    
 def checkUser(username):
     if current_user.username != username:
         print('no such user:', username, '\nabort 404')
-        abort(404)
+        abort(404, description = 'no such user')
 
 
 def checkGroup(username, groupname):
@@ -32,13 +37,13 @@ def checkGroup(username, groupname):
         if groupname == i[0]:
             return
     print('no such group:', groupname, 'for user:', username, '\nabort 404')
-    abort(404)
+    abort(404, description = 'no such group')
 
 
 def checkDate(username, groupname, date):
     if type(db.getAttendance(username, groupname, date)) == str:
         print('no such date:', date, 'for user:', username, 'group:', groupname, '\nabort 404')
-        abort(404)
+        abort(404, description = 'no such date')
 
 
 @loginManager.user_loader
