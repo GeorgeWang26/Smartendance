@@ -186,7 +186,7 @@ def discardAttendance(username, group, date):
         if group == g.groupName:
             for i in range(len(g.calendar)):
                 if g.calendar[i].date == date:
-                    g.pop(i)
+                    g.calendar.pop(i)
                     user.save()
                     return 'success'
             return 'no such date'
