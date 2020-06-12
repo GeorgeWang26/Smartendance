@@ -284,6 +284,18 @@ def getMembers(username, groupName):
             return(members)
     return 'no such group'
 
+def getDates(username, groupName):
+    user = User.objects(username=username).first()
+    if not user:
+        return 'no such user'
+    dates = []
+    for group in user.groups:
+        if group.groupName == groupName:
+            for day in group.calendar:
+                dates.append(day.date)
+            return(dates)
+    return 'no such group'
+
 
 # return the entire document here because it is the lowest layer already
 # it doesnt contain any extra info that is not needed for the purpose of updaing attendance

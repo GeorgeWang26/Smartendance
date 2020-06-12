@@ -317,6 +317,14 @@ def calendar(username, groupname):
     checkGroup(username, groupname)
     return render_template('calendar.html')
 
+@app.route('/getDates')
+def getDates():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    result = db.getDates(username, groupname)
+    return jsonify(result = result)
+
+
 @app.route('/userhome/<string:username>/group/<string:groupname>/calendar/<string:weeknumber>')
 @login_required
 def week(username, groupname, weeknumber):
