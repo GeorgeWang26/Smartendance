@@ -94,6 +94,7 @@ function showMembers() {
                     listGroup.appendChild(listGroupItem)
                 }
             }
+            update()
         }
     });
 }
@@ -113,6 +114,23 @@ function update() {
 
             if(typeof(data.result) != "string") {
                 console.log(data.result.date)
+                let buttons = document.querySelectorAll('input[type="radio"]')
+                if(data.result.status == 'P') {
+                    buttons[0].setAttribute('checked', true)
+                    buttons[1].setAttribute('checked', false)
+                    buttons[2].setAttribute('checked', false)
+                } else if (data.result.status == 'L') {
+                    buttons[0].setAttribute('checked', false)
+                    buttons[0].setAttribute('disabled', true)
+                    buttons[1].setAttribute('checked', true)
+                    buttons[2].setAttribute('checked', false)
+                } else {
+                    buttons[0].setAttribute('checked', false)
+                    buttons[0].setAttribute('disabled', true)
+                    buttons[1].setAttribute('checked', false)
+                    buttons[1].setAttribute('disabled', true)
+                    buttons[2].setAttribute('checked', true)
+                }
                 let listMembers = data.result.members
                 for (let i = 0; i < listMembers.length; i++) {
                     let member = listMembers[i]
