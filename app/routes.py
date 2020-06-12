@@ -23,7 +23,7 @@ loginManager.init_app(app)
 
 def checkUser(username):
     if current_user.username != username:
-        print('no such user', username, '\nabort 404')
+        print('no such user:', username, '\nabort 404')
         abort(404)
 
 
@@ -31,8 +31,15 @@ def checkGroup(username, groupname):
     for i in db.getGroups(username):
         if groupname == i[0]:
             return
-    print('no such group', groupname, 'for user', username, '\nabort 404')
+    print('no such group:', groupname, 'for user:', username, '\nabort 404')
     abort(404)
+
+
+def checkDate(username, groupname, date):
+    if type(db.getAttendance(username, groupname, date)) == str:
+        print('no such date:', date, 'for user:', username, 'group:', groupname, '\nabort 404')
+        abort(404)
+
 
 @loginManager.user_loader
 def load_user(user_id):
@@ -276,7 +283,7 @@ def discardAttendance():
 def capture(username, groupname, date):
     checkUser(username)
     checkGroup(username, groupname)
-    # check date here
+    checkDate(username, groupname, date)
     return render_template('capture.html')
 
 
@@ -293,6 +300,7 @@ def search():
         db.markAttendance(username, groupname, date, name)
     print(name)
     return jsonify(name = name)
+
 
 
 

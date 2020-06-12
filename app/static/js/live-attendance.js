@@ -29,6 +29,7 @@ function setUp() {
     getTimestamp()
     setURL()
     showMembers()
+    update()
 }
 
 function setURL() {
@@ -95,7 +96,6 @@ function showMembers() {
                     listGroup.appendChild(listGroupItem)
                 }
             }
-            update()
         }
     });
 }
@@ -206,7 +206,7 @@ function changeStatus(status, number) {
             },
             success: function(data){
                 console.log(data.result)
-                if (number == 2) {
+                if (number == 2 && data.result == "success") {
                     endAttendance()
                     update()
                 }
@@ -248,9 +248,7 @@ function discardData() {
         success: function(data){
             console.log(data.result)
 
-            // if (data.result == "success") {
-            //     window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
-            // }
+            window.location.pathname = window.location.pathname.substring(0, window.location.pathname.length-5)
         }
     });
 }
