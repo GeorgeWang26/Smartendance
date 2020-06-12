@@ -112,11 +112,13 @@ function update() {
         },
         success: function(data){
             // console.log(data.result)
-
+            let buttons = document.querySelectorAll('input[type="radio"]')
             if(typeof(data.result) != "string") {
                 // console.log(data.result.date)
                 console.log('result    ' + data.result.status)
-                let buttons = document.querySelectorAll('input[type="radio"]')
+                buttons[0].removeAttribute('disabled')
+                buttons[1].removeAttribute('disabled')
+                buttons[2].removeAttribute('disabled')
                 if(data.result.status == 'P') {
                     console.log('P')
                     buttons[0].setAttribute('checked', true)
@@ -135,12 +137,20 @@ function update() {
                     buttons[1].removeAttribute('checked')
                     buttons[1].setAttribute('disabled', true)
                     buttons[2].setAttribute('checked', true)
+                    buttons[2].setAttribute('disabled', true)
                 }
                 let listMembers = data.result.members
                 for (let i = 0; i < listMembers.length; i++) {
                     let member = listMembers[i]
                     document.querySelector('#' + member.name).children[0].children[1].textContent = member.attendance
                 }
+            } else {
+                buttons[0].setAttribute('disabled', true)
+                buttons[1].setAttribute('disabled', true)
+                buttons[2].setAttribute('disabled', true)
+                buttons[0].removeAttribute('checked')
+                buttons[1].removeAttribute('checked')
+                buttons[2].removeAttribute('checked')
             }
         }
     });
