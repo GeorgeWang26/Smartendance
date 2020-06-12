@@ -178,12 +178,14 @@ def grouphome(username, groupname):
     checkGroup(username, groupname)
     return render_template('grouphome.html')
 
+
 @app.route('/getMembers', methods = ['POST'])
 def getMembers():
     username = request.form['username']
     groupname = request.form['groupname']
     memberList = db.getMembers(username, groupname)
     return jsonify(result = memberList)
+
 
 @app.route('/newMember', methods = ['POST'])
 def newMember():
@@ -202,6 +204,7 @@ def newMember():
             db.removeMember(username, groupname, memberName)
             return jsonify(result = addFaceResult)
     return jsonify(result = result)
+
 
 @app.route('/removeMember', methods = ['POST'])
 def removeMember():
@@ -231,6 +234,7 @@ def liveUpdate():
     groupname = request.form['groupname']
     date = request.form['date']
     result = db.getAttendance(username, groupname, date)
+    # print(result)
     return jsonify(result = result)
 
 
@@ -243,7 +247,7 @@ def newAttendance():
     return jsonify(result = result)
 
 
-@app.route('/changeAttendanceStatus')
+@app.route('/changeAttendanceStatus', methods = ['POST'])
 def changeAttendanceStatus():
     username = request.form['username']
     groupname = request.form['groupname']
@@ -253,7 +257,7 @@ def changeAttendanceStatus():
     return jsonify(result = result)
 
 
-@app.route('/discardAttendance')
+@app.route('/discardAttendance', methods = ['POST'])
 def discardAttendance():
     username = request.form['username']
     groupname = request.form['groupname']
@@ -292,7 +296,7 @@ def week(username, groupname, weeknumber):
 
 
 
-@app.route('/getWeekAttendance')
+@app.route('/getWeekAttendance', methods = ['POST'])
 def getWeekAttendance():
     username = request.form['username']
     groupname = request.form['groupname']
@@ -301,7 +305,7 @@ def getWeekAttendance():
     allDays = []
     allMembers = set()
     for date in dates:
-        dateResult = db.getAttendance(username, groupname, int(date))
+        dateResult = db.getAttendance(username, groupname, date)
         allMembers = allMembers|set(dateResult.members)
         allDays.append(dateResult)
     result['allMembers'] = list(allMembers)

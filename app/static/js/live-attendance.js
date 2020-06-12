@@ -5,19 +5,24 @@ let year = d.getFullYear()
 
 
 let newMonthInt, newDay
-if (monthInt < 10) {
-    newMonthInt = "0" + monthInt
+
+newMonthInt = monthInt + 1
+
+if (newMonthInt < 10) {
+    newMonthInt = "0" + newMonthInt
 } else {
-    newMonthInt = "" + monthInt
+    newMonthInt = "" + newMonthInt
 }
 
 if (day < 10) {
-    newDay = "0" + newDay
+    newDay = "0" + day
 } else {
-    newDay = "" + newDay
+    newDay = "" + day
 }
 
 let date = year + newMonthInt + newDay
+
+console.log(date, year, newMonthInt, newDay)
 
 function setUp() {
     getTimestamp()
@@ -65,7 +70,7 @@ function showMembers() {
                 document.querySelector('.list-group').appendChild(listGroupItem)
             } else {
                 for(let i = 0; i < numMembers; i++) {
-                    let memberName = data.result[i][0].replace(/-/g, " ")
+                    let memberName = data.result[i][0]
             
                     let listGroupItem = document.createElement('a')
                     listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
@@ -77,7 +82,7 @@ function showMembers() {
             
                     let memberInfo = document.createElement('label')
                     memberInfo.className = "member-name"
-                    memberInfo.textContent = memberName
+                    memberInfo.textContent = memberName.replace(/-/g, " ")
                     itemWrapper.appendChild(memberInfo)
             
                     let attendanceStatus = document.createElement('label')
@@ -104,11 +109,15 @@ function update() {
             date: date
         },
         success: function(data){
-            console.log(date.result)
-            let listMembers = data.result.members
-            for (let i = 0; i < listMembers.length; i++) {
-                let member = listMembers[i]
-                document.querySelector('#' + member.name).children[0].children[1].textContent = member.attendance
+            console.log(data.result)
+
+            if(typeof(data.result) != "string") {
+                console.log(data.result.date)
+                let listMembers = data.result.members
+                for (let i = 0; i < listMembers.length; i++) {
+                    let member = listMembers[i]
+                    document.querySelector('#' + member.name).children[0].children[1].textContent = member.attendance
+                }
             }
         }
     });
@@ -221,3 +230,6 @@ function discardData() {
         }
     });
 }
+
+
+setInterval(update, 10000)

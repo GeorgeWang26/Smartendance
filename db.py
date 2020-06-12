@@ -184,7 +184,7 @@ def discardAttendance(username, group, date):
         return 'no such user'
     for g in user.groups:
         if group == g.groupName:
-            for i in len(g.calendar):
+            for i in range(len(g.calendar)):
                 if g.calendar[i].date == date:
                     g.pop(i)
                     user.save()
@@ -297,7 +297,7 @@ def getAttendance(username, group, date):
         if g.groupName == group:
             for day in g.calendar:
                 if date == day.date:
-                    return day
+                    return json.loads(day.to_json())
             return 'no such date'
     return 'no such group'
 
@@ -317,9 +317,7 @@ if __name__ == '__main__':
     print(updateStatus('test', 'group1', '20200603', 'A'))
 
 
-    attendance = getAttendance('test', 'group1', '20200603')
-
-    print(attendance.to_json())
+    print(getAttendance('test', 'group1', '20200603'))
 
     User.drop_collection()
     LoginReturn.drop_collection()
