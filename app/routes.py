@@ -365,9 +365,14 @@ def getWeekAttendance():
     allDays = []
     allMembers = set()
     for date in dates:
-        dateResult = db.getAttendance(username, groupname, date)
-        allMembers = allMembers|set(dateResult.members)
+        dateResult = db.getAttendance(username, groupname, date) #always be dict, all dates are valid
+        # print(dateResult)
         allDays.append(dateResult)
+        members = dateResult['members']
+        for member in members:
+            allMembers.add(member['name'])
+
+    print(allMembers)
     result['allMembers'] = list(allMembers)
     result['allDays'] = allDays
     return jsonify(result = result)

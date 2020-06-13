@@ -8,7 +8,7 @@ function setUp() {
 }
 
 function setURL() {
-    document.querySelector(".group-name").href = "/userhome/" + window.location.pathname.split("/")[4]
+    document.querySelector(".group-name").href = "/userhome/" + window.location.pathname.split("/")[2] + '/group/' + window.location.pathname.split("/")[4]
 }
 
 function showNames() {

@@ -21,8 +21,8 @@ function setUp() {
 }
 
 function setURL() {
-    document.querySelector(".group-name").href = "/userhome/" + window.location.pathname.split("/")[4]
-    document.querySelector(".calendar-url").href = "/userhome/" + window.location.pathname.split("/")[4] + "/calendar"
+    document.querySelector(".group-name").href = "/userhome/" + window.location.pathname.split("/")[2] + '/group/' + window.location.pathname.split("/")[4]
+    document.querySelector(".calendar-url").href = "/userhome/" + window.location.pathname.split("/")[2] + '/group/' + window.location.pathname.split("/")[4] + '/calendar'
 }
 
 function getDates() {
@@ -98,7 +98,7 @@ function showMembers() {
 
                 let memberInfo = document.createElement('label')
                 memberInfo.className = "member-name"
-                memberInfo.textContent = memberName
+                memberInfo.textContent = memberName.replace(/-/g, ' ')
                 itemWrapper.appendChild(memberInfo)
 
                 let attendanceWrapper = document.createElement('div')
