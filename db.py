@@ -203,9 +203,11 @@ def markAttendance(username, group, date, name):
                 if date == day.date:
                     for member in day.members:
                         if name == member.name:
-                            member.attendance = day.status
-                            user.save()
-                            return 'success'
+                            if member.attendance != '-':
+                                member.attendance = day.status
+                                user.save()
+                                return 'success'
+                            return 'attendance already taken'
                     return 'no such member'
             return 'no such date'
     return 'no such group'

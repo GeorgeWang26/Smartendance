@@ -9,17 +9,7 @@ app.config['SECRET_KEY'] = 'itssecretkey'
 
 loginManager = LoginManager()
 loginManager.init_app(app)
-
-# 
-# 
-# 
-# 
-# customize the 404 page here
-#
-# 
-# 
-# 
-#  
+  
 
 @app.errorhandler(404)
 def page_not_found(e):
