@@ -27,22 +27,25 @@ function setURL() {
 
 function getDates() {
     let urlParts = window.location.pathname.split("/")[6].split("-")
-    let year = parseInt(urlParts[0])
-    let month = parseInt(urlParts[1])
-    let days = urlParts.slice(2)
-
-    document.querySelector('.month').innerHTML = monthNames[month]
+    year = parseInt(urlParts[0])
+    month = parseInt(urlParts[1])
+    days = urlParts.slice(2)
+    document.querySelector('.month').innerHTML = monthNames[month-1]
+    for (let i = 0; i < days.length; i++) {
+        days[i] = parseInt(days[i])
+    }
     
     for (let i = 0; i < days.length; i++) {
-        dates[i] = year + convertString(month) + convertString(parseInt(days[i]))
+        dates[i] = year + convertString(month) + convertString(days[i])
     }
 
     let dateObject = new Date(year + "-" + month + "-" + days[0])
     let dayOfWeek = dateObject.getDay()
-    let temporaryDay = parseInt(days[0])
+    let theDay = days[0]
     let lower, upper = -1
     for (let i = 0; i <= dayOfWeek; i++) {
-        temporaryDay -= 1
+        let temporaryDay = theDay-i
+        console.log(i, temporaryDay, dayOfWeek)
         if (temporaryDay <= 0) {
             lower = dayOfWeek-i+1
             break
@@ -50,14 +53,13 @@ function getDates() {
         document.querySelector('.dates').children[dayOfWeek-i].textContent = temporaryDay
     }
 
-    temporaryDay = parseInt(days[0])
     for (let i = 1; i < 7-dayOfWeek; i++) {
-        temporaryDay += 1
+        let temporaryDay = theDay + i
         if (temporaryDay > numDaysInMonths[month-1]) {
             upper = dayOfWeek+i-1
             break
         }
-        document.querySelector('.dates').children[dayOfWeek-i].textContent = temporaryDay
+        document.querySelector('.dates').children[dayOfWeek+i].textContent = temporaryDay
     }
 
     if (lower > -1) {
@@ -65,7 +67,7 @@ function getDates() {
     } else if (upper > -1) {
         document.querySelector('.date').textContent = monthNames[month-1] + " " + (numDaysInMonths[month-1]-upper) + "-" + numDaysInMonths[month-1]
     } else {
-        document.querySelector('.date').textContent = monthNames[month-1] + " " + (parseInt(days[0])-dayOfWeek) + "-" + (parseInt(days[0])+(6-dayOfWeek))
+        document.querySelector('.date').textContent = monthNames[month-1] + " " + (days[0]-dayOfWeek) + "-" + (days[0]+(6-dayOfWeek))
     }
 }
 
@@ -85,15 +87,15 @@ function showMembers() {
             let numMembers = data.result.allMembers.length
             for(let i = 0; i < numMembers; i++) {
                 let memberName = data.result.allMembers[i]
-        
+
                 let listGroupItem = document.createElement('a')
                 listGroupItem.className = "list-group-item list-group-item-action flex-column align-items-start"
                 listGroupItem.id = memberName
-        
+
                 let itemWrapper = document.createElement('div')
                 itemWrapper.className = "item-wrapper"
                 listGroupItem.appendChild(itemWrapper)
-        
+
                 let memberInfo = document.createElement('label')
                 memberInfo.className = "member-name"
                 memberInfo.textContent = memberName
@@ -108,7 +110,7 @@ function showMembers() {
                     attendanceStatus.className = "attendance-status"
                     attendanceWrapper.appendChild(attendanceStatus)
                 }
-        
+
                 let listGroup = document.querySelector('.list-group')
                 listGroup.appendChild(listGroupItem)
             }
