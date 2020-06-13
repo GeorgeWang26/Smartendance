@@ -317,7 +317,7 @@ def calendar(username, groupname):
     checkGroup(username, groupname)
     return render_template('calendar.html')
 
-@app.route('/getDates')
+@app.route('/getDates', methods = ['POST'])
 def getDates():
     username = request.form['username']
     groupname = request.form['groupname']
@@ -325,12 +325,27 @@ def getDates():
     return jsonify(result = result)
 
 
-@app.route('/userhome/<string:username>/group/<string:groupname>/calendar/<string:weeknumber>')
+
+
+@app.route('/userhome/<string:username>/group/<string:groupname>/calendar/<string:week>')
 @login_required
-def week(username, groupname, weeknumber):
+def week(username, groupname, week):
     checkUser(username)
     checkGroup(username, groupname)
-    # check week number here
+    year = week.split('-')[0]
+    month = week.split('-')[1]
+    days = week.split('-') #start from [2]
+    if len(month) == 1:
+        month = "0" + month
+    print(month)
+    for i in range(2, len(days)):
+        day = days[i]
+        if len(day) == 1:
+            day = "0" + day
+        print(day)
+        date = year + month + day
+        print(date)
+        checkDate(username, groupname, date)
     return render_template('week-attendance.html')
 
 
