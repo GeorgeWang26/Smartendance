@@ -346,7 +346,8 @@ def getWeekAttendance():
     allMembers = set()
     for date in dates:
         dateResult = db.getAttendance(username, groupname, date)
-        allMembers = allMembers|set(dateResult.members)
+        for member in dateResult['members']:
+            allMembers.add(member.name)
         allDays.append(dateResult)
     result['allMembers'] = list(allMembers)
     result['allDays'] = allDays
