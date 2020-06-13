@@ -39,7 +39,7 @@ function getDates() {
 
     let dateObject = new Date(year + "-" + month + "-" + days[0])
     let dayOfWeek = dateObject.getDay()
-    let temporaryDay = parseInt(days[0])
+    let temporaryDay = parseInt(days[0])+1
     let lower, upper = -1
     for (let i = 0; i <= dayOfWeek; i++) {
         temporaryDay -= 1
@@ -57,7 +57,7 @@ function getDates() {
             upper = dayOfWeek+i-1
             break
         }
-        document.querySelector('.dates').children[dayOfWeek-i].textContent = temporaryDay
+        document.querySelector('.dates').children[dayOfWeek+i].textContent = temporaryDay
     }
 
     if (lower > -1) {
