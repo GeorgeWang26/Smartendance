@@ -59,7 +59,7 @@ function showGroups() {
                     groupText.appendChild(groupNameHeader)
                 
                     let numMembers = document.createElement('small')
-                    numMembers.textContent = numStudents + " students"
+                    numMembers.textContent = numStudents + " members"
                     groupText.appendChild(numMembers)
                 
                     let valignWrapper = document.createElement('div')
