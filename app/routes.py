@@ -358,8 +358,8 @@ def getWeekAttendance():
     print('username', username)
     groupname = request.form['groupname']
     print('groupname', groupname)
-    dates = request.form['dates']
-    print('dates', dates)
+    dates = request.form['dates'].split(',')
+    print('dates', dates, type(dates))
     print('values retieved')
     result = {}
     allDays = []

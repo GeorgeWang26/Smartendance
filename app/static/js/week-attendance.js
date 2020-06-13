@@ -78,7 +78,7 @@ function showMembers() {
         data: {
             username: window.location.pathname.split("/")[2],
             groupname: window.location.pathname.split("/")[4],
-            dates: dates
+            dates: dates.toString()
         },
         success: function(data){
             console.log(data.result)
