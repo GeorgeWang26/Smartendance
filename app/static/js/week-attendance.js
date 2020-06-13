@@ -42,7 +42,7 @@ function getDates() {
     let temporaryDay = parseInt(days[0])
     let lower, upper = -1
     for (let i = 0; i <= dayOfWeek; i++) {
-        temporaryDay -= i
+        temporaryDay -= 1
         if (temporaryDay <= 0) {
             lower = dayOfWeek-i+1
             break
@@ -52,7 +52,7 @@ function getDates() {
 
     temporaryDay = parseInt(days[0])
     for (let i = 1; i < 7-dayOfWeek; i++) {
-        temporaryDay += i
+        temporaryDay += 1
         if (temporaryDay > numDaysInMonths[month-1]) {
             upper = dayOfWeek+i-1
             break
