@@ -70,6 +70,7 @@ function getDates() {
 }
 
 function showMembers() {
+    console.log(dates)
     $.ajax({
         url: "/getWeekAttendance",
         type: "POST",

@@ -353,9 +353,14 @@ def week(username, groupname, week):
 
 @app.route('/getWeekAttendance', methods = ['POST'])
 def getWeekAttendance():
+    print('\n\n\n\n\n\n\n\n\n\nhi\n\n\n\n\n\n\n\n\n')
     username = request.form['username']
+    print('username', username)
     groupname = request.form['groupname']
+    print('groupname', groupname)
     dates = request.form['dates']
+    print('dates', dates)
+    print('values retieved')
     result = {}
     allDays = []
     allMembers = set()
