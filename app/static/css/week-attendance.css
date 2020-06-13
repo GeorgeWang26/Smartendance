@@ -1,0 +1,31 @@
+.row {
+    width: 100%;
+    margin: 0;
+}
+
+.list-group-item {
+    min-width: 100%;
+    width: fit-content;
+    padding: 1px 10px;
+}
+
+.item-wrapper, .days-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.days-wrapper {
+    width: 100%;
+    padding: 1px 10px;
+}
+
+.dates, .days-of-week, .attendance-wrapper {
+    font-size: 0rem !important;
+}
+
+.dates label, .days-of-week label, .attendance-wrapper label {
+    font-size: 1rem !important;
+    width: 2rem !important;
+    text-align: center !important;
+}

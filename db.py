@@ -1,6 +1,6 @@
 import json
 from flask_login import UserMixin
-from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentListField, StringField, BooleanField, SortedListField, EmbeddedDocumentField, IntField
+from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentListField, StringField, BooleanField, SortedListField, EmbeddedDocumentField
 
 # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
 # to print the whole db in formated json style
@@ -16,15 +16,16 @@ connect('test')
 class Member(EmbeddedDocument):
     name = StringField(required = True)
     dataURL = StringField(required = True)
-    attendance = StringField(default = 'A')
+    attendance = StringField(default = '-')
+    # this attendance should be set to 'A' in the end, for whoever remains '-'
     # sort by name
 
 
 class Day(EmbeddedDocument):
-    date = IntField(required=True)
+    date = StringField(required=True)
     status = StringField(default = 'P')
     members = SortedListField(EmbeddedDocumentField(Member), ordering = 'name')
-    # sort by data
+    # sort by date
 
 
 class Group(EmbeddedDocument):
@@ -63,7 +64,7 @@ class LoginReturn(Document, UserMixin):
 def addUser(username, email, password):
     # duplicate = User.objects(username=username).first()
     if User.objects(username=username).first():
-        return 'username already exist'
+        return 'username already exists'
     elif User.objects(email=email).first():
         return 'email already used'
     User(username=username, email = email, password=password).save()
@@ -107,7 +108,7 @@ def addGroup(username, group):
         return 'no such user'
     for g in user.groups:
         if g.groupName == group:
-            return 'group already exist'
+            return 'group already exists'
     newGroup = Group(groupName=group)
     user.groups.append(newGroup)
     user.save()
@@ -183,9 +184,9 @@ def discardAttendance(username, group, date):
         return 'no such user'
     for g in user.groups:
         if group == g.groupName:
-            for i in len(g.calendar):
+            for i in range(len(g.calendar)):
                 if g.calendar[i].date == date:
-                    g.pop(i)
+                    g.calendar.pop(i)
                     user.save()
                     return 'success'
             return 'no such date'
@@ -202,14 +203,22 @@ def markAttendance(username, group, date, name):
                 if date == day.date:
                     for member in day.members:
                         if name == member.name:
-                            member.attendance = day.status
-                            user.save()
-                            return 'success'
+                            if member.attendance != '-':
+                                member.attendance = day.status
+                                user.save()
+                                return 'success'
+                            return 'attendance already taken'
                     return 'no such member'
             return 'no such date'
     return 'no such group'
 
 # passed in parameter  newStatus should be P,L,A
+
+def endAttendance(day):
+    for member in day.members:
+        if member.attendance == '-':
+            member.attendance = 'A'
+
 
 def updateStatus(username, group, date, newStatus):
     # should only need to change status for the group once,
@@ -224,14 +233,21 @@ def updateStatus(username, group, date, newStatus):
         if g.groupName == group:
             for day in g.calendar:
                 if date == day.date:
-                    day.date.status = newStatus
+                    day.status = newStatus
+                    if newStatus == 'A':
+                        endAttendance(day)
                     user.save()
+                    return 'success'
             return 'no such date'
     return 'no such group'
 
 # passed in parameter  newStatus should be P,L,A
 
+
+
+
 def updateIndividualAttendance(username, group, date, name, newStatus):
+    # in case user wants to update specific member's status manually
     user = User.objects(username=username).first()
     if not user:
         return 'no such user'
@@ -270,6 +286,18 @@ def getMembers(username, groupName):
             return(members)
     return 'no such group'
 
+def getDates(username, groupName):
+    user = User.objects(username=username).first()
+    if not user:
+        return 'no such user'
+    dates = []
+    for group in user.groups:
+        if group.groupName == groupName:
+            for day in group.calendar:
+                dates.append(day.date)
+            return(dates)
+    return 'no such group'
+
 
 # return the entire document here because it is the lowest layer already
 # it doesnt contain any extra info that is not needed for the purpose of updaing attendance
@@ -283,46 +311,28 @@ def getAttendance(username, group, date):
         if g.groupName == group:
             for day in g.calendar:
                 if date == day.date:
-                    return day
+                    return json.loads(day.to_json())
             return 'no such date'
     return 'no such group'
 
 
 if __name__ == '__main__':
 
+    addUser('test', 'test@gmail.com', 'password')
+    addGroup('test', 'group1')
+    addMember('test', 'group1', 'George', 'George_dataURL')
+    addMember('test', 'group1', 'Fred', 'Fred_dataURL')
+    addMember('test', 'group1', 'Yang', 'Yang_dataURL')
+
+    addAttendance('test', 'group1', '20200603')
+    print(markAttendance('test', 'group1', '20200603', 'George'))
+    print(updateStatus('test', 'group1', '20200603', 'L'))
+    print(markAttendance('test', 'group1', '20200603', 'Fred'))
+    print(updateStatus('test', 'group1', '20200603', 'A'))
+
+
+    print(getAttendance('test', 'group1', '20200603'))
+
     User.drop_collection()
     LoginReturn.drop_collection()
-
-    print('User', User.objects())
-    print('LoginReturn', LoginReturn.objects())
-
-    addUser('a', 'a@email', 'pass')
-    addGroup('a', 'group1')
-    addGroup('a', 'group2')
-    addGroup('a', 'group3')
-    addGroup('a', 'group4')
-    addMember('a', 'group1', 'George', 'George_dataURL')
-    addMember('a', 'group1', 'Fred', 'Fred_dataURL')
-    addMember('a', 'group2', 'Yang', 'Yang_dataURL')
-
-
-    addAttendance('a', 'group1', 20200428)
-    addAttendance('a', 'group1', 20200505)
-    print(markAttendance('a', 'group1', 20200428, 'George'))
-    updateStatus('a', 'group1', '20200505', 'P')
-    print(markAttendance('a', 'group1', 20200505, 'George'))
-    updateStatus('a', 'group1', '20200505', 'L')
-    print(markAttendance('a', 'group1', 20200505, 'Fred'))
-    print(getAttendance('a', 'group1', 20200505).date)
-
-
-
-    print(getAttendance('a', 'group1', 20200428).to_json())
-
-    print(getGroups('a'))
-    print(getMembers('a', 'group1'))
-    # print(getMembers('a', 'group2'))
-
-
-    # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
-    # print(json.dumps(json.loads(LoginReturn.objects().to_json()), sort_keys=True, indent=4))
+        

@@ -1,0 +1,109 @@
+<head>
+    <title>Smartendance</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/general.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/grouphome.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='/static/js/jquery.js'></script>
+    <script src="/static/js/grouphome.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src = "/static/js/checkStatus.js"></script>
+</head>
+<body class="bg-primary" onload="setUp()">
+    <nav class="navbar navbar-light navbar-expand-sm bg-light">
+        <a class="navbar-brand" href="/"><img class="logo" src="/static/img/logo.png"> Smartendance</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="valign-wrapper collapse navbar-collapse" id="navbar">
+            <nav aria-label="breadcrumb" class="breadcrumb-container">
+                <ol class="breadcrumb" style="margin: auto;">
+                    <li class="breadcrumb-item"><a href="/userhome" class="text-primary">Home <img src="/static/img/home.png" style="height: 1.25rem; padding-left: 2px; margin-top: -0.5rem;"></a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a class="group-name"></a></li>
+                </ol>
+            </nav>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row" style="text-align: center;">
+            <h3 class="group-header group-name"></h3>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class=section-wrapper>
+                    <div class="section-title"><h5>Member List</h5></div>
+                    <div class="bg-light" style="height: calc(60vh - 6.5rem);">
+                        <div class="list-group">
+                            
+                        </div>
+                    </div>
+                    <div class="add-content">
+                        <button class="add-content-button btn btn-success" data-toggle="modal" data-target="#addMember" onclick=useWebcam()>Add Member</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=section-wrapper>
+                    <div class="section-title"><h5>Calendar</h5></div>
+                    <button class="calendar btn btn-light" onclick=viewAttendance()></button>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=section-wrapper>
+                    <div class="section-title"><h5>Track Attendance</h5></div>
+                    <button class="attendance btn btn-light" onclick=markAttendance()></button>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="addMember">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Member</h5>
+                    <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Member Name</label>
+                        <label class="text-danger form-status" style="display: none;"></label>
+                        <input autocomplete="off" class="form-control name-input" required>
+                        <div class="invalid-feedback" style="display: none;">
+                            Required.
+                        </div>
+                    </div>
+                    <h5 style="text-align: center; margin-top: 2rem;">Choose how to add member's face</h5>
+                    <div class="upload-options">
+                        <div style="width: 40%; margin-top: 2rem;">
+                            <label>From files</label>
+                            <label for="file" class="input-file-label bg-light"></label>
+                            <input type="file" class="input-file" id="file" onchange="showImageName()">
+                            <label class="filename">No file selected</label>
+                        </div>
+                        <div style="width: 40%; margin-top: 2rem;">
+                            <label>From webcam</label>
+                            <div class="overlap-container" style="width: 100%;">
+                                <div class="webcam">
+                                    <video autoplay="true" id="webcam-view" class="bg-light"></video>
+                                    <label onclick="takePhoto()" class="take-picture">Take Picture</label>
+                                </div>
+                                <div class="webcam-result">
+                                    <img class="frame" id="webcam-result">
+                                    <label onclick="retakePhoto()" class="take-picture">Retake</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary closing-options" disabled onclick="chooseWebcam()">Use Webcam</button>
+                    <button type="button" class="btn btn-primary closing-options" disabled onclick="chooseFiles()">Use Files</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

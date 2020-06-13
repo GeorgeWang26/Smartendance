@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, jsonify, redirect, url_for
+from flask import render_template, request, jsonify, redirect, url_for, abort
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 import base64
 import recognition as rec
@@ -9,7 +9,31 @@ app.config['SECRET_KEY'] = 'itssecretkey'
 
 loginManager = LoginManager()
 loginManager.init_app(app)
+  
 
+@app.errorhandler(404)
+def page_not_found(e):
+    print(str(e))
+    return render_template('404.html'), 404
+    
+def checkUser(username):
+    if current_user.username != username:
+        print('no such user:', username, '\nabort 404')
+        abort(404, description = 'no such user')
+
+
+def checkGroup(username, groupname):
+    for i in db.getGroups(username):
+        if groupname == i[0]:
+            return
+    print('no such group:', groupname, 'for user:', username, '\nabort 404')
+    abort(404, description = 'no such group')
+
+
+def checkDate(username, groupname, date):
+    if type(db.getAttendance(username, groupname, date)) == str:
+        print('no such date:', date, 'for user:', username, 'group:', groupname, '\nabort 404')
+        abort(404, description = 'no such date')
 
 
 @loginManager.user_loader
@@ -21,12 +45,12 @@ def load_user(user_id):
     return user
 
 
-@LoginManager.unauthorized_handler
+@loginManager.unauthorized_handler
 def unauthorized():
     return redirect('/')
 
 
-@app.route("/checkStatus")
+@app.route('/checkStatus')
 def checkStatus():
     if current_user.is_authenticated:
         return jsonify(status = True)
@@ -34,80 +58,313 @@ def checkStatus():
         return jsonify(status = False)
 
 
-# only the render template urls need  login_required
-# the ajax request urls don't need it since they all will have checkStatus included in them
-
-
-# this function should be done through a ajax request
-# no need to send suceess and let page redirect to '/' 
-# because that will be done by '/checkStatus'
-@app.route("/logout")
+@app.route('/logout')
 def logout():
     logout_user()
+    return redirect('/login')
 
 
+
+# only the render template urls need  login_required
+# the ajax request urls don't need it since they all will have checkStatus included in the htmls
+
+
+# make /login and /signup complex routing
+# having both GET and POST
 
 @app.route('/')
 @app.route('/signup')
 def signup():
     if current_user.is_authenticated:
-        redirect('/userhome')
+        print('authenticated already  -signup')
+        return redirect('/userhome')
     return render_template('home.html')
+
+# add new user here
+@app.route('/newUser', methods = ['POST'])
+def newUser():
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+    print(username, email, password)
+    result = db.addUser(username, email, password)
+    return jsonify(result = result)
 
 
 
 @app.route('/login')
 def login():
     if current_user.is_authenticated:
-        redirect('/userhome')
+        print('authenticated already  -login')
+        return redirect('/userhome')
     return render_template('login.html')
 
-# embed ajax auto login ajax request in these two htmls as well
-# customize the ajax call back function on /signup and /login 
-# if /checkstatus returns true, they will be redirected to /userhome
 
+@app.route('/authenticate', methods = ['POST'])
+def authenticate():
+    print('hello')
+    username = request.form['username']
+    password = request.form['password']
+    result = db.authenticate(username, password)
+    if type(result) == str:
+        return jsonify(result = result)
+    else:
+        login_user(result)
+        return jsonify(result = 'success')
+
+
+# embed ajax auto login ajax request in /signup and /login
+# customize the ajax call back function
+# if /checkStatus returns true, it should be redirected to /userhome
 
 
 @app.route('/userhome')
 @login_required
-def userhome():
+def redirectUerhome():
+    return redirect('/userhome/' + current_user.username)
+
+
+@app.route('/userhome/<string:username>')
+@login_required
+def userhome(username):
+    checkUser(username)
+    print('entered userhome for user: ', username)
     return render_template('userhome.html')
 
 
+@app.route('/getGroups', methods = ['POST'])
+def getGroups():
+    username = request.form['username']
+    print('getting group information for user:', username)
+    groups = db.getGroups(username)
+    print(groups)
+    return jsonify(result = groups)
 
-@app.route('/userhome/group/<string:groupname>')
+
+@app.route('/createGroup', methods = ['POST'])
+def createGroup():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    print('adding new group:', groupname, '  for:', username)
+    result = db.addGroup(username, groupname)
+    print(result)
+    if result == 'success':
+        collectionID = username + '_' + groupname
+        print('creating new collection', collectionID)
+        createCollectionresult = rec.CreateCollection(collectionID)
+        print(createCollectionresult)
+    return jsonify(result = result)
+
+
+@app.route('/deleteGroup', methods = ['POST'])
+def deleteGroup():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    print('deleting group:', groupname, '  for:', username)
+    result = db.removeGroup(username, groupname)
+    print(result)
+    if result == 'success':
+        collectionID = username + '_' + groupname
+        print('deleting collection', collectionID)
+        deleteCollectionResult = rec.DelletCollection(collectionID)
+        print(deleteCollectionResult)
+    return jsonify(result = result)
+
+
+
+
+@app.route('/userhome/<string:username>/group/<string:groupname>')
 @login_required
-def grouphome(groupname):
+def grouphome(username, groupname):
+    checkUser(username)
+    checkGroup(username, groupname)
     return render_template('grouphome.html')
 
 
+@app.route('/getMembers', methods = ['POST'])
+def getMembers():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    memberList = db.getMembers(username, groupname)
+    return jsonify(result = memberList)
 
-@app.route('userhome/group/<string:groupname>/calendar')
+
+@app.route('/newMember', methods = ['POST'])
+def newMember():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    imageURL = request.form['imageURL']
+    memberName = request.form['membername']
+    image = imageURL.split(',')[1]
+    print('add member    ', memberName)
+    result = db.addMember(username, groupname, memberName, imageURL)
+    if result == 'success':
+        collectionID = username + "_" + groupname
+        addFaceResult = rec.addFace(collectionID, base64.b64decode(image), memberName)
+        print(addFaceResult)
+        if addFaceResult != 'success':
+            db.removeMember(username, groupname, memberName)
+            return jsonify(result = addFaceResult)
+    return jsonify(result = result)
+
+
+@app.route('/removeMember', methods = ['POST'])
+def removeMember():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    memberName = request.form['membername']
+    collectionID = username + '_' + groupname
+    dbResult = db.removeMember(username, groupname, memberName)
+    awsResult = rec.deleteByName(collectionID, memberName)
+    return jsonify(dbResult = dbResult, awsResult = awsResult)
+
+
+
+
+
+@app.route('/userhome/<string:username>/group/<string:groupname>/live')
 @login_required
-def calendar(groupname):
-    return render_template('calendar.html')
-
-
-
-@app.route('userhome/group<string:groupname>/live')
-@login_required
-def liveAttendance(groupname):
+def liveAttendance(username, groupname):
+    checkUser(username)
+    checkGroup(username, groupname)
     return render_template('live-attendance.html')
 
 
+@app.route('/liveUpdate', methods = ['POST'])
+def liveUpdate():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    result = db.getAttendance(username, groupname, date)
+    # print(result)
+    return jsonify(result = result)
 
-@app.route('userhome/group/<string:groupname>/capture')
+
+@app.route('/newAttendance', methods = ['POST'])
+def newAttendance():
+    print('\n\n\n\nnew date\n\n\n\n')
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    result = db.addAttendance(username, groupname, date)
+    return jsonify(result = result)
+
+
+@app.route('/changeAttendanceStatus', methods = ['POST'])
+def changeAttendanceStatus():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    status = request.form['status']
+    result = db.updateStatus(username, groupname, date, status)
+    return jsonify(result = result)
+
+
+@app.route('/discardAttendance', methods = ['POST'])
+def discardAttendance():
+    print('\n\n\n\ndiscard\n\n\n\n')
+    username = request.form['username']
+    groupname = request.form['groupname']
+    date = request.form['date']
+    result = db.discardAttendance(username, groupname, date)
+    return jsonify(result = result)
+
+
+
+
+
+@app.route('/userhome/<string:username>/group/<string:groupname>/capture/<string:date>')
 @login_required
-def capture(groupname):
+def capture(username, groupname, date):
+    checkUser(username)
+    checkGroup(username, groupname)
+    checkDate(username, groupname, date)
     return render_template('capture.html')
 
 
+@app.route('/search', methods = ['POST'])
+def search():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    imageURL = request.form['dataURL']
+    date = request.form['date']
+    image = imageURL.split(',')[1]
+    collectionID = username + '_' + groupname
+    name = rec.searchName(collectionID, base64.b64decode(image))
+    if (name != 'no face in picture') & (name != 'face not recognized'):
+        db.markAttendance(username, groupname, date, name)
+    print(name)
+    return jsonify(name = name)
 
-@app.route('/userhome/group/<string:groupname>/calendar/<string:weeknumber>')
+
+
+
+
+@app.route('/userhome/<string:username>/group/<string:groupname>/calendar')
 @login_required
-def week(groupname, weeknumber):
-    return render_template('week.html')
+def calendar(username, groupname):
+    checkUser(username)
+    checkGroup(username, groupname)
+    return render_template('calendar.html')
+
+@app.route('/getDates', methods = ['POST'])
+def getDates():
+    username = request.form['username']
+    groupname = request.form['groupname']
+    result = db.getDates(username, groupname)
+    return jsonify(result = result)
 
 
 
-# delete face will done by member name instead of taking pictures
+
+@app.route('/userhome/<string:username>/group/<string:groupname>/calendar/<string:week>')
+@login_required
+def week(username, groupname, week):
+    checkUser(username)
+    checkGroup(username, groupname)
+    year = week.split('-')[0]
+    month = week.split('-')[1]
+    days = week.split('-') #start from [2]
+    if len(month) == 1:
+        month = "0" + month
+    print(month)
+    for i in range(2, len(days)):
+        day = days[i]
+        if len(day) == 1:
+            day = "0" + day
+        print(day)
+        date = year + month + day
+        print(date)
+        checkDate(username, groupname, date)
+    return render_template('week-attendance.html')
+
+
+
+
+@app.route('/getWeekAttendance', methods = ['POST'])
+def getWeekAttendance():
+    print('\n\n\n\n\n\n\n\n\n\nhi\n\n\n\n\n\n\n\n\n')
+    username = request.form['username']
+    print('username', username)
+    groupname = request.form['groupname']
+    print('groupname', groupname)
+    dates = request.form['dates'].split(',')
+    print('dates', dates, type(dates))
+    print('values retieved')
+    result = {}
+    allDays = []
+    allMembers = set()
+    for date in dates:
+        dateResult = db.getAttendance(username, groupname, date) #always be dict, all dates are valid
+        # print(dateResult)
+        allDays.append(dateResult)
+        members = dateResult['members']
+        for member in members:
+            allMembers.add(member['name'])
+
+    print(allMembers)
+    result['allMembers'] = list(allMembers)
+    result['allDays'] = allDays
+    return jsonify(result = result)
+
+# detect face will be done in capture page

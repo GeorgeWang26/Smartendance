@@ -1,0 +1,83 @@
+.user-home-header {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.list-group {
+    max-height: 50vh;
+    overflow: auto;
+}
+
+.overlap-container {
+    display: grid;
+}
+
+.delete-confirmation {
+    grid-row: 1;
+    grid-column: 1;
+    visibility: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.choice-button {
+    border: 1px #212529 solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.group-wrapper {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    visibility: visible;
+}
+
+.group-text {
+    cursor: pointer;
+    width: calc(100% - 3rem);
+}
+
+.group-text:hover h5, .group-text:hover small{
+    color: #212529a9;
+}
+
+.group-text h5 {
+    color: #212529;
+}
+
+.group-name-input {
+    width: 75%;
+}
+
+.add-content {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.add-content-button {
+    width: 50%;
+    height: 3rem;
+    cursor: pointer;
+}
+
+.delete-group {
+    opacity: 0;
+    background-image: url(../img/trash.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    border: 1px #212529 solid;
+    border-radius: 5px;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+}
+
+.list-group-item:hover .delete-group {
+    transition: opacity 0.5s 0s;
+    opacity: 1;
+}

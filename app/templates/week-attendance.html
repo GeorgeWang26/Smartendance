@@ -1,0 +1,67 @@
+<head>
+    <title>Smartendance</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/general.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/week-attendance.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='/static/js/jquery.js'></script>
+    <script src="/static/js/week-attendance.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src = "/static/js/checkStatus.js"></script>
+</head>
+<body class="bg-white" onload="setUp()">
+    <nav class="navbar navbar-light navbar-expand-lg bg-light">
+        <a class="navbar-brand" href="/"><img class="logo" src="/static/img/logo.png"> Smartendance</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="valign-wrapper collapse navbar-collapse" id="navbar">
+            <nav aria-label="breadcrumb" class="breadcrumb-container">
+                <ol class="breadcrumb" style="margin: auto;">
+                    <li class="breadcrumb-item"><a href="/userhome" class="text-primary">Home <img src="/static/img/home.png" style="height: 1.25rem; padding-left: 2px; margin-top: -0.5rem;"></a></li>
+                    <li class="breadcrumb-item"><a class="group-name text-primary"></a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a class="text-primary calendar-url">Calendar</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a class="date"></a></li>
+                </ol>
+            </nav>
+        <div>
+    </nav>
+    <div class="container-fluid" style="padding: 0;">
+        <div class="row">
+            <div class="col-1">
+
+            </div>
+            <div class="col-10">
+                <div class="days-wrapper" style="margin-top: 2rem;">
+                    <label class="month"></label>
+                    <div class="dates">
+                        <label></label>
+                        <label></label>
+                        <label></label>
+                        <label></label>
+                        <label></label>
+                        <label></label>
+                        <label></label>
+                    </div>
+                </div>
+                <div class="days-wrapper">
+                    <label></label>
+                    <div class="days-of-week">
+                        <label>S</label>
+                        <label>M</label>
+                        <label>T</label>
+                        <label>W</label>
+                        <label>T</label>
+                        <label>F</label>
+                        <label>S</label>
+                    </div>
+                </div>
+                <div class="list-group">
+                </div>
+            </div>
+            <div class="col-1">
+
+            </div>
+        </div>
+    </div>
+</body>

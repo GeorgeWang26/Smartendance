@@ -1,0 +1,204 @@
+.group-header {
+    width: 100%;
+    margin: 3rem 0px;
+    color: white;
+}
+
+.section-wrapper {
+    height: 60vh;
+}
+
+.section-title {
+    width: 100%;
+    text-align: center;
+    font-family: product-sans;
+    padding: 1rem 0px;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-bottom: none;
+    background: #f8f9fa;
+}
+
+.section-title h5 {
+    margin-bottom: 0 !important;
+}
+
+.list-group {
+    max-height: 100%;
+    overflow: auto;
+}
+
+.list-group-item {
+    min-width: 100%;
+    width: fit-content;
+    border-radius: 0 !important;
+}
+
+.overlap-container {
+    display: grid;
+}
+
+.delete-confirmation {
+    grid-row: 1;
+    grid-column: 1;
+    visibility: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.choice-button {
+    border: 1px #212529 solid;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.group-wrapper {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    visibility: visible;
+}
+
+.member-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.member-info h5 {
+    padding-left: 1rem;
+    color: #212529;
+}
+
+.member-picture {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 5px;
+}
+
+.add-content-button {
+    width: 100%;
+    height: 3rem;
+    cursor: pointer;
+    font-family: product-sans;
+}
+
+.delete-group {
+    opacity: 0;
+    background-image: url(../img/trash.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    border: 1px #212529 solid;
+    border-radius: 0.25rem;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+.list-group-item:hover .delete-group {
+    transition: opacity 0.5s 0s;
+    opacity: 1;
+}
+
+.upload-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.input-file-label {
+    display: block;
+    width: 100%;
+    height: 10rem;
+    background-image: url(../img/file-explorer.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    border: 2px solid black;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.input-file-label:hover {
+    background-color: #e2e6ea !important;
+}
+
+.input-file {
+    display: none;
+}
+
+.webcam {
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+}
+
+.webcam-result {
+    grid-row: 1;
+    grid-column: 1;
+    visibility: hidden;
+    width: 100%;
+}
+
+#webcam-view {
+    border: solid 2px black;
+    border-radius: 0.25rem;
+    width: 100%;
+    height: 10rem;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    background-size: cover;
+    margin-bottom: 0.5rem;
+}
+
+.take-picture {
+    border: solid 1px #28a745;
+    border-radius: 0.25rem;
+    text-align: center;
+    background-color: #28a745;
+    color: white;
+    width: 100%;
+    cursor: pointer;
+}
+
+.take-picture:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.frame {
+    width: 100%;
+    height: 10rem;
+    margin-bottom: 0.5rem;
+    border: solid 2px black;
+    border-radius: 0.25rem;
+}
+
+.calendar {
+    background-image: url(../img/calendar.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    width: 100%;
+    height: calc(100% - 3.5rem);
+    cursor: pointer;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.attendance {
+    background-image: url(../img/attendance.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    width: 100%;
+    height: calc(100% - 3.5rem);
+    cursor: pointer;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

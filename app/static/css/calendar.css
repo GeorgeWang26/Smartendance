@@ -1,0 +1,76 @@
+.calendar-overflow {
+    width: calc(100% + 30px);
+    overflow: auto;
+    flex-wrap: nowrap !important;
+}
+
+.month-wrapper {
+    width: fit-content;
+    min-width: 40%;
+    margin: 0 5%;
+    font-family: product-sans;
+    border: solid 2px black;
+    border-radius: 1rem;
+}
+
+.month-header {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: solid 2px black;
+}
+
+.month-header label {
+    margin-bottom: 0;
+}
+
+.days-header {
+    margin-top: 1rem;
+    width: 100%;
+    font-size: 0;
+}
+
+.days-header label {
+    display: inline-block;
+    width: calc(100% / 7);
+    text-align: center;
+    font-size: initial;
+}
+
+.days-wrapper {
+    width: 100%;
+}
+
+.week {
+    width: 100%;
+    font-size: 0;
+}
+
+.week:hover {
+    background-color: #dae0e5 !important;
+}
+
+.week label {
+    display: inline-block;
+    width: calc(100% / 7);
+    text-align: center;
+    font-size: initial;
+    margin: 0.25rem 0;
+    cursor: inherit !important;
+}
+
+.week:last-child {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.week-disabled {
+    height: 2rem;
+    width: 100%;
+}
+
+.week-disabled label {
+    display: none;
+}
