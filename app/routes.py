@@ -292,7 +292,8 @@ def search():
     collectionID = username + '_' + groupname
     name = rec.searchName(collectionID, base64.b64decode(image))
     if (name != 'no face in picture') & (name != 'face not recognized'):
-        db.markAttendance(username, groupname, date, name)
+        mark = db.markAttendance(username, groupname, date, name)
+        print(mark)
     print(name)
     return jsonify(name = name)
 

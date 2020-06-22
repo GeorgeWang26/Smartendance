@@ -5,7 +5,7 @@ from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentList
 # print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
 # to print the whole db in formated json style
 
-connect('test')
+connect('Smartendance')
 
 
 # as for db, dont use  unique  other than in main(top) document
@@ -203,10 +203,11 @@ def markAttendance(username, group, date, name):
                 if date == day.date:
                     for member in day.members:
                         if name == member.name:
-                            if member.attendance != '-':
+                            if member.attendance == '-':
                                 member.attendance = day.status
                                 user.save()
                                 return 'success'
+                            print(member.attendance)
                             return 'attendance already taken'
                     return 'no such member'
             return 'no such date'
