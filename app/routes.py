@@ -2,8 +2,8 @@ from app import app
 from flask import render_template, request, jsonify, redirect, url_for, abort
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 import base64
-import recognition as rec
-import db
+import models.recognition as rec
+import models.db as db
 
 app.config['SECRET_KEY'] = 'itssecretkey'
 
