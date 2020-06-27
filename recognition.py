@@ -85,7 +85,7 @@ def deleteByName(collectionId, name):
     response = client.list_faces(CollectionId=collectionId)
     faces = response['Faces']
     for face in faces:
-        print(face['ExternalImageId'])
+        # print(face['ExternalImageId'])
         if face['ExternalImageId'] == name:
             response = client.delete_faces(CollectionId = collectionId, FaceIds = [face['FaceId']])
             if response['DeletedFaces']:

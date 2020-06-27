@@ -18,27 +18,23 @@ def page_not_found(e):
     
 def checkUser(username):
     if current_user.username != username:
-        print('no such user:', username, '\nabort 404')
-        abort(404, description = 'no such user')
+        abort(404, description = 'no such user: ' + username)
 
 
 def checkGroup(username, groupname):
     for i in db.getGroups(username):
         if groupname == i[0]:
             return
-    print('no such group:', groupname, 'for user:', username, '\nabort 404')
-    abort(404, description = 'no such group')
+    abort(404, description = 'no such group: ' + groupname + '  for user: ' + username)
 
 
 def checkDate(username, groupname, date):
     if type(db.getAttendance(username, groupname, date)) == str:
-        print('no such date:', date, 'for user:', username, 'group:', groupname, '\nabort 404')
-        abort(404, description = 'no such date')
+        abort(404, description = 'no such date: ' + date + '  for group: ' + groupname + '  for user: ' + username)
 
 
 @loginManager.user_loader
 def load_user(user_id):
-    print('\n\nLOAD USER', type(user_id), user_id)
     user = db.getFromId(user_id)
     if type(user) == str:
         return None
@@ -69,14 +65,13 @@ def logout():
 # the ajax request urls don't need it since they all will have checkStatus included in the htmls
 
 
-# make /login and /signup complex routing
-# having both GET and POST
+# signup
 
 @app.route('/')
 @app.route('/signup')
 def signup():
     if current_user.is_authenticated:
-        print('authenticated already  -signup')
+        print('authenticated already  -signup page')
         return redirect('/userhome')
     return render_template('home.html')
 
@@ -86,25 +81,26 @@ def newUser():
     username = request.form['username']
     email = request.form['email']
     password = request.form['password']
-    print(username, email, password)
+    print('adding new user', '\nusername:', username, ' email:', email, ' password:', password)
     result = db.addUser(username, email, password)
     return jsonify(result = result)
 
 
+# login
 
 @app.route('/login')
 def login():
     if current_user.is_authenticated:
-        print('authenticated already  -login')
+        print('authenticated already  -login page')
         return redirect('/userhome')
     return render_template('login.html')
 
 
 @app.route('/authenticate', methods = ['POST'])
 def authenticate():
-    print('hello')
     username = request.form['username']
     password = request.form['password']
+    print('user login', '\nusername/email:', username, ' password:', password)
     result = db.authenticate(username, password)
     if type(result) == str:
         return jsonify(result = result)
@@ -113,10 +109,12 @@ def authenticate():
         return jsonify(result = 'success')
 
 
-# embed ajax auto login ajax request in /signup and /login
-# customize the ajax call back function
+# embeded ajax auto login ajax request in /signup and /login
+# customized the ajax call back function
 # if /checkStatus returns true, it should be redirected to /userhome
 
+
+# userhome
 
 @app.route('/userhome')
 @login_required
@@ -150,9 +148,8 @@ def createGroup():
     print(result)
     if result == 'success':
         collectionID = username + '_' + groupname
-        print('creating new collection', collectionID)
-        createCollectionresult = rec.CreateCollection(collectionID)
-        print(createCollectionresult)
+        print('creating new collection:', collectionID)
+        rec.CreateCollection(collectionID)
     return jsonify(result = result)
 
 
@@ -165,13 +162,12 @@ def deleteGroup():
     print(result)
     if result == 'success':
         collectionID = username + '_' + groupname
-        print('deleting collection', collectionID)
-        deleteCollectionResult = rec.DelletCollection(collectionID)
-        print(deleteCollectionResult)
+        print('deleting collection:', collectionID)
+        rec.DelletCollection(collectionID)
     return jsonify(result = result)
 
 
-
+# grouphome
 
 @app.route('/userhome/<string:username>/group/<string:groupname>')
 @login_required
@@ -219,8 +215,7 @@ def removeMember():
     return jsonify(dbResult = dbResult, awsResult = awsResult)
 
 
-
-
+# live attendance
 
 @app.route('/userhome/<string:username>/group/<string:groupname>/live')
 @login_required
@@ -270,8 +265,7 @@ def discardAttendance():
     return jsonify(result = result)
 
 
-
-
+# capture(take attendance)
 
 @app.route('/userhome/<string:username>/group/<string:groupname>/capture/<string:date>')
 @login_required
@@ -298,8 +292,7 @@ def search():
     return jsonify(name = name)
 
 
-
-
+# calender(view all attendance in general)
 
 @app.route('/userhome/<string:username>/group/<string:groupname>/calendar')
 @login_required
@@ -316,7 +309,7 @@ def getDates():
     return jsonify(result = result)
 
 
-
+# view attendance of individual week
 
 @app.route('/userhome/<string:username>/group/<string:groupname>/calendar/<string:week>')
 @login_required
@@ -325,45 +318,35 @@ def week(username, groupname, week):
     checkGroup(username, groupname)
     year = week.split('-')[0]
     month = week.split('-')[1]
-    days = week.split('-') #start from [2]
+    days = week.split('-') # start from [2]
     if len(month) == 1:
         month = "0" + month
-    print(month)
+
     for i in range(2, len(days)):
         day = days[i]
         if len(day) == 1:
             day = "0" + day
-        print(day)
         date = year + month + day
-        print(date)
+        print('checking attendance for', date)
         checkDate(username, groupname, date)
     return render_template('week-attendance.html')
 
 
-
-
 @app.route('/getWeekAttendance', methods = ['POST'])
 def getWeekAttendance():
-    print('\n\n\n\n\n\n\n\n\n\nhi\n\n\n\n\n\n\n\n\n')
     username = request.form['username']
-    print('username', username)
     groupname = request.form['groupname']
-    print('groupname', groupname)
-    dates = request.form['dates'].split(',')
-    print('dates', dates, type(dates))
-    print('values retieved')
+    dates = request.form['dates'].split(',') # dates are turned from list to string in js
     result = {}
     allDays = []
     allMembers = set()
     for date in dates:
-        dateResult = db.getAttendance(username, groupname, date) #always be dict, all dates are valid
-        # print(dateResult)
+        dateResult = db.getAttendance(username, groupname, date) # always be dict, all dates are valid
         allDays.append(dateResult)
         members = dateResult['members']
         for member in members:
             allMembers.add(member['name'])
 
-    print(allMembers)
     result['allMembers'] = list(allMembers)
     result['allDays'] = allDays
     return jsonify(result = result)
