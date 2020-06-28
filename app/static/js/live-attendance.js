@@ -46,9 +46,13 @@ function setURL() {
             },
             success: function(data){
                 console.log(data.result)
-                window.location.pathname = window.location.pathname.substring(0, window.location.pathname.length-4) + "capture/" + date
+                captureURL = window.location.pathname.substring(0, window.location.pathname.length-4) + "capture/" + date;
+                console.log(captureURL)
+                window.open(captureURL, '_blank');
+                console.log('done')
             }
         })
+
     })
     
 }
@@ -241,7 +245,7 @@ function endAttendance() {
 }
 
 function saveData() {
-    window.location.href = window.location.pathname.substring(0, window.location.pathname.length-5)
+    window.location.pathname = window.location.pathname.substring(0, window.location.pathname.length-5)
 }
 
 function discardData() {

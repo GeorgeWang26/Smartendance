@@ -301,6 +301,7 @@ def calendar(username, groupname):
     checkGroup(username, groupname)
     return render_template('calendar.html')
 
+
 @app.route('/getDates', methods = ['POST'])
 def getDates():
     username = request.form['username']
