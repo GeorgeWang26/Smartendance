@@ -1,3 +1,3 @@
 # Smartendance
 
-Please refer to RecognitionAttendance for more information on Smartendance
+[smartendance.ca](https://smartendance.ca)
