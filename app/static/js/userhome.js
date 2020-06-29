@@ -55,7 +55,7 @@ function showGroups() {
                     groupWrapper.appendChild(groupText)
                 
                     let groupNameHeader = document.createElement('h5')
-                    groupNameHeader.textContent = groupName
+                    groupNameHeader.textContent = groupName.replace(/-/g, " ")
                     groupText.appendChild(groupNameHeader)
                 
                     let numMembers = document.createElement('small')
@@ -140,7 +140,7 @@ function deleteGroup(order) {
     if (document.querySelector('.group-name-input') && order == document.querySelectorAll('.list-group-item').length) {
         document.querySelector('.add-content-button').removeAttribute('disabled')
     } else {
-        let groupName = document.querySelectorAll(".group-text h5")[order-1].textContent
+        let groupName = document.querySelectorAll(".group-text h5")[order-1].textContent.replace(/ /g, "-")
         //Ajax request here
         $.ajax({
             url: '/deleteGroup',
@@ -285,10 +285,22 @@ function nameGroup() {
     if(groupName.includes('_')) {
         formStatus.style.display = "block"
         formStatus.textContent = "Group name cannot include _"
+
     } else if(groupName.includes('/')) {
         formStatus.style.display = "block"
         formStatus.textContent = "Group name cannot include /"
+
+    } else if(groupName == '') {
+        formStatus.style.display = "block"
+        formStatus.textContent = "Group name cannot be empty"
+
+    } else if(groupName.includes('-')) {
+        formStatus.style.display = "block"
+        formStatus.textContent = "Group name cannot include -"
+
     } else {
+        groupName = groupName.replace(/ /g, '-')
+        console.log('adding new group ' + groupName)
 
         $.ajax({
             url: '/createGroup',
@@ -307,7 +319,7 @@ function nameGroup() {
                     groupTextWrapper.removeChild(groupNameForm)
         
                     let groupNameHeader = document.createElement('h5')
-                    groupNameHeader.textContent = groupName
+                    groupNameHeader.textContent = groupName.replace(/-/g, " ")
                     groupTextWrapper.insertBefore(groupNameHeader, groupTextWrapper.childNodes[0])
         
                     document.querySelector('.add-content-button').removeAttribute('disabled')

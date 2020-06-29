@@ -14,7 +14,7 @@ function convertString(numberInt) {
 }
 
 function setUp() {
-    document.querySelector('.group-name').innerHTML = window.location.pathname.split("/")[4]
+    document.querySelector('.group-name').innerHTML = window.location.pathname.split("/")[4].replace(/-/g, " ")
     setURL()
     getDates()
     showMembers()

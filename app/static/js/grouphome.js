@@ -20,8 +20,8 @@ function setUp() {
 
 
 function showNames() {
-    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4];
-    $(".group-name")[1].innerHTML = window.location.pathname.split("/")[4];
+    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4].replace(/-/g, " ");
+    $(".group-name")[1].innerHTML = window.location.pathname.split("/")[4].replace(/-/g, " ");
 }
 
 
@@ -196,7 +196,13 @@ function chooseFiles() {
         formStatus.style.display = "block"
         formStatus.textContent = "member name cannot include -"
 
+    } else if(memberName.includes("/")){
+        formStatus.style.display = "block"
+        formStatus.textContent = "member name cannot include /"
+        console.log('new member name has /')
+
     } else {
+        console.log(memberName)
         memberName = memberName.replace(/ /g, "-")
 
         let file = document.querySelector('.input-file').files[0]
@@ -226,8 +232,15 @@ function chooseWebcam() {
         formStatus.style.display = "block"
         formStatus.textContent = "member name cannot include -"
 
+    } else if(memberName.includes("/")){
+        formStatus.style.display = "block"
+        formStatus.textContent = "member name cannot include /"
+        console.log('new member name has /')
+
     } else {
+        console.log(memberName)
         memberName = memberName.replace(/ /g, "-")
+        
         let imageURI = document.querySelector('#webcam-result').src
         addMember(imageURI, memberName)
     }

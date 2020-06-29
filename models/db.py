@@ -317,23 +317,23 @@ def getAttendance(username, group, date):
     return 'no such group'
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    addUser('test', 'test@gmail.com', 'password')
-    addGroup('test', 'group1')
-    addMember('test', 'group1', 'George', 'George_dataURL')
-    addMember('test', 'group1', 'Fred', 'Fred_dataURL')
-    addMember('test', 'group1', 'Yang', 'Yang_dataURL')
+#     addUser('test', 'test@gmail.com', 'password')
+#     addGroup('test', 'group1')
+#     addMember('test', 'group1', 'George', 'George_dataURL')
+#     addMember('test', 'group1', 'Fred', 'Fred_dataURL')
+#     addMember('test', 'group1', 'Yang', 'Yang_dataURL')
 
-    addAttendance('test', 'group1', '20200603')
-    print(markAttendance('test', 'group1', '20200603', 'George'))
-    print(updateStatus('test', 'group1', '20200603', 'L'))
-    print(markAttendance('test', 'group1', '20200603', 'Fred'))
-    print(updateStatus('test', 'group1', '20200603', 'A'))
+#     addAttendance('test', 'group1', '20200603')
+#     print(markAttendance('test', 'group1', '20200603', 'George'))
+#     print(updateStatus('test', 'group1', '20200603', 'L'))
+#     print(markAttendance('test', 'group1', '20200603', 'Fred'))
+#     print(updateStatus('test', 'group1', '20200603', 'A'))
 
 
-    print(getAttendance('test', 'group1', '20200603'))
+#     print(getAttendance('test', 'group1', '20200603'))
 
-    User.drop_collection()
-    LoginReturn.drop_collection()
+#     User.drop_collection()
+#     LoginReturn.drop_collection()
         

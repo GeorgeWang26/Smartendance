@@ -24,9 +24,9 @@ function addNewUser() {
         formStatus.style.display = "block"
         formStatus.textContent = "Password is empty!"
 
-    } else if(username.includes("@")) {
+    } else if(username.includes("/")) {
         formStatus.style.display = "block"
-        formStatus.textContent = "Username cannot include @"
+        formStatus.textContent = "Username cannot include /"
 
     } else if (username.includes("_")) {
         formStatus.style.display = "block"

@@ -12,8 +12,8 @@ function setURL() {
 }
 
 function showNames() {
-    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4];
-    $(".group-name")[1].innerHTML = window.location.pathname.split("/")[4];
+    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4].replace(/-/g, " ");
+    $(".group-name")[1].innerHTML = window.location.pathname.split("/")[4].replace(/-/g, " ");
 }
 
 function showCalendar() {

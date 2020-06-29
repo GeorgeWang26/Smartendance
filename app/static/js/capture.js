@@ -29,7 +29,7 @@ addEventListener('resize', function(event) {
 })
 
 function startup() {
-    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4];
+    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4].replace(/-/g, " ");
 
     video = document.querySelector('#video');
     canvas = document.createElement('canvas');

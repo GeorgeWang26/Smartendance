@@ -25,7 +25,7 @@ let date = year + newMonthInt + newDay
 console.log(date, year, newMonthInt, newDay)
 
 function setUp() {
-    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4];
+    $(".group-name")[0].innerHTML = window.location.pathname.split("/")[4].replace(/-/g, " ");
     getTimestamp()
     setURL()
     showMembers()
@@ -49,6 +49,7 @@ function setURL() {
                 console.log(captureURL)
                 window.open(captureURL, '_blank');
                 console.log('done')
+                update()
             }
         })
 
