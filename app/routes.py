@@ -1,7 +1,6 @@
 from app import app
-from flask import render_template, request, jsonify, redirect, url_for, abort, send_from_directory
+from flask import render_template, request, jsonify, redirect, abort
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
-import os
 import base64
 import models.recognition as rec
 import models.db as db
@@ -10,11 +9,7 @@ app.config['SECRET_KEY'] = 'itssecretkey'
 
 loginManager = LoginManager()
 loginManager.init_app(app)
-  
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static/img'), 'favicon.ico', mimetype = 'image/vnd.microsoft.icon')
 
 
 @app.errorhandler(404)
