@@ -29,7 +29,6 @@ function setUp() {
     getTimestamp()
     setURL()
     showMembers()
-    update()
 }
 
 function setURL() {
@@ -98,6 +97,8 @@ function showMembers() {
             
                     let listGroup = document.querySelector('.list-group')
                     listGroup.appendChild(listGroupItem)
+                    
+                    update()
                 }
             }
         }
