@@ -13,13 +13,13 @@ jmespath==0.9.5
 lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
-mongoengine==0.19.1
+mongoengine
 pylint==2.4.4
 pymongo==3.10.1
 python-dateutil==2.8.1
 s3transfer==0.3.3
 six==1.14.0
-typed-ast==1.4.1
+typed-ast
 urllib3==1.25.8
 Werkzeug==1.0.0
 wrapt==1.11.2
